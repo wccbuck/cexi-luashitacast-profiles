@@ -160,7 +160,7 @@ local sets = {
     PDT = {
         -- TODO
         Body = 'Narasimha\'s Vest', -- replace with augmented scorp harness
-        Hands = 'Melaco Mittens'
+        Hands = 'Melaco Mittens',
         Legs = 'Goliard Trews',
     },
     MDT = {
@@ -208,7 +208,7 @@ profile.HandleDefault = function()
     else
         gFunc.EquipSet(sets.Idle);
         -- TODO make the next line configurable
-        gFunc.EquipSet(sets.Weapons_Default);
+        -- gFunc.EquipSet(sets.Weapons_Default);
     end
 
     if (T{'PDT', 'MDT', 'BDT'}:contains(utilities.OverrideSet)) then
