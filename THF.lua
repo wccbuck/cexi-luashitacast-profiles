@@ -16,6 +16,12 @@ local dragonHarness = {
     Augment = { [1] = 'Sklchn.dmg.+2%', [2] = 'Attack+8', [3] = 'AGI+2', [4] = 'DEX+2' }
 };
 
+local dragonCap = {
+    Name = 'Dragon Cap',
+    Augment = { [1] = 'Dagger skill +4', [2] = 'AGI+2', [3] = '"Subtle Blow"+2' }
+};
+
+
 local hctMittens = {
     Name = 'Hct. Mittens +1',
     Augment = { [1] = 'Dagger skill +5', [2] = 'Crit. hit damage +2%' }
@@ -29,7 +35,7 @@ local acroBreeches = {
 local sets = {
     TPGain = {
         Head = ohat,
-        Neck = 'Tiercel Necklace',
+        Neck = 'Love Torque',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Suppanomimi',
         Body = 'Homam Corazza',
@@ -45,7 +51,6 @@ local sets = {
         Body = 'Rapparee Harness',
     },
     TPGain_High_Eva = {
-        Neck = 'Chivalrous Chain',
         Back = 'Cuchulain\'s Mantle',
     },
     Idle = { -- gets applied on top of TPGain
@@ -57,7 +62,7 @@ local sets = {
         Ear2 = 'Bushinomimi',
         Body = dragonHarness,
         Hands = hctMittens,
-        -- Ring1 = 'Garrulous Ring',
+        Ring1 = 'Thunder Ring',
         Ring2 = 'Rajas Ring',
         Back = 'Cuchulain\'s Mantle',
         Waist = 'Warwolf Belt',
@@ -65,7 +70,7 @@ local sets = {
         Feet = 'Adsilio Boots +1',
     },
     WS_Exent = {
-        Head = ohat,
+        Head = dragonCap,
         Neck = 'Fotia Gorget',
         Ear1 = 'Wilhelm\'s Earring',
         Ear2 = 'Altdorf\'s Earring',
@@ -100,7 +105,7 @@ local sets = {
     },
     TrickAttack = {
         -- +agi, +enmity
-        -- Head = 'Dragon Cap' -- augment
+        Head = dragonCap,
         Ear1 = 'Wilhelm\'s Earring',
         Ear2 = 'Altdorf\'s Earring',
         Ring1 = 'Sattva Ring',
@@ -119,7 +124,7 @@ local sets = {
     Fast = {
         Body = 'Kupo Suit',
         Legs = 'displaced',
-        Feet = 'Rogue\'s Poulaines',
+        Feet = 'Rogue\'s Poulaines', -- for flee
     },
     PDT = {
         -- TODO
@@ -141,7 +146,7 @@ local sets = {
         Waist = 'Lieutenant\'s Sash',
     },
     BDT = {
-        Head = 'Dragon Cap',
+        Head = dragonCap,
         Body = dragonHarness,
         Hands = 'Denali Wristbands',
     },
@@ -292,7 +297,7 @@ profile.HandleWeaponskill = function()
     -- don't prioritize acc+ gear (especially Mandalic and Mercy which are 1-hit).
     if (T{'Exenterator', 'Last Stand'}:contains(ws.Name)) then
         gFunc.EquipSet(sets.WS_Exent);
-        -- TODO: make an actual last stand set (e.g. pahluwan hands)
+        -- for last stand we need to equip pahluwan hands
     elseif (ws.Name == 'Mandalic Stab') then
         gFunc.EquipSet(sets.WS_Mandalic);
     elseif (ws.Name == 'Mercy Stroke') then

@@ -111,6 +111,7 @@ local sets = {
         Head = 'Denali Bonnet', -- remove this line when you get Maat's cap
         Hands = mrgBaz,
         Ring1 = 'Aqua Ring',
+        Waist = 'Visionary Obi',
     },
     WS_Expiacion = {
         -- 2 hits, STR 30%, DEX 20%, INT 30%
@@ -120,6 +121,7 @@ local sets = {
         -- 2 hits, STR 50%, MND 50%
         Head = 'Denali Bonnet', -- remove this line when you get Maat's cap
         Hands = mrgBaz,
+        Waist = 'Visionary Obi',
     },
     WS_High_Eva = {
         -- this overrides anything set in specific WS sets
@@ -254,7 +256,7 @@ local sets = {
         Head = 'Errant Hat',
         Neck = 'Bird Whistle',
         Ear1 = 'Moldavite Earring',
-        Ear2 = 'Aqua Earring',
+        Ear2 = 'Novio Earring',
         Body = 'Errant Hpl.',
         Hands = 'Yigit Gages',
         Ring1 = 'Angel\'s Ring',
@@ -269,7 +271,7 @@ local sets = {
         Head = 'Magus Keffiyeh',
         Neck = 'Lmg. Medallion +1',
         Ear1 = 'Moldavite Earring',
-        Ear2 = 'Aqua Earring',
+        Ear2 = 'Novio Earring',
         Body = bloodMail,
         Hands = 'Yigit Gages',
         Ring1 = 'Tamas Ring',
@@ -284,7 +286,7 @@ local sets = {
         Head = 'Yigit Turban',
         Neck = 'Gnole Torque',
         Ear1 = 'Moldavite Earring',
-        Ear2 = 'Aqua Earring',
+        Ear2 = 'Novio Earring',
         Body = bloodMail,
         Hands = 'Yigit Gages',
         Ring1 = 'Tamas Ring',
@@ -401,6 +403,9 @@ profile.Packer = {
 
 profile.OnLoad = function()
     gSettings.AllowAddSet = true;
+    utilities.Initialize();
+    (function () AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 16') end):once(3);
+
 end
 
 profile.OnUnload = function()

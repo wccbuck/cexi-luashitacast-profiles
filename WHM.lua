@@ -185,8 +185,9 @@ local sets = {
         Feet = 'Clr. Duckbills +1',
     },
     Fast = {
-        Body = 'Kupo Suit',
-        Legs = 'displaced',
+        -- Body = 'Kupo Suit',
+        -- Legs = 'displaced',
+        Feet = 'Herald\'s Gaiters'
     },
     Weapons_Default = {
         Main = 'Tamaxchi',
