@@ -30,22 +30,23 @@ local hmnSuneate = 'Hmn. Sune-Ate +1'; -- TODO get augs
 
 local sets = {
     TPGain = {
-        Head = acesHelm,
+        Head = acesHelm, -- swap for relic+1 or conq helm
         Neck = 'Chivalrous Chain',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Bushinomimi',
-        Body = 'Askar Korazin',
+        Body = 'Askar Korazin', -- swap for Shura+1 haste+3%
         Hands = mynKote,
         Ring1 = 'Toreador\'s Ring',
         Ring2 = 'Rajas Ring',
         Back = 'Aesir Mantle',
         Waist = 'Ninurta\'s Sash',
-        Legs = byakkoHaidate,
+        Legs = byakkoHaidate, -- swap for AF+1
         Feet = hmnSuneate,
     },
     TPGain_Low_Eva = {
     },
     TPGain_High_Eva = {
+        Body = 'Hachiryu Haramaki',
         Back = 'Cuchulain\'s Mantle',
     },
     Idle = { -- gets applied on top of TPGain

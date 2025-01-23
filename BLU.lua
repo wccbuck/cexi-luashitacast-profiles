@@ -128,10 +128,8 @@ local sets = {
         Head = ohat, -- remove this line when you get Maat's cap
         Hands = 'Enkidu\'s Mittens',
         Ring1 = 'Toreador\'s Ring', -- remove this line when you get strigoi's
-        Waist = 'Potent Belt',
     },
     WS_Low_Eva = {
-        Waist = 'Warwolf Belt',
     },
     Learning = {
         Hands = magBaz,
@@ -413,7 +411,7 @@ end
 
 profile.HandleCommand = function(args)
     if args[1] == 'learning' then
-        learning = ~learning;
+        learning = not learning;
         gFunc.Echo(255,  'Learning [' .. (learning and 'ON' or 'OFF') .. ']');
     end
     utilities.HandleCommands(args);

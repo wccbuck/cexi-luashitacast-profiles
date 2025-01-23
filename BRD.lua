@@ -28,6 +28,12 @@ local genbuShield = {
         [3] = '"Cure" potency +5%' }
 };
 
+local chlJust = { 
+    Name = 'Chl. Jstcorps +1', 
+    Augment = { [1] = 'Singing skill +4', [2] = 'Wind instrument skill +5' } 
+};
+
+
 local instruments = {
     Minuet = 'Cornette +1',
     Mambo = 'Hellish Bugle',
@@ -45,15 +51,15 @@ local sets = {
         Head = 'Bard\'s Roundlet',
         Neck = 'Fylgja Torque +1',
         Ear1 = 'Musical Earring',
-        Ear2 = 'Light Earring',
-        Body = 'Narasimha\'s Vest', -- replace with augmented scorp harness
+        Ear2 = 'Soil Earring',
+        Body = chlJust,
         Hands = 'Melaco Mittens',
         Ring1 = 'Trumpet Ring',
         Ring2 = 'Tamas Ring',
         Back = 'Dew Silk Cape +1', -- replace with hexerei
-        Waist = 'Ninurta\'s Sash',
+        Waist = 'Marid Belt',
         Legs = 'Goliard Trews',
-        Feet = 'Oracle\'s Pigaches',
+        Feet = 'Suzaku\'s Sune-Ate',
     },
     TPGain = {
         -- TODO
@@ -89,12 +95,13 @@ local sets = {
         Feet = zenithPumps,
     },
     PrecastSong = {
-        -- get Demon Helm and augment it
+        Body = 'Sha\'ir Manteel',
         Legs = zenithSlacks,
     },
     Wind = {
         Head = 'Bard\'s Roundlet', -- sing+5
         Ear1 = 'Musical Earring', -- wind, string +5
+        Body = chlJust, 
         Hands = 'Choral Cuffs', -- sing+5
         Ring1 = 'Trumpet Ring', -- wind+2
         Legs = zenithSlacks, -- wind+4
@@ -103,7 +110,7 @@ local sets = {
     String = {
         Head = 'Bard\'s Roundlet', -- sing+5
         Ear1 = 'Musical Earring', -- wind, string +5
-        Body = 'Choral Jstcorps', -- string +3
+        Body = chlJust, -- string +6
         Hands = 'Choral Cuffs', -- sing+5
         Feet = 'Bard\'s Slippers', -- string+3
     },
@@ -168,6 +175,7 @@ local sets = {
     },
     BDT = {},
     Showoff = {},
+    
 };
 profile.Sets = sets;
 
@@ -264,6 +272,7 @@ profile.HandleMidcast = function()
                 end
                 if (player.Status ~= 'Engaged') then
                     -- dont want to lose TP while fighting
+                    gFunc.Equip('main', 'Silktone');
                     gFunc.Equip('range', inst);
                 end
             end
