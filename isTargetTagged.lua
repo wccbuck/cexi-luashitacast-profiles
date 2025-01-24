@@ -1,7 +1,9 @@
--- written by will.8627 on the Ashita discord
--- use this like: local isTargetTagged = gFunc.LoadFile('isTargetTagged'); if (not isTargetTagged()) then ...
+-- Most of this written by will.8627 on the Ashita discord
+-- The TH Proc level parts written by wccbuck/ziphion
+-- use this like: local isTargetTagged = gFunc.LoadFile('isTargetTagged'); if (not isTargetTagged(6)) then ...
 
 local taggedMobs = T {};
+local setThTier = 1;
 
 local function ParseActionPacket(e)
     local bitData;
@@ -27,6 +29,7 @@ local function ParseActionPacket(e)
     bitOffset = bitOffset + 4;
     actionPacket.Type = UnpackBits(4);
     actionPacket.Id = UnpackBits(32);
+
     actionPacket.Recast = UnpackBits(32);
 
     actionPacket.Targets = T {};
@@ -95,7 +98,7 @@ local function onAction(e)
         return;
     end
 
-    local targetCount = ashita.bits.unpack_be(e.data_raw, 0, 76, 6);
+    -- local targetCount = ashita.bits.unpack_be(e.data_raw, 0, 76, 6);
 
     -- We only care about actions with targets
     -- if (targetCount == 0) then
@@ -106,7 +109,14 @@ local function onAction(e)
 
     for _, target in ipairs(actionPacket.Targets) do
         if (isMob(target.Id)) then
-            taggedMobs[target.Id] = os.clock();
+            if taggedMobs[target.Id] == nil then
+                taggedMobs[target.Id] = {
+                    Tier = 1,
+                    Time = os.clock()
+                };
+            else
+                taggedMobs[target.Id].Time = os.clock();
+            end
         end
     end
 end
@@ -126,7 +136,9 @@ local function onZone(e)
 end
 
 -- Call this function to determine if the current target/subtarget has been tagged by you
-local function isTargetTagged()
+local function isTargetTagged(thTier)
+    thTier = thTier == nil and 1 or thTier;
+    setThTier = thTier;
     local targetManager = AshitaCore:GetMemoryManager():GetTarget();
     local isSubTargetActive = targetManager:GetIsSubTargetActive();
 
@@ -134,7 +146,9 @@ local function isTargetTagged()
 
     local tagged = taggedMobs[targetId];
 
-    return tagged and os.clock() - tagged < 550;
+    if tagged == nil then return false end;
+
+    return tagged.Tier >= setThTier and os.clock() - tagged.Time < 550;
 end
 
 ashita.events.register('packet_in', 'packet_in_th_cb', function(e)
@@ -144,6 +158,23 @@ ashita.events.register('packet_in', 'packet_in_th_cb', function(e)
         onMessage(e);
     elseif (e.id == 0x0A or e.id == 0x0B) then
         onZone(e);
+    end
+end);
+
+ashita.events.register('text_in', 'text_in_th_cb', function (e)
+    if (not e.injected) and (e.message:match("Treasure Hunter effectiveness")) then
+        gFunc.Echo(2, e.message);
+        local thTierAsString = string.match(e.message, "%d+");
+        if thTierAsString ~= nil then
+            local targetManager = AshitaCore:GetMemoryManager():GetTarget();
+            local isSubTargetActive = targetManager:GetIsSubTargetActive();
+
+            local targetId = targetManager:GetServerId(isSubTargetActive == 1 and 1 or 0);
+            taggedMobs[targetId] = {
+                Tier = tonumber(thTierAsString),
+                Time = os.clock()
+            };
+        end
     end
 end);
 

@@ -4,6 +4,7 @@ utilities = gFunc.LoadFile('utilities.lua');
 local isTargetTagged = gFunc.LoadFile('isTargetTagged');
 
 local profile = {};
+local thtier = 6; -- the treasure hunter tier at which we should switch to TP gain set
 
 -- some equipment pieces I use in multiple places
 local ohat = {
@@ -185,6 +186,7 @@ profile.Packer = {
 profile.OnLoad = function()
     gSettings.AllowAddSet = true;
     utilities.Initialize();
+    gFunc.Echo(2,  'TH Tier set to [' .. thtier .. ']');
 
     (function () AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 20') end):once(3);
     -- TODO: set these based on subjob
@@ -196,6 +198,15 @@ profile.OnUnload = function()
 end
 
 profile.HandleCommand = function(args)
+    if args[1] == 'thtier' then
+        if #args == 1 then
+            thtier = 1
+        else
+            thtier = tonumber(args[2])
+            thtier = thtier == nil and 1 or thtier
+        end
+        gFunc.Echo(2,  'TH Tier set to [' .. thtier .. ']');
+    end
     utilities.HandleCommands(args);
 end
 
@@ -218,7 +229,7 @@ profile.HandleDefault = function()
         if (ta > 0) then
             gFunc.EquipSet(sets.TrickAttack);
         end
-        if (not isTargetTagged()) then
+        if (not isTargetTagged(thtier)) then
             -- 'isTargetTagged' is a function which determines whether you have added yourself
             -- to the target's enmity list, based on that target's server id. It does *not*
             -- check whether you have applied your highest TH level to the mob, only that you
@@ -273,7 +284,7 @@ end
 
 profile.HandleMidshot = function()
     gFunc.EquipSet(sets.Ranged);
-    if (not isTargetTagged()) then
+    if (not isTargetTagged(thTier)) then
         gFunc.EquipSet(sets.TH);
     end
 end
