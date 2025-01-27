@@ -1,6 +1,15 @@
--- Most of this written by will.8627 on the Ashita discord
--- The TH Proc level parts written by wccbuck/ziphion
--- use this like: local isTargetTagged = gFunc.LoadFile('isTargetTagged'); if (not isTargetTagged(6)) then ...
+-- This is an altered version of the "isTargetTagged" function written by will.8627 on the Ashita discord.
+-- Most of this code is his, as are many of the helpful comments.
+
+-- This isTargetTagged function not only lets you know whether a given target has been "tagged" by you 
+-- (e.g. any hostile action which would trigger the first stage of TH), but it also keeps track of the 
+-- highest tier of TH applied on the target, and lets you know once that value has exceeded a value you 
+-- specify.
+
+-- If you use a language other than English in your client, edit the text_in listener callback function at 
+-- the end of this file with a portion of your Treasure Hunter proc message so that it can capture it.
+
+-- Place this file in the same directory as your THF.lua.
 
 local taggedMobs = T {};
 local setThTier = 1;
@@ -11,7 +20,7 @@ local function ParseActionPacket(e)
     local maxLength = e.size * 8;
     local function UnpackBits(length)
         if ((bitOffset + length) >= maxLength) then
-            maxLength = 0; --Using this as a flag since any malformed fields mean the data is trash anyway.
+            maxLength = 0;
             return 0;
         end
         local value = ashita.bits.unpack_be(bitData, 0, bitOffset, length);
@@ -23,7 +32,7 @@ local function ParseActionPacket(e)
     bitData = e.data_raw;
     bitOffset = 40;
     actionPacket.UserId = UnpackBits(32);
-    -- actionPacket.UserIndex = GetIndexFromId(actionPacket.UserId); --Many implementations of this exist, or you can comment it out if not needed.  It can be costly.
+
     local targetCount = UnpackBits(6);
     --Unknown 4 bits
     bitOffset = bitOffset + 4;
@@ -98,13 +107,6 @@ local function onAction(e)
         return;
     end
 
-    -- local targetCount = ashita.bits.unpack_be(e.data_raw, 0, 76, 6);
-
-    -- We only care about actions with targets
-    -- if (targetCount == 0) then
-    --     return;
-    -- end
-
     local actionPacket = ParseActionPacket(e);
 
     for _, target in ipairs(actionPacket.Targets) do
@@ -137,8 +139,7 @@ end
 
 -- Call this function to determine if the current target/subtarget has been tagged by you
 local function isTargetTagged(thTier)
-    thTier = thTier == nil and 1 or thTier;
-    setThTier = thTier;
+    setThTier = thTier == nil and 1 or thTier;
     local targetManager = AshitaCore:GetMemoryManager():GetTarget();
     local isSubTargetActive = targetManager:GetIsSubTargetActive();
 
@@ -162,6 +163,10 @@ ashita.events.register('packet_in', 'packet_in_th_cb', function(e)
 end);
 
 ashita.events.register('text_in', 'text_in_th_cb', function (e)
+    -- there is probably a more elegant way to do this by capturing the relevant part of the enspell portion
+    -- of the action packet. You might also think that you might catch the TH proc in a message packet (0x29)
+    -- and handle it in onMessage(). I wasn't able to get either of these approaches to work. Instead, this 
+    -- listener just checks every incoming string of text for the TH proc message.
     if (not e.injected) and (e.message:match("Treasure Hunter effectiveness")) then
         gFunc.Echo(2, e.message);
         local thTierAsString = string.match(e.message, "%d+");
@@ -179,4 +184,3 @@ ashita.events.register('text_in', 'text_in_th_cb', function (e)
 end);
 
 return isTargetTagged;
-

@@ -1,7 +1,7 @@
 # cexi-luashitacast-profiles
 A set of lua files to be used with Luashitacast on the [CatsEye XI](https://www.catseyexi.com) private server for the game Final Fantasy XI.
 
-These scripts are works-in-progress that I use for my own character in-game (Ziphion). I'm posting these publicly as a way to offer more examples for people to reference as they craft their own lua scripts. Only a few jobs are represented here (SAM, THF, WHM, and BLU); as I start using other jobs more, I will add luas for them here.
+These scripts are works-in-progress that I use for my own character in-game (Ziphion). I'm posting these publicly as a way to offer more examples for people to reference as they craft their own lua scripts. Only a few jobs are represented here (SAM, THF, WHM, BLU, and BRD); as I start using other jobs more, I will add luas for them here.
 
 ## Features
 
@@ -33,6 +33,8 @@ These profiles add the following helpful commands to the game (though they requi
 BLU has one more custom command: `learning`, which you can use to toggle Magus Bazubands on or off. I don't bother with making an alias for this, so I just use the full `/lac fwd learning` when I want to use this toggle.
 
 ## Setup
+
+Add the lua files matching the jobs you want to play to your `ashita/config/addons/luashitacast/playername_playerid` directory. *Important*: You also need `utilities.lua` for all profiles. For THF, you also need `isTargetTagged.lua`, and for BLU, you need `bluMag.lua`. To play it safe, just add every file that starts with a lower case letter to your directory.
 
 The following addons are required for you to be able to use these profiles:
 

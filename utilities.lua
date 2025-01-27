@@ -45,7 +45,8 @@ function useEquippedItem(slot, itemName)
 end
 
 function equipAndUseItem(slot, itemName, delay)
-	gFunc.Equip(slot, itemName);
+	-- gFunc.Equip(slot, itemName); -- doesn't seem to work
+	AshitaCore:GetChatManager():QueueCommand(1, '/equip ' .. string.lower(slot) .. ' "'.. itemName ..'"');
 	(function() useEquippedItem(slot, itemName) end):once(delay);
 end
 
@@ -118,15 +119,15 @@ function utilities.CheckCancels()
 	if (action.Name == 'Spectral Jig' and sneak > 0) then
 		gFunc.CancelAction();
 		AshitaCore:GetChatManager():QueueCommand(1, '/cancel Sneak');
-		(function AshitaCore:GetChatManager():QueueCommand(1, '/ja "Spectral Jig" <me>') end):once(2);
+		(function() AshitaCore:GetChatManager():QueueCommand(1, '/ja "Spectral Jig" <me>') end):once(2);
 	elseif (action.Name == 'Sneak' and sneak > 0 and target.Name == me) then
 		gFunc.CancelAction();
 		AshitaCore:GetChatManager():QueueCommand(1, '/cancel Sneak');
-		(function AshitaCore:GetChatManager():QueueCommand(1, '/ma "Sneak" <me>') end):once(1);
+		(function() AshitaCore:GetChatManager():QueueCommand(1, '/ma "Sneak" <me>') end):once(1);
 	elseif (action.Name == 'Stoneskin' and stoneskin > 0) then
 		gFunc.CancelAction();
 		AshitaCore:GetChatManager():QueueCommand(1, '/cancel Stoneskin');
-		(function AshitaCore:GetChatManager():QueueCommand(1, '/ma "Stoneskin" <me>') end):once(1);
+		(function() AshitaCore:GetChatManager():QueueCommand(1, '/ma "Stoneskin" <me>') end):once(1);
     else
         utilities.CancelShadows(action);
 	end

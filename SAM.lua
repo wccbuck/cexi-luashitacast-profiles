@@ -1,5 +1,3 @@
-
-
 utilities = gFunc.LoadFile('utilities.lua');
 
 local profile = {};
