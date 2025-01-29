@@ -103,7 +103,7 @@ local sets = {
         Ear1 = 'Wilhelm\'s Earring',
         Ear2 = 'Altdorf\'s Earring',
         Body = 'Denali Jacket',
-        Hands = 'Enkidu\'s Mittens', -- get pahluwan
+        Hands = 'Enkidu\'s Mittens', -- get pahluwan?
         Ring1 = 'Garrulous Ring',
         Ring2 = 'Rajas Ring',
         Back = 'Amemet Mantle',
@@ -125,19 +125,34 @@ local sets = {
         Back = 'Assassin\'s Cape',
         Waist = 'Warwolf Belt',
     },
+    Provoke = {
+        -- +enmity
+        Head = dragonCap,
+        Ear1 = 'Eris\'s Earring',
+        -- Neck = harmonia's?
+        -- Body = 'Avalon Breastplate', -- Tiamat drop
+        -- Hands = 'Dragon Mittens',
+        Ring1 = 'Sattva Ring',
+        Back = 'Assassin\'s Cape',
+        Waist = 'Warwolf Belt',
+        -- Legs = 'Dragon Subligar',
+        -- Feet = 'Dragon Leggings',
+    },
     Steal = {
         Head = 'Rogue\'s Bonnet',
         Hands = 'Rogue\'s Armlets',
-        Legs = 'Rogue\'s Culottes',
+        Legs = 'Rogue\'s Culottes', -- swap with assassin's
         Feet = 'Rogue\'s Poulaines',
     },
     Hide = {
         Body = 'Rogue\'s Vest',
     },
+    Flee = {
+        Feet = 'Rogue\'s Poulaines',
+    },
     Fast = {
         Body = 'Kupo Suit',
         Legs = 'displaced',
-        Feet = 'Rogue\'s Poulaines', -- for flee
     },
     PDT = {
         -- TODO
@@ -271,13 +286,9 @@ end
 
 profile.HandleAbility = function()
     local ability = gData.GetAction();
-    if (ability.Name == 'Flee') then
-		gFunc.EquipSet(sets.Fast);
-    elseif (ability.Name == 'Steal') then
-		gFunc.EquipSet(sets.Steal);
-    elseif (ability.Name == 'Hide') then
-		gFunc.EquipSet(sets.Hide);
-	end
+    if (T{'Flee', 'Steal', 'Hide', 'Provoke'}:contains(ability.Name)) then
+        gFunc.EquipSet(sets[ability.Name]);
+    end
 
     utilities.CheckCancels();
 end
@@ -286,10 +297,12 @@ profile.HandleItem = function()
 end
 
 profile.HandlePrecast = function()
+    -- TODO: fast cast
     utilities.CheckCancels();
 end
 
 profile.HandleMidcast = function()
+    -- TODO: fast cast, haste
 end
 
 profile.HandlePreshot = function()
@@ -319,7 +332,6 @@ profile.HandleWeaponskill = function()
 
     -- all dagger WS sets assume you have either SA or TA up and therefore
     -- don't prioritize acc+ gear (especially Mandalic and Mercy which are 1-hit).
-    -- if (T{'Exenterator', 'Last Stand'}:contains(ws.Name)) then
     if (ws.Name == 'Exenterator') then
         gFunc.EquipSet(sets.WS_Exent);
     elseif (ws.Name == 'Mandalic Stab') then

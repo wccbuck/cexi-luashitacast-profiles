@@ -12,13 +12,13 @@ These profiles add some nice quality-of-life features to the FFXI experience. Li
 * Automatically cancel sneak or stoneskin when casting those spells (requires the debuff addon). No more waiting for a 30 second cooldown on your Spectral Jig that did nothing!
 * Automatically remove your shadows before casting an utsusemi spell (also requires debuff addon)
 * Automatically re-equip user-defined default weapons whenever they are forcefully removed during combat (e.g. a merrow uses Torrent)
-* As THF, equip treasure hunter gear whenever you engage an enemy you haven't tagged yet
+* As THF, equip treasure hunter gear whenever you engage an enemy you haven't tagged yet, and keep it equipped until you proc your preferred TH level
 * As SAM, keep Saotome Haidate equipped whenever Third Eye is up and you're engaged in combat
 * And much more!
 
 ## Custom Commands
 
-These profiles add the following helpful commands to the game (though they require a bit of setup; see the Setup section below.)
+These profiles add the following helpful commands to the game. If you want to use them as written, you need to set them up as aliases; see the Setup section below for more information. If your aliases aren't set, you can still use these commands using `/lac fwd`. For example, instaed of `/mdt`, you'd type `/lac fwd mdt`.
 
 * `/pdt`, `/mdt`, `/bdt`: These commands equip your -physical damage taken, -magic damage taken, or -breath damage taken sets respectively. Any pieces you add to these sets will take preference over any other equipment during any idling action (engaged, moving, just standing there). Only one can be set at a time, and the commands are toggles; for example, typing `/pdt` equips your pdt set, then typing `/pdt` again will toggle it off, or typing `/mdt` will toggle off your pdt and replace with mdt.
 * `/acc`: Increase or decrease your accuracy vs raw power. This command sets a global variable "TargetEva" to "default", "high", or "low". When you load up a script, TargetEva is set to "default".
@@ -30,7 +30,12 @@ These profiles add the following helpful commands to the game (though they requi
 * `/showoff`: Similar to the damage-taken and idle equipment overrides, this command replaces your idle set with a "showoff" set you can put on while AFK'ing in Lower Jeuno.
 	> Unlike the damage-taken sets, your showoff set is only applied when you aren't moving or engaged in melee, so your Kupo Suit can still be equipped while you're running around town.
 
-BLU has one more custom command: `learning`, which you can use to toggle Magus Bazubands on or off. I don't bother with making an alias for this, so I just use the full `/lac fwd learning` when I want to use this toggle.
+### Job-Specific Custom Commands
+
+* THF
+** `thtier`: Use this command to set your preferred level of treasure hunter you'd like to reach before swapping your TH gear to standard melee gear. By default it's set to 6, so if you tagged the mob with TH5 gear equipped, it'll swap after your first proc. `/thtier 1` or just `/thtier` will set it to swap off of your TH gear after the first proc. [More info on Treasure Hunter and the proc system](https://www.bg-wiki.com/ffxi/Treasure_Hunter)
+* BLU
+** `learning`: Use this command to toggle Magus Bazubands on or off.
 
 ## Setup
 
@@ -53,6 +58,8 @@ In order to use the custom commands above, you need to add the following aliases
 * `/alias /bdt /lac fwd bdt`
 * `/alias /idle /lac fwd idle`
 * `/alias /showoff /lac fwd showoff`
+* (Optional, THF only) `/alias /thtier /lac fwd thtier`
+* (Optional, BLU only) `/alias /learning /lac fwd learning`
 
 If you don't want to do that, you can use the full "`/lac fwd echadring`" syntax, or un-comment the code in utilities.lua that sets the aliases when each script is loaded and clears them when unloaded.
 > The reason why I prefer adding these to ashita default scripts is so that I am not constantly setting and clearing aliases every time I change jobs; sometimes doing this too frequently caused my client to crash.
