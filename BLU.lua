@@ -47,10 +47,10 @@ local magBaz = {
 local mrgBaz = {
     Name = 'Mrg. Bazubands +1',
     Augment = {
-        [1] = 'VIT+4',
-        [2] = 'STR+4',
-        [3] = 'Accuracy+6',
-        [4] = 'Attack+6',
+        [1] = 'VIT+5',
+        [2] = 'STR+5',
+        [3] = 'Accuracy+7',
+        [4] = 'Attack+7',
         [5] = 'Haste+4'
     }
 };
@@ -93,7 +93,7 @@ local sets = {
     },
     WS_Default = {
         Ammo = 'Tiphia Sting',
-        Head = ohat, -- swap this to Maat's cap when you get it
+        Head = 'Gnadbhod\'s Helm', -- swap this to Maat's cap when you get it
         Neck = 'Fotia Gorget',
         Ear1 = 'Aesir Ear Pendant',
         Ear2 = 'Suppanomimi',
@@ -108,7 +108,6 @@ local sets = {
     },
     WS_Requiescat = {
         -- 5 hits, MND 73%
-        Head = 'Denali Bonnet', -- remove this line when you get Maat's cap
         Hands = mrgBaz,
         Ring1 = 'Aqua Ring',
         Waist = 'Visionary Obi',
@@ -119,7 +118,6 @@ local sets = {
     },
     WS_SavageBlade = {
         -- 2 hits, STR 50%, MND 50%
-        Head = 'Denali Bonnet', -- remove this line when you get Maat's cap
         Hands = mrgBaz,
         Waist = 'Visionary Obi',
     },

@@ -168,4 +168,39 @@ function utilities.ResetDefaultWeapons(weaponset)
 
 end
 
+local greenPhrases = {
+	"Treasure Hunter effectiveness"
+};
+
+local redPhrases = {
+	"uses Invincible",
+	"uses Perfect Dodge",
+	"Gates of Hades",
+	"casting Meteor"
+};
+
+ashita.events.register('text_in', 'text_in_highlight_cb', function (e)
+    -- this text_in callback makes certain incoming messages much more noticeable.
+	-- By the way, string.match does not use full regex, so we can't use `|` (or)
+	-- to simplify this.
+	if (not e.injected) then
+		for _, phrase in ipairs(greenPhrases) do
+			if e.message:match(phrase) then
+				-- green text
+				gFunc.Echo(2, e.message);
+				break
+			end
+		end
+		-- these don't seem to work with simplelog, find a way to sidestep
+		-- or just capture simplelog's messages
+		for _, phrase in ipairs(redPhrases) do
+			if e.message:match(phrase) then
+				-- red text
+				gFunc.Echo(5, e.message);
+				break
+			end
+		end
+	end
+end);
+
 return utilities;

@@ -1,13 +1,11 @@
 -- This is an altered version of the "isTargetTagged" function written by will.8627 on the Ashita discord.
--- Most of this code is his, as are many of the helpful comments.
+-- I (wccbuck / ziphion) added the stuff dealing with treasure hunter tier, with some help from 
+-- Thorny (https://github.com/ThornyFFXI).
 
 -- This isTargetTagged function not only lets you know whether a given target has been "tagged" by you 
 -- (e.g. any hostile action which would trigger the first stage of TH), but it also keeps track of the 
 -- highest tier of TH applied on the target, and lets you know once that value has exceeded a value you 
 -- specify.
-
--- If you use a language other than English in your client, edit the text_in listener callback function at 
--- the end of this file with a portion of your Treasure Hunter proc message so that it can capture it.
 
 -- Place this file in the same directory as your THF.lua.
 
@@ -100,14 +98,30 @@ local function onAction(e)
     else
         return;
     end
-    local actorId = ashita.bits.unpack_be(e.data_raw, 0, 40, 32);
-
-    -- We only care about actions done by the player
-    if (actorId ~= playerId) then
+    local actionPacket = ParseActionPacket(e);
+    -- First check to see if this action proc'd TH on a mob we have already tagged
+    -- We actually don't want to restrict this to actions only done by ourselves,
+    -- in case another THF in the party proc'd a higher TH level
+    for _, target in ipairs(actionPacket.Targets) do
+        if taggedMobs[target.Id] ~= nil then
+            for _,action in ipairs(target.Actions) do
+                local addEffect = action.AdditionalEffect;
+                if (addEffect) then
+                    if (addEffect.Message == 603) then
+                        taggedMobs[target.Id] = {
+                            Tier = addEffect.Param,
+                            Time = os.clock()
+                        };
+                    end
+                end
+            end
+        end
+    end
+    -- If no procs in this action, we check to see if this is a hostile action performed 
+    -- by ourselves on a mob, at which point we save its ID
+    if (actionPacket.UserId ~= playerId) then
         return;
     end
-
-    local actionPacket = ParseActionPacket(e);
 
     for _, target in ipairs(actionPacket.Targets) do
         if (isMob(target.Id)) then
@@ -159,27 +173,6 @@ ashita.events.register('packet_in', 'packet_in_th_cb', function(e)
         onMessage(e);
     elseif (e.id == 0x0A or e.id == 0x0B) then
         onZone(e);
-    end
-end);
-
-ashita.events.register('text_in', 'text_in_th_cb', function (e)
-    -- there is probably a more elegant way to do this by capturing the relevant part of the enspell portion
-    -- of the action packet. You might also think that you might catch the TH proc in a message packet (0x29)
-    -- and handle it in onMessage(). I wasn't able to get either of these approaches to work. Instead, this 
-    -- listener just checks every incoming string of text for the TH proc message.
-    if (not e.injected) and (e.message:match("Treasure Hunter effectiveness")) then
-        gFunc.Echo(2, e.message);
-        local thTierAsString = string.match(e.message, "%d+");
-        if thTierAsString ~= nil then
-            local targetManager = AshitaCore:GetMemoryManager():GetTarget();
-            local isSubTargetActive = targetManager:GetIsSubTargetActive();
-
-            local targetId = targetManager:GetServerId(isSubTargetActive == 1 and 1 or 0);
-            taggedMobs[targetId] = {
-                Tier = tonumber(thTierAsString),
-                Time = os.clock()
-            };
-        end
     end
 end);
 

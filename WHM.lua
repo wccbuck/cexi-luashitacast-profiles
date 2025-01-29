@@ -47,10 +47,11 @@ local sets = {
         Sub = genbuShield,
     },
     Idle = {
+        -- refresh, regen, -dt
         Head = healerCap,
         Neck = 'Fylgja Torque +1',
         Ear1 = 'Light Earring',
-        Ear2 = 'Loquac. Earring',
+        Ear2 = 'Soil Earring',
         Body = 'Aristocrat\'s Coat',
         Hands = 'Blessed Mitts',
         Ring1 = 'Star Ring',
@@ -64,27 +65,42 @@ local sets = {
         -- TODO
     },
     Haste = {
-        Head = 'Walahra Turban',
-        Neck = 'Fylgja Torque +1',
+        Head = 'Windfall Hat',
         Ear2 = 'Loquac. Earring',
-        Body = 'Aristocrat\'s Coat',
         Hands = 'Blessed Mitts',
-        Ring1 = 'Aqua Ring',
-        Ring2 = 'Tamas Ring',
-        Back = 'Dew Silk Cape +1',
+        -- Body = marduk's or dalmatica
+        Back = 'Veela Cape',
         Waist = 'Ninurta\'s Sash',
         Legs = 'Blessed Trousers',
+        Feet = 'Blessed Pumps',
+    },
+    Cursna = {
+        -- the priority here is fast cast / haste,
+        -- followed by healing magic.
+        -- Each 30 points of healing magic+ increases the chance of
+        -- removing Doom by only 1%, so it's generally more important
+        -- to focus on reducing recast cooldown.
+        -- At 0 skill: 10% of removing Doom
+        -- At 300 skill: 20%
+        -- At 330 skill: 21%
+        Head = 'Windfall Hat',
+        Neck = 'Colossus\'s Torque',
+        Ear2 = 'Loquac. Earring',
+        Body = 'Nashira Manteel',
+        Hands = 'Healer\'s Mitts',
+        Back = 'Veela Cape',
+        Waist = 'Ninurta\'s Sash',
+        Legs = 'Cleric\'s Pantaln.',
         Feet = 'Blessed Pumps',
     },
     Precast = {
         Head = 'Windfall Hat',
         Ear2 = 'Loquac. Earring',
-        Body = 'Aristocrat\'s Coat',
         Hands = 'Blessed Mitts',
+        -- Body = marduk's or dalmatica
         Back = 'Veela Cape',
         Waist = 'Ninurta\'s Sash',
-        Legs = 'Blessed Trousers',
-        Feet = 'Blessed Pumps',
+        -- Feet = 'Rostrum Pumps',
     },
     PrecastHeal = {
         Feet = zenithPumps,
@@ -295,9 +311,14 @@ profile.HandleMidcast = function()
             gFunc.EquipSet(sets.Stoneskin);
         end
     elseif (spell.Skill == 'Healing Magic') then
-        gFunc.EquipSet(sets.Heal);
-        if (player.Status ~= 'Engaged') then
-            gFunc.EquipSet(sets.Heal_Weapons);
+        if (spell.Name == 'Cursna') then
+            -- healing magic+, haste, fast cast
+            gFunc.EquipSet(sets.Cursna);
+        else
+            gFunc.EquipSet(sets.Heal);
+            if (player.Status ~= 'Engaged') then
+                gFunc.EquipSet(sets.Heal_Weapons);
+            end
         end
     elseif (spell.Skill == 'Enfeebling Magic') then
         gFunc.EquipSet(sets.Enfeeble);

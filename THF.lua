@@ -55,7 +55,7 @@ local sets = {
     Idle = { -- gets applied on top of TPGain
     },
     WS_Default = {
-        Head = ohat,
+        Head = 'Gnadbhod\'s Helm', -- eventually hct
         Neck = 'Fotia Gorget',
         Ear1 = 'Aesir Ear Pendant',
         Ear2 = 'Bushinomimi',
@@ -65,7 +65,7 @@ local sets = {
         Ring2 = 'Rajas Ring',
         Back = 'Cuchulain\'s Mantle',
         Waist = 'Warwolf Belt',
-        Legs = acroBreeches,
+        Legs = acroBreeches, -- eventually hct
         Feet = 'Adsilio Boots +1',
     },
     WS_Exent = {
@@ -83,7 +83,7 @@ local sets = {
         Feet = 'Adsilio Boots +1',
     },
     WS_Mandalic = {
-        Head = ohat,
+        Head = 'Gnadbhod\'s Helm', -- eventually hct
         Neck = 'Fotia Gorget',
         Ear1 = 'Bushinomimi',
         Ear2 = 'Aesir Ear Pendant',
@@ -97,6 +97,20 @@ local sets = {
         Feet = 'Adsilio Boots +1',
     },
     WS_Mercy = {}, -- STR
+    WS_LastStand = {
+        Head = dragonCap,
+        Neck = 'Fotia Gorget',
+        Ear1 = 'Wilhelm\'s Earring',
+        Ear2 = 'Altdorf\'s Earring',
+        Body = 'Denali Jacket',
+        Hands = 'Enkidu\'s Mittens', -- get pahluwan
+        Ring1 = 'Garrulous Ring',
+        Ring2 = 'Rajas Ring',
+        Back = 'Amemet Mantle',
+        Waist = 'Buccaneer\'s Belt',
+        Legs = acroBreeches,
+        Feet = 'Adsilio Boots +1',
+    },
     TH = {
         Sub = 'Thief\'s Knife',
         Head = 'Wh. Rarab Cap +1',
@@ -172,6 +186,7 @@ local sets = {
         Ring1 = 'Merman\'s Ring',
         Ring2 = 'Merman\'s Ring',
         Back = 'Amemet Mantle',
+        Waist = 'Buccaneer\'s Belt',
         Legs = 'Dusk Trousers',
         Feet = 'Homam Gambieras',
     }
@@ -304,13 +319,15 @@ profile.HandleWeaponskill = function()
 
     -- all dagger WS sets assume you have either SA or TA up and therefore
     -- don't prioritize acc+ gear (especially Mandalic and Mercy which are 1-hit).
-    if (T{'Exenterator', 'Last Stand'}:contains(ws.Name)) then
+    -- if (T{'Exenterator', 'Last Stand'}:contains(ws.Name)) then
+    if (ws.Name == 'Exenterator') then
         gFunc.EquipSet(sets.WS_Exent);
-        -- for last stand we need to equip pahluwan hands
     elseif (ws.Name == 'Mandalic Stab') then
         gFunc.EquipSet(sets.WS_Mandalic);
     elseif (ws.Name == 'Mercy Stroke') then
         gFunc.EquipSet(sets.WS_Mercy);
+    elseif (ws.Name == 'Last Stand') then
+        gFunc.EquipSet(sets.WS_LastStand);
     end
 
     if (ta > 0) then

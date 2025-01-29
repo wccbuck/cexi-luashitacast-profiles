@@ -89,7 +89,9 @@ local sets = {
     Precast = {
         Head = 'Windfall Hat',
         Ear2 = 'Loquac. Earring',
+        -- Body = marduk's or dalmatica
         Back = 'Veela Cape',
+        -- Feet = 'Rostrum Pumps',
     },
     PrecastHeal = {
         Feet = zenithPumps,
@@ -97,6 +99,19 @@ local sets = {
     PrecastSong = {
         Body = 'Sha\'ir Manteel',
         Legs = zenithSlacks,
+    },
+    Cursna = {
+        -- Ranged = 'Angel Lyre',
+        Head = 'Windfall Hat', -- fast cast
+        Neck = 'Colossus\'s Torque', -- healing magic
+        Ear2 = 'Loquac. Earring', -- fast cast
+        Body = 'Goliard Saio', -- haste
+        -- Hands = 'Patrician\'s Cuffs', -- if we need to get to a multiple of 30 for healing magic
+        Hands = 'Dusk Gloves', -- haste
+        Back = 'Veela Cape', -- fast cast
+        Waist = 'Ninurta\'s Sash', -- haste
+        Legs = 'Byakko\'s Haidate', -- haste
+        -- Feet = 'Rostrum Pumps', -- fast cast
     },
     Wind = {
         Head = 'Bard\'s Roundlet', -- sing+5
@@ -258,9 +273,13 @@ profile.HandleMidcast = function()
             gFunc.EquipSet(sets.Stoneskin);
         end
     elseif (spell.Skill == 'Healing Magic') then
-        gFunc.EquipSet(sets.Heal);
-        if (player.Status ~= 'Engaged') then
-            gFunc.EquipSet(sets.Heal_Weapons);
+        if spell.Name == 'Cursna' then
+            gFunc.EquipSet(sets.Cursna);
+        else
+            gFunc.EquipSet(sets.Heal);
+            if (player.Status ~= 'Engaged') then
+                gFunc.EquipSet(sets.Heal_Weapons);
+            end
         end
     elseif (spell.Skill == 'Singing') then
         gFunc.EquipSet(sets.Wind);
