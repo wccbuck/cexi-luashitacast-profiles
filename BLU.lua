@@ -36,7 +36,13 @@ local acroBreeches = {
 
 local princesSlops =  {
     Name = 'Prince\'s Slops',
-    Augment = { [1] = 'Pet: Rng. Acc.+6', [2] = '"Mag.Def.Bns."+2', [3] = 'Accuracy+3', [4] = 'Pet: Accuracy+6', [5] = 'Attack+3' }
+    Augment = { 
+        [1] = 'Pet: Rng. Acc.+6', 
+        [2] = '"Mag.Def.Bns."+2', 
+        [3] = 'Accuracy+3', 
+        [4] = 'Pet: Accuracy+6', 
+        [5] = 'Attack+3' 
+    }
 };
 
 local magBaz = {
@@ -68,9 +74,6 @@ local sets = {
         -- Legs = 'Magus Shalwar +1' -- uncomment this when you get + augment this (refresh + regen)
     },
     TPGain = {
-        -- Ammo = 'White Tathlum',
-        -- Ammo = 'Hedgehog Bomb',
-        Ammo = 'Tiphia Sting',
         Head = ohat,
         Neck = 'Tiercel Necklace',
         Ear1 = 'Brutal Earring',
@@ -83,6 +86,11 @@ local sets = {
         Waist = 'Ninurta\'s Sash',
         Legs = acroBreeches,
         Feet = 'Homam Gambieras',
+    },
+    TPGain_Ammo = {
+        -- Ammo = 'White Tathlum',
+        -- Ammo = 'Hedgehog Bomb',
+        Ammo = 'Tiphia Sting',
     },
     TPGain_High_Eva = {
         Body = 'Homam Corazza',
@@ -391,6 +399,9 @@ local sets = {
         Neck = 'Stone Gorget',
         Back = 'Grapevine Cape',
     },
+    Sleep = {
+        Neck = 'Opo-opo Necklace',
+    },
 };
 profile.Sets = sets;
 
@@ -419,6 +430,7 @@ profile.HandleDefault = function()
     local player = gData.GetPlayer();
     if (player.Status == 'Engaged') then
         gFunc.EquipSet(sets.TPGain);
+        gFunc.EquipSet(sets.TPGain_Ammo);
         if utilities.TargetEva == 'low' then
             gFunc.EquipSet(sets.TPGain_Low_Eva);
         elseif utilities.TargetEva == 'high' then
@@ -445,8 +457,12 @@ profile.HandleDefault = function()
         end
     end
 
+    if (gData.GetBuffCount('Sleep') > 0) then
+        gFunc.EquipSet(sets.Sleep);
+    end
+
     if (T{'PDT', 'MDT', 'BDT'}:contains(utilities.OverrideSet)) then
-        -- damage-taken sets take precedence over everything
+        -- damage-taken sets take precedence over (almost) everything
         gFunc.EquipSet(utilities.OverrideSet);
         if player.MPP < 90 then
             -- might as well get some MP back

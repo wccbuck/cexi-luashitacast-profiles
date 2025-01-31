@@ -1,4 +1,5 @@
 utilities = gFunc.LoadFile('utilities.lua');
+naSpell = gFunc.LoadFile('naSpell.lua');
 
 local profile = {};
 
@@ -240,6 +241,12 @@ profile.OnUnload = function()
 end
 
 profile.HandleCommand = function(args)
+    if args[1] == 'naspell' then
+        naSpell.Cast();
+    elseif args[1] == 'naspellprio' then
+        -- comma-delimited list of player names
+        naSpell.SetPlayerPriority(args);
+    end
     utilities.HandleCommands(args);
 end
 

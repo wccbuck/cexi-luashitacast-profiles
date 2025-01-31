@@ -137,6 +137,12 @@ local sets = {
         Range = 'Ifrit\'s Bow',
         Ammo = 'Iron Arrow',
     },
+    Sleep = {
+        Neck = 'Opo-opo Necklace',
+    },
+    Berserker = {
+        Neck = 'Berserker\'s Torque',
+    },
 };
 profile.Sets = sets;
 
@@ -176,17 +182,27 @@ profile.HandleDefault = function()
         -- if all three weapon slots are empty during combat,
         -- equip the default weapon set (useful against merrows)
         utilities.ResetDefaultWeapons(sets.Weapons_Default);
-        local thirdeyecount = gData.GetBuffCount('Third Eye');
-        if (thirdeyecount > 0) then
+        if (gData.GetBuffCount('Third Eye') > 0) then
             gFunc.EquipSet(sets.ThirdEye);
         end
-    elseif (player.IsMoving == true) then
-		gFunc.EquipSet(sets.Fast);
+
+        if (gData.GetBuffCount('Sleep') > 0 and player.HP > 200) then
+            gFunc.EquipSet(sets.Berserker);
+        end
+
     else
-        gFunc.EquipSet(sets.TPGain);
-        gFunc.EquipSet(sets.Idle);
-        if (utilities.OverrideSet == 'SHOWOFF') then
-            gFunc.EquipSet(sets.Showoff);
+        if (player.IsMoving == true) then
+            gFunc.EquipSet(sets.Fast);
+        else
+            gFunc.EquipSet(sets.TPGain);
+            gFunc.EquipSet(sets.Idle);
+            if (utilities.OverrideSet == 'SHOWOFF') then
+                gFunc.EquipSet(sets.Showoff);
+            end
+        end
+
+        if (gData.GetBuffCount('Sleep') > 0) then
+            gFunc.EquipSet(sets.Sleep);
         end
     end
 

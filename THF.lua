@@ -128,7 +128,7 @@ local sets = {
     Provoke = {
         -- +enmity
         Head = dragonCap,
-        Ear1 = 'Eris\'s Earring',
+        Ear1 = 'Eris\' Earring',
         -- Neck = harmonia's?
         -- Body = 'Avalon Breastplate', -- Tiamat drop
         -- Hands = 'Dragon Mittens',
@@ -204,7 +204,10 @@ local sets = {
         Waist = 'Buccaneer\'s Belt',
         Legs = 'Dusk Trousers',
         Feet = 'Homam Gambieras',
-    }
+    },
+    Sleep = {
+        Neck = 'Opo-opo Necklace',
+    },
 };
 profile.Sets = sets;
 
@@ -274,6 +277,10 @@ profile.HandleDefault = function()
         if (utilities.OverrideSet == 'SHOWOFF') then
             gFunc.EquipSet(sets.Showoff);
         end
+    end
+
+    if (gData.GetBuffCount('Sleep') > 0) then
+        gFunc.EquipSet(sets.Sleep);
     end
 
     if (T{'PDT', 'MDT', 'BDT'}:contains(utilities.OverrideSet)) then
