@@ -93,6 +93,8 @@ end
 function naSpell.Cast()
     local party = AshitaCore:GetMemoryManager():GetParty();
     local player = AshitaCore:GetMemoryManager():GetPlayer();
+    local mmRecast = AshitaCore:GetMemoryManager():GetRecast();
+    -- TODO: get recast for Cursna (20), Cure (1), Curaga (7), Stona (18), Viruna (19), Silena (17), Paralyna (15), and Blindna (16)
 
     local highestPriority = 999;
     local afflictedPlayers = T{}; -- will pick one randomly from this list, unless priority has been given
@@ -129,6 +131,9 @@ function naSpell.Cast()
                 local buffId = buffIds[i];
                 local priority = 999;
                 if buffId == 15 then -- Doom
+                    -- very important to clear, and we don't care about recast;
+                    -- if a party member has doom effect, and if cursna is on cooldown,
+                    -- we should not cast another spell in the meantime.
                     priority = 0
                     if highestPriority > priority then
                         highestPriority = priority;
@@ -156,7 +161,7 @@ function naSpell.Cast()
                         end
                         -- if numSleptPlayersWithin10 > 1, then target becomes <me> and spellName becomes Curaga
                     end
-                elseif buffId == 7 then -- Petrify
+                elseif buffId == 7 and not mmRecast:GetSpellTimer(18) > 0 then -- Petrify
                     priority = 2
                     if highestPriority > priority then
                         highestPriority = priority;
@@ -167,7 +172,7 @@ function naSpell.Cast()
                     if highestPriority == priority then
                         table.insert(afflictedPlayers, party:GetMemberName(memberIdx))
                     end
-                elseif buffId == 31 then -- Plague
+                elseif buffId == 31 and not mmRecast:GetSpellTimer(19) > 0 then -- Plague
                     priority = 3
                     if highestPriority > priority then
                         highestPriority = priority;
@@ -178,7 +183,7 @@ function naSpell.Cast()
                     if highestPriority == priority then
                         table.insert(afflictedPlayers, party:GetMemberName(memberIdx))
                     end
-                elseif buffId == 6 and isMage(job, subjob) then -- Silenced mage
+                elseif buffId == 6 and isMage(job, subjob) and not mmRecast:GetSpellTimer(17) > 0 then -- Silenced mage
                     priority = 4
                     if highestPriority > priority then
                         highestPriority = priority;
@@ -189,7 +194,7 @@ function naSpell.Cast()
                     if highestPriority == priority then
                         table.insert(afflictedPlayers, party:GetMemberName(memberIdx))
                     end
-                elseif buffId == 4 then -- Paralysis
+                elseif buffId == 4 and not mmRecast:GetSpellTimer(15) > 0 then -- Paralysis
                     priority = 5
                     if highestPriority > priority then
                         highestPriority = priority;
@@ -200,7 +205,7 @@ function naSpell.Cast()
                     if highestPriority == priority then
                         table.insert(afflictedPlayers, party:GetMemberName(memberIdx))
                     end
-                elseif (buffId == 9) or (buffId == 20) or (buffId == 30) then -- Curse/Bane
+                elseif ((buffId == 9) or (buffId == 20) or (buffId == 30)) and not mmRecast:GetSpellTimer(20) > 0 then -- Curse/Bane
                     priority = 6
                     if highestPriority > priority then
                         highestPriority = priority;
@@ -211,7 +216,7 @@ function naSpell.Cast()
                     if highestPriority == priority then
                         table.insert(afflictedPlayers, party:GetMemberName(memberIdx))
                     end
-                elseif buffId == 5 then -- Blind
+                elseif buffId == 5 and not mmRecast:GetSpellTimer(16) > 0 then -- Blind
                     priority = 7
                     if highestPriority > priority then
                         highestPriority = priority;
@@ -222,7 +227,7 @@ function naSpell.Cast()
                     if highestPriority == priority then
                         table.insert(afflictedPlayers, party:GetMemberName(memberIdx))
                     end
-                elseif buffId == 8 then -- Disease
+                elseif buffId == 8 and not mmRecast:GetSpellTimer(19) > 0 then -- Disease
                     priority = 8
                     if highestPriority > priority then
                         highestPriority = priority;
@@ -233,7 +238,7 @@ function naSpell.Cast()
                     if highestPriority == priority then
                         table.insert(afflictedPlayers, party:GetMemberName(memberIdx))
                     end
-                elseif buffId == 9 then -- Silenced non-mage
+                elseif buffId == 9 and not mmRecast:GetSpellTimer(17) > 0 then -- Silenced non-mage
                     priority = 9
                     if highestPriority > priority then
                         highestPriority = priority;
@@ -247,7 +252,7 @@ function naSpell.Cast()
                 end
             end
         end
-        if numSleptPlayersWithin10 > 1 then
+        if numSleptPlayersWithin10 > 1 and not mmRecast:GetSpellTimer(7) > 0 then
             AshitaCore:GetChatManager():QueueCommand(1, '/ma "Curaga" <me>');
         elseif highestPriority < 999 then
             local targets = {};
@@ -280,15 +285,15 @@ function naSpell.SetPlayerPriority(priorityListArgs)
                 local targetEntity = gData.GetTarget();
                 priorityPlayers:insert(targetEntity.Name);
             elseif charName == "<p1>" then
-                priorityPlayers:insert(party:GetMemberName(1));
+                priorityPlayers:insert(party:GetMemberName(1) or charName);
             elseif charName == "<p2>" then
-                priorityPlayers:insert(party:GetMemberName(2));
+                priorityPlayers:insert(party:GetMemberName(2) or charName);
             elseif charName == "<p3>" then
-                priorityPlayers:insert(party:GetMemberName(3));
+                priorityPlayers:insert(party:GetMemberName(3) or charName);
             elseif charName == "<p4>" then
-                priorityPlayers:insert(party:GetMemberName(4));
+                priorityPlayers:insert(party:GetMemberName(4) or charName);
             elseif charName == "<p5>" then
-                priorityPlayers:insert(party:GetMemberName(5));
+                priorityPlayers:insert(party:GetMemberName(5) or charName);
             else
                 priorityPlayers:insert(charName);
             end

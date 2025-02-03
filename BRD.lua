@@ -30,7 +30,7 @@ local genbuShield = {
 
 local chlJust = { 
     Name = 'Chl. Jstcorps +1', 
-    Augment = { [1] = 'Singing skill +4', [2] = 'Wind instrument skill +5' } 
+    Augment = { [1] = 'Singing skill +5', [2] = 'Wind instrument skill +6' } 
 };
 
 

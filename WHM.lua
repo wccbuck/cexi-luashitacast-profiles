@@ -63,8 +63,21 @@ local sets = {
         Feet = zenithPumps,
     },
     TPGain = {
-        -- TODO
+        Ammo = 'Tiphia Sting',
+        Head = { Name = 'Optical Hat', Augment = { [1] = 'Haste+3', [2] = 'HP+15', [3] = 'AGI+3', [4] = 'DEX+3' } },
+        Neck = 'Chivalrous Chain',
+        Ear1 = 'Brutal Earring',
+        Ear2 = 'Ethereal Earring',
+        Body = 'Nashira Manteel',
+        Hands = 'Blessed Mitts',
+        Ring1 = 'Rajas Ring',
+        Ring2 = 'Tamas Ring',
+        Back = 'Aesir Mantle',
+        Waist = 'Ninurta\'s Sash',
+        Legs = { Name = 'Prince\'s Slops', Augment = { [1] = 'Pet: Rng. Acc.+6', [2] = '"Mag.Def.Bns."+2', [3] = 'Accuracy+3', [4] = 'Pet: Accuracy+6', [5] = 'Attack+3' } },
+        Feet = 'Blessed Pumps',
     },
+    WS_Default = {}, -- TODO
     Haste = {
         Head = 'Windfall Hat',
         Ear2 = 'Loquac. Earring',
@@ -254,9 +267,7 @@ profile.HandleDefault = function()
     local player = gData.GetPlayer();
 
     if (player.Status == 'Engaged') then
-        -- gFunc.EquipSet(sets.TPGain);
-        -- remove next line when TPGain set is done
-        gFunc.EquipSet(sets.Idle);
+        gFunc.EquipSet(sets.TPGain);
         -- if all three weapon slots are empty during combat,
         -- equip the default weapon set (useful against merrows)
         utilities.ResetDefaultWeapons(sets.Weapons_Default);
@@ -353,7 +364,7 @@ profile.HandleWeaponskill = function()
     --     return;
     -- end
     --
-    -- gFunc.EquipSet(sets.WS_Default);
+    gFunc.EquipSet(sets.WS_Default);
 end
 
 return profile;

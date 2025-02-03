@@ -31,6 +31,11 @@ local acroBreeches = {
     Augment = { [1] = '"Dual Wield"+2', [2] = 'Attack+5', [3] = 'DEX+5' }
 };
 
+local rogArmlets = {
+    Name = 'Rog. Armlets +1', 
+    Augment = { [1] = '"Treasure Hunter"+1', [2] = 'Haste+3' }
+};
+
 local sets = {
     TPGain = {
         Head = ohat,
@@ -85,8 +90,8 @@ local sets = {
     WS_Mandalic = {
         Head = 'Gnadbhod\'s Helm', -- eventually hct
         Neck = 'Fotia Gorget',
-        Ear1 = 'Bushinomimi',
-        Ear2 = 'Aesir Ear Pendant',
+        Ear1 = 'Aesir Ear Pendant'
+        Ear2 = 'Pixie Earring',
         Body = dragonHarness,
         Hands = hctMittens,
         Ring1 = 'Thunder Ring',
@@ -114,13 +119,15 @@ local sets = {
     TH = {
         Sub = 'Thief\'s Knife',
         Head = 'Wh. Rarab Cap +1',
-        Hands = 'Assassin\'s Armlets',
+        -- Hands = 'Assassin\'s Armlets',
+        Hands = rogArmlets,
     },
     TrickAttack = {
         -- +agi, +enmity
         Head = dragonCap,
         Ear1 = 'Wilhelm\'s Earring',
         Ear2 = 'Altdorf\'s Earring',
+        Hands = rogArmlets,
         Ring1 = 'Sattva Ring',
         Back = 'Assassin\'s Cape',
         Waist = 'Warwolf Belt',
@@ -131,7 +138,7 @@ local sets = {
         Ear1 = 'Eris\' Earring',
         -- Neck = harmonia's?
         -- Body = 'Avalon Breastplate', -- Tiamat drop
-        -- Hands = 'Dragon Mittens',
+        Hands = 'Homam Manopolas',
         Ring1 = 'Sattva Ring',
         Back = 'Assassin\'s Cape',
         Waist = 'Warwolf Belt',
@@ -140,7 +147,7 @@ local sets = {
     },
     Steal = {
         Head = 'Rogue\'s Bonnet',
-        Hands = 'Rogue\'s Armlets',
+        Hands = rogArmlets,
         Legs = 'Rogue\'s Culottes', -- swap with assassin's
         Feet = 'Rogue\'s Poulaines',
     },
