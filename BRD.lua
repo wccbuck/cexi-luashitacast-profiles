@@ -1,6 +1,5 @@
--- Work in progress
-
 utilities = gFunc.LoadFile('utilities.lua');
+naSpell = gFunc.LoadFile('naSpell.lua');
 
 local profile = {};
 
@@ -43,7 +42,8 @@ local instruments = {
     Mazurka = 'Harlequin\'s Horn',
     March = 'Ryl.Spr. Horn', -- replace with faerie piccolo (quest)
     Requiem = 'Requiem Flute',
-    -- get Horn+1 for elegy, piccolo for threnody
+    Elegy = 'Horn +1',
+    -- get piccolo for threnody
 };
 
 local sets = {
@@ -54,7 +54,7 @@ local sets = {
         Ear2 = 'Soil Earring',
         Body = chlJust,
         Hands = 'Melaco Mittens',
-        Ring1 = 'Trumpet Ring',
+        Ring1 = 'Mercenary\'s Ring',
         Ring2 = 'Tamas Ring',
         Back = 'Dew Silk Cape +1', -- replace with hexerei
         Waist = 'Marid Belt',
@@ -91,6 +91,7 @@ local sets = {
         Ear2 = 'Loquac. Earring',
         -- Body = marduk's or dalmatica
         Back = 'Veela Cape',
+        Feet = 'Suzaku\'s Sune-Ate', -- fast cast
         -- Feet = 'Rostrum Pumps',
     },
     PrecastHeal = {
@@ -111,6 +112,7 @@ local sets = {
         Back = 'Veela Cape', -- fast cast
         Waist = 'Ninurta\'s Sash', -- haste
         Legs = 'Byakko\'s Haidate', -- haste
+        Feet = 'Suzaku\'s Sune-Ate', -- haste, fast cast
         -- Feet = 'Rostrum Pumps', -- fast cast
     },
     Wind = {
@@ -128,6 +130,23 @@ local sets = {
         Body = chlJust, -- string +6
         Hands = 'Choral Cuffs', -- sing+5
         Feet = 'Bard\'s Slippers', -- string+3
+    },
+    Lullaby = {
+        Head = 'Bard\'s Roundlet',
+        Neck = 'Bird Whistle',
+        Ear1 = 'Musical Earring',
+        Body = chlJust,
+        Hands = 'Choral Cuffs',
+        Ring1 = 'Angel\'s Ring',
+        Ring2 = 'Angel\'s Ring',
+        Back = 'Jester\'s Cape',
+        Waist = 'Corsette +1',
+        Legs = 'Errant Slops',
+        Feet = 'Goliard Clogs',
+    },
+    Lullaby_Weapons = {
+        Main = 'Chatoyant Staff',
+        Sub = 'Light Grip',
     },
     Enhancing = {
         Back = 'Grapevine Cape',
@@ -166,9 +185,6 @@ local sets = {
         -- Waist = 'Qiqirn Sash',
         Legs = 'Yigit Seraweels',
         Feet = 'Goliard Clogs',
-    },
-    Enfeeble = {
-        -- TODO: CHR+
     },
     Fast = {
         Body = 'Kupo Suit',
@@ -211,6 +227,12 @@ profile.OnUnload = function()
 end
 
 profile.HandleCommand = function(args)
+    if args[1] == 'naspell' then
+        naSpell.Cast();
+    elseif args[1] == 'naspellprio' then
+        -- comma-delimited list of player names
+        naSpell.SetPlayerPriority(args);
+    end
     utilities.HandleCommands(args);
 end
 
@@ -283,15 +305,21 @@ profile.HandleMidcast = function()
         end
     elseif (spell.Skill == 'Singing') then
         gFunc.EquipSet(sets.Wind);
-        for song, inst in pairs(instruments) do
-            if spell.Name:match(song) then
-                if T{'Ballad', 'Lullaby'}:contains(song) then
-                    -- terpander
-                    gFunc.EquipSet(sets.String);
-                end
-                if (player.Status ~= 'Engaged') then
-                    -- dont want to lose TP while fighting
-                    gFunc.Equip('main', 'Silktone');
+        if spell.Name:match('Ballad') then
+            gFunc.EquipSet(sets.String);
+        elseif spell.Name:match('Lullaby') or spell.Name:match('Elegy') or spell.Name:match('Threnody') then
+            -- CHR+
+            gFunc.EquipSet(sets.Lullaby);
+        end
+        if (player.Status ~= 'Engaged') then
+            -- dont want to lose TP while fighting
+            if spell.Name:match('Lullaby') then
+                gFunc.EquipSet(sets.Lullaby_Weapons);
+            else
+                gFunc.EquipSet(sets.Weapons_Default);
+            end
+            for song, inst in pairs(instruments) do
+                if spell.Name:match(song) then
                     gFunc.Equip('range', inst);
                 end
             end
