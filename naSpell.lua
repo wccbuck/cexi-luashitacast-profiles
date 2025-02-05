@@ -256,7 +256,7 @@ function naSpell.Cast()
             AshitaCore:GetChatManager():QueueCommand(1, '/ma "Curaga" <me>');
         elseif highestPriority < 999 then
             local targets = {};
-            if highestPriority < 6 and afflictedPlayers:contains(party:GetMemberName(0))
+            if highestPriority < 6 and afflictedPlayers:contains(party:GetMemberName(0)) then
                 -- heal yourself first if the condition is doom, plague, or paralysis
                 table.insert(targets, party:GetMemberName(0));
             else
