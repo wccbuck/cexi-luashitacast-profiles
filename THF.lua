@@ -38,7 +38,7 @@ local rogArmlets = {
 
 local sets = {
     TPGain = {
-        Head = ohat,
+        Head = 'Dampening Tam',
         Neck = 'Love Torque',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Suppanomimi',
@@ -170,6 +170,7 @@ local sets = {
     },
     MDT = {
         -- TODO
+        Head = 'Dampening Tam',
         Neck = 'Jeweled Collar',
         Ear1 = 'Colossus\'s Earring',
         -- Body = 'Avalon Breastplate', -- Tiamat drop

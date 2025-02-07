@@ -74,7 +74,7 @@ local sets = {
         -- Legs = 'Magus Shalwar +1' -- uncomment this when you get + augment this (refresh + regen)
     },
     TPGain = {
-        Head = ohat,
+        Head = 'Dampening Tam',
         Neck = 'Tiercel Necklace',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Suppanomimi',
@@ -196,7 +196,7 @@ local sets = {
     Headbutt = {
         -- all accuracy.
         Ammo = 'Tiphia Sting',
-        Head = { Name = 'Optical Hat', Augment = { [1] = 'Haste+3', [2] = 'HP+15', [3] = 'AGI+3', [4] = 'DEX+3' } },
+        Head = ohat,
         Neck = 'Peacock Charm',
         Ear1 = { Name = 'Optical Earring', Augment = { [1] = 'DEX+1', [2] = 'HP+2' } },
         Ear2 = 'Suppanomimi',
@@ -225,7 +225,7 @@ local sets = {
     },
     Phys_Spell = {
         Ammo = 'Tiphia Sting',
-        Head = 'Optical Hat',
+        Head = 'Dampening Tam',
         Neck = 'Chivalrous Chain',
         Ear1 = optEarring,
         Ear2 = 'Suppanomimi',
@@ -371,6 +371,7 @@ local sets = {
     },
     MDT = {
         -- TODO
+        Head = 'Dampening Tam',
         Ear1 = 'Colossus\'s Earring',
         Ear2 = 'Merman\'s Earring',
         Neck = 'Jeweled Collar',
