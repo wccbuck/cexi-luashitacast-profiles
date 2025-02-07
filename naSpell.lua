@@ -1,5 +1,4 @@
 -- This function allows you to cast the highest-priority status ailment recovery spell on a member of your party.
-
 -- Place this file in the same directory as your WHM.lua etc.
 
 local naSpell = T{};
@@ -7,7 +6,10 @@ local naSpell = T{};
 -- priorityPlayers: a list of names of players who should be restored before others
 local priorityPlayers = T{}; 
 
--- This is from HXUI's statushandler
+--------------------------------------------------------------------------------------
+-- The following code from here until the next divider is from HXUI's statushandler --
+--------------------------------------------------------------------------------------
+
 local ptrPartyBuffs = ashita.memory.find('FFXiMain.dll', 0, 'B93C0000008D7004BF????????F3A5', 9, 0);
 ptrPartyBuffs = ashita.memory.read_uint32(ptrPartyBuffs);
 
@@ -76,6 +78,10 @@ local function readPartyBuffsFromPacket(e)
     partyBuffs = partyBuffTable;
 end
 
+--------------------------------------------------------------------------------------
+--                           End HXUI statushandler code                            --
+--------------------------------------------------------------------------------------
+
 local function GetJobStr(jobIdx)
     if (jobIdx == nil or jobIdx == 0 or jobIdx == -1) then
         return '';
@@ -94,12 +100,14 @@ function naSpell.Cast()
     local party = AshitaCore:GetMemoryManager():GetParty();
     local player = AshitaCore:GetMemoryManager():GetPlayer();
     local mmRecast = AshitaCore:GetMemoryManager():GetRecast();
-    -- TODO: get recast for Cursna (20), Cure (1), Curaga (7), Stona (18), Viruna (19), Silena (17), Paralyna (15), and Blindna (16)
 
     local highestPriority = 999;
     local afflictedPlayers = T{}; -- will pick one randomly from this list, unless priority has been given
     local numSleptPlayersWithin10 = 0;
+    local charmedPlayers = T{}; -- do not cure charmed players
     local spellName;
+    local amWHM = GetJobStr(party:GetMemberMainJob(0), nil) == 'WHM';
+    -- TODO: Add Erase and Poisona, but make them toggleable, default to off.
 
     for memberIdx = 0, 5 do
         local sameZone = party:GetMemberZone(memberIdx) == party:GetMemberZone(0);
@@ -126,11 +134,14 @@ function naSpell.Cast()
             -- 9: Silence on non-mage (Silena) id 6
 
             -- Ignore poison (id 3 and 540)
+            -- if charmed (14 or 17), skip over that player
 
             for i = 0, #buffIds do
                 local buffId = buffIds[i];
                 local priority = 999;
-                if buffId == 15 then -- Doom
+                if (buffId == 14) or (buffId == 17) then -- Charmed
+                    table.insert(charmedPlayers, party:GetMemberName(memberIdx));
+                elseif buffId == 15 then -- Doom
                     -- very important to clear, and we don't care about recast;
                     -- if a party member has doom effect, and if cursna is on cooldown,
                     -- we should not cast another spell in the meantime.
@@ -142,7 +153,7 @@ function naSpell.Cast()
                         spellName = "Cursna";
                     end
                     if highestPriority == priority then
-                        table.insert(afflictedPlayers, party:GetMemberName(memberIdx))
+                        table.insert(afflictedPlayers, party:GetMemberName(memberIdx));
                     end
                 elseif (buffId == 2) or (buffId == 19) then -- Sleep
                     priority = 1
@@ -153,7 +164,7 @@ function naSpell.Cast()
                         spellName = "Cure";
                     end
                     if highestPriority == priority then
-                        table.insert(afflictedPlayers, party:GetMemberName(memberIdx))
+                        table.insert(afflictedPlayers, party:GetMemberName(memberIdx));
                         local targetIdx = party:GetMemberTargetIndex(memberIdx);
                         local distance = math.sqrt(AshitaCore:GetMemoryManager():GetEntity():GetDistance(targetIdx));
                         if distance <= 10 then
@@ -161,7 +172,7 @@ function naSpell.Cast()
                         end
                         -- if numSleptPlayersWithin10 > 1, then target becomes <me> and spellName becomes Curaga
                     end
-                elseif buffId == 7 and not (mmRecast:GetSpellTimer(18) > 0) then -- Petrify
+                elseif (buffId == 7) and (amWHM) and not (mmRecast:GetSpellTimer(18) > 0) then -- Petrify
                     priority = 2
                     if highestPriority > priority then
                         highestPriority = priority;
@@ -170,7 +181,7 @@ function naSpell.Cast()
                         spellName = "Stona";
                     end
                     if highestPriority == priority then
-                        table.insert(afflictedPlayers, party:GetMemberName(memberIdx))
+                        table.insert(afflictedPlayers, party:GetMemberName(memberIdx));
                     end
                 elseif buffId == 31 and not (mmRecast:GetSpellTimer(19) > 0) then -- Plague
                     priority = 3
@@ -181,7 +192,7 @@ function naSpell.Cast()
                         spellName = "Viruna";
                     end
                     if highestPriority == priority then
-                        table.insert(afflictedPlayers, party:GetMemberName(memberIdx))
+                        table.insert(afflictedPlayers, party:GetMemberName(memberIdx));
                     end
                 elseif buffId == 6 and isMage(job, subjob) and not (mmRecast:GetSpellTimer(17) > 0) then -- Silenced mage
                     priority = 4
@@ -192,7 +203,7 @@ function naSpell.Cast()
                         spellName = "Silena";
                     end
                     if highestPriority == priority then
-                        table.insert(afflictedPlayers, party:GetMemberName(memberIdx))
+                        table.insert(afflictedPlayers, party:GetMemberName(memberIdx));
                     end
                 elseif buffId == 4 and not (mmRecast:GetSpellTimer(15) > 0) then -- Paralysis
                     priority = 5
@@ -203,7 +214,7 @@ function naSpell.Cast()
                         spellName = "Paralyna";
                     end
                     if highestPriority == priority then
-                        table.insert(afflictedPlayers, party:GetMemberName(memberIdx))
+                        table.insert(afflictedPlayers, party:GetMemberName(memberIdx));
                     end
                 elseif ((buffId == 9) or (buffId == 20) or (buffId == 30)) and not (mmRecast:GetSpellTimer(20) > 0) then -- Curse/Bane
                     priority = 6
@@ -214,7 +225,7 @@ function naSpell.Cast()
                         spellName = "Cursna";
                     end
                     if highestPriority == priority then
-                        table.insert(afflictedPlayers, party:GetMemberName(memberIdx))
+                        table.insert(afflictedPlayers, party:GetMemberName(memberIdx));
                     end
                 elseif buffId == 5 and not (mmRecast:GetSpellTimer(16) > 0) then -- Blind
                     priority = 7
@@ -225,7 +236,7 @@ function naSpell.Cast()
                         spellName = "Blindna";
                     end
                     if highestPriority == priority then
-                        table.insert(afflictedPlayers, party:GetMemberName(memberIdx))
+                        table.insert(afflictedPlayers, party:GetMemberName(memberIdx));
                     end
                 elseif buffId == 8 and not (mmRecast:GetSpellTimer(19) > 0) then -- Disease
                     priority = 8
@@ -236,7 +247,7 @@ function naSpell.Cast()
                         spellName = "Viruna";
                     end
                     if highestPriority == priority then
-                        table.insert(afflictedPlayers, party:GetMemberName(memberIdx))
+                        table.insert(afflictedPlayers, party:GetMemberName(memberIdx));
                     end
                 elseif buffId == 9 and not (mmRecast:GetSpellTimer(17) > 0) then -- Silenced non-mage
                     priority = 9
@@ -247,26 +258,30 @@ function naSpell.Cast()
                         spellName = "Silena";
                     end
                     if highestPriority == priority then
-                        table.insert(afflictedPlayers, party:GetMemberName(memberIdx))
+                        table.insert(afflictedPlayers, party:GetMemberName(memberIdx));
                     end
                 end
             end
         end
-        if numSleptPlayersWithin10 > 1 and not (mmRecast:GetSpellTimer(7) > 0) then
+        if (#charmedPlayers == 0) and (numSleptPlayersWithin10 > 1) and not (mmRecast:GetSpellTimer(7) > 0) then
             AshitaCore:GetChatManager():QueueCommand(1, '/ma "Curaga" <me>');
         elseif highestPriority < 999 then
             local targets = {};
-            if highestPriority < 6 and afflictedPlayers:contains(party:GetMemberName(0)) then
+            if (highestPriority < 6) and (afflictedPlayers:contains(party:GetMemberName(0))) then
                 -- heal yourself first if the condition is doom, plague, or paralysis
                 table.insert(targets, party:GetMemberName(0));
             else
                 for _, name in ipairs(priorityPlayers) do
-                    if afflictedPlayers:contains(name) then
+                    if (afflictedPlayers:contains(name)) and not (charmedPlayers:contains(name)) then
                         table.insert(targets, name);
                     end
                 end
                 if #targets < 1 then
-                    targets = afflictedPlayers;
+                    for _, name in ipairs(afflictedPlayers) do
+                        if not (charmedPlayers:contains(name)) then
+                            table.insert(targets, name);
+                        end
+                    end
                 end
             end
             local target = targets[math.random(#targets)]

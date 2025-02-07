@@ -288,20 +288,18 @@ profile.HandleMidcast = function()
 
     -- local target = gData.GetActionTarget();
     -- local me = AshitaCore:GetMemoryManager():GetParty():GetMemberName(0);
-
-    if (spell.Skill == 'Enhancing Magic') then
+    if (T{'Cursna', 'Erase'}:contains(spell.Name)) then
+        -- lower recast
+        gFunc.EquipSet(sets.Cursna);
+    elseif (spell.Skill == 'Enhancing Magic') then
         gFunc.EquipSet(sets.Enhancing)
         if (spell.Name == 'Stoneskin') then
             gFunc.EquipSet(sets.Stoneskin);
         end
     elseif (spell.Skill == 'Healing Magic') then
-        if spell.Name == 'Cursna' then
-            gFunc.EquipSet(sets.Cursna);
-        else
-            gFunc.EquipSet(sets.Heal);
-            if (player.Status ~= 'Engaged') then
-                gFunc.EquipSet(sets.Heal_Weapons);
-            end
+        gFunc.EquipSet(sets.Heal);
+        if (player.Status ~= 'Engaged') then
+            gFunc.EquipSet(sets.Heal_Weapons);
         end
     elseif (spell.Skill == 'Singing') then
         gFunc.EquipSet(sets.Wind);

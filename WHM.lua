@@ -311,14 +311,12 @@ profile.HandleMidcast = function()
 
     -- local target = gData.GetActionTarget();
     -- local me = AshitaCore:GetMemoryManager():GetParty():GetMemberName(0);
-
-    if (spell.Skill == 'Enhancing Magic') then
-
+    if (T{'Haste', 'Erase', 'Esuna'}:contains(spell.Name)) then
+        -- lower recast
+        gFunc.EquipSet(sets.Haste);
+    elseif (spell.Skill == 'Enhancing Magic') then
         if (string.contains(spell.Name, 'Regen')) then
             gFunc.EquipSet(sets.Regen);
-        elseif (T{'Haste', 'Erase', 'Esuna'}:contains(spell.Name)) then
-            -- lower recast
-            gFunc.EquipSet(sets.Haste);
         elseif (string.match(spell.Name, '^Bar')) then
             gFunc.EquipSet(sets.Barspell);
         else
