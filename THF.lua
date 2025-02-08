@@ -16,10 +16,9 @@ local dragonHarness = {
 };
 
 local dragonCap = {
-    Name = 'Dragon Cap',
-    Augment = { [1] = 'Dagger skill +4', [2] = 'AGI+2', [3] = '"Subtle Blow"+2' }
+    Name = 'Dragon Cap +1',
+    Augment = { [1] = 'Dagger skill +6', [2] = 'AGI+4', [3] = '"Subtle Blow"+4' }
 };
-
 
 local hctMittens = {
     Name = 'Hct. Mittens +1',
@@ -46,7 +45,8 @@ local sets = {
         Hands = 'Homam Manopolas',
         Ring1 = 'Toreador\'s Ring',
         Ring2 = 'Rajas Ring',
-        Back = 'Aesir Mantle',
+        -- Back = 'Aesir Mantle',
+        Back = 'Aife\'s Mantle',
         Waist = 'Ninurta\'s Sash',
         Legs = acroBreeches,
         Feet = 'Homam Gambieras',
@@ -208,7 +208,7 @@ local sets = {
         Hands = 'Enkidu\'s Mittens', -- get pahluwan
         Ring1 = 'Merman\'s Ring',
         Ring2 = 'Merman\'s Ring',
-        Back = 'Amemet Mantle',
+        Back = 'Aife\'s Mantle', -- agi+ and storeTP+
         Waist = 'Buccaneer\'s Belt',
         Legs = 'Dusk Trousers',
         Feet = 'Homam Gambieras',

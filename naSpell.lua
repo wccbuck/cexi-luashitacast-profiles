@@ -107,6 +107,7 @@ function naSpell.Cast()
     local charmedPlayers = T{}; -- do not cure charmed players
     local spellName;
     local amWHM = GetJobStr(party:GetMemberMainJob(0), nil) == 'WHM';
+    local amSCH = GetJobStr(party:GetMemberMainJob(0), nil) == 'SCH';
     -- TODO: Add Erase and Poisona, but make them toggleable, default to off.
 
     for memberIdx = 0, 5 do
@@ -172,7 +173,7 @@ function naSpell.Cast()
                         end
                         -- if numSleptPlayersWithin10 > 1, then target becomes <me> and spellName becomes Curaga
                     end
-                elseif (buffId == 7) and (amWHM) and not (mmRecast:GetSpellTimer(18) > 0) then -- Petrify
+                elseif (buffId == 7) and (amWHM or amSCH) and not (mmRecast:GetSpellTimer(18) > 0) then -- Petrify
                     priority = 2
                     if highestPriority > priority then
                         highestPriority = priority;

@@ -33,10 +33,11 @@ local sets = {
         Ear1 = 'Brutal Earring',
         Ear2 = 'Bushinomimi',
         Body = 'Askar Korazin', -- swap for Shura+1 haste+3%
+        -- Body = 'Shura Togi +1',
         Hands = mynKote, -- swap for swift gages
         Ring1 = 'Toreador\'s Ring', -- mars? ecphoria?
         Ring2 = 'Rajas Ring',
-        Back = 'Aesir Mantle', -- swap for aife's 
+        Back = 'Aife\'s Mantle',
         Waist = 'Ninurta\'s Sash',
         Legs = byakkoHaidate, -- swap for AF+1
         Feet = hmnSuneate,
@@ -44,7 +45,7 @@ local sets = {
     TPGain_Low_Eva = {
     },
     TPGain_High_Eva = {
-        Back = 'Cuchulain\'s Mantle',
+        -- Back = 'Cuchulain\'s Mantle',
     },
     Idle = { -- gets applied on top of TPGain
         Body = mynDomaru,
