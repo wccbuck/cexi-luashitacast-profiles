@@ -53,11 +53,11 @@ local magBaz = {
 local mrgBaz = {
     Name = 'Mrg. Bazubands +1',
     Augment = {
-        [1] = 'VIT+5',
-        [2] = 'STR+5',
-        [3] = 'Accuracy+7',
-        [4] = 'Attack+7',
-        [5] = 'Haste+4'
+        [1] = 'VIT+6',
+        [2] = 'STR+6',
+        [3] = 'Accuracy+8',
+        [4] = 'Attack+8',
+        [5] = 'Haste+5'
     }
 };
 
@@ -79,10 +79,10 @@ local sets = {
         Ear1 = 'Brutal Earring',
         Ear2 = 'Suppanomimi',
         Body = bloodMail,
-        Hands = magBaz,
+        Hands = mrgBaz,
         Ring1 = 'Toreador\'s Ring',
         Ring2 = 'Rajas Ring',
-        Back = 'Aife\'s Mantle',
+        Back = 'Mirage Mantle', -- acc, store TP
         Waist = 'Ninurta\'s Sash',
         Legs = acroBreeches,
         Feet = 'Homam Gambieras',
@@ -117,7 +117,7 @@ local sets = {
     WS_Requiescat = {
         -- 5 hits, MND 73%
         Hands = mrgBaz,
-        Ring1 = 'Aqua Ring',
+        Ring1 = 'Aqua Ring', -- swap with Tjukurrpa Annulet
         Waist = 'Visionary Obi',
     },
     WS_Expiacion = {
@@ -198,7 +198,7 @@ local sets = {
         Ammo = 'Tiphia Sting',
         Head = ohat,
         Neck = 'Peacock Charm',
-        Ear1 = { Name = 'Optical Earring', Augment = { [1] = 'DEX+1', [2] = 'HP+2' } },
+        Ear1 = optEarring,
         Ear2 = 'Suppanomimi',
         Body = 'Homam Corazza',
         Hands = { Name = 'Mrg. Bazubands +1', Augment = { [1] = 'VIT+4', [2] = 'STR+4', [3] = 'Accuracy+6', [4] = 'Attack+6', [5] = 'Haste+4' } },
@@ -227,14 +227,14 @@ local sets = {
         Ammo = 'Tiphia Sting',
         Head = 'Dampening Tam',
         Neck = 'Chivalrous Chain',
-        Ear1 = optEarring,
+        Ear1 = 'Pixie Earring',
         Ear2 = 'Suppanomimi',
         Body = 'Magus Jubbah',
         Hands = mrgBaz,
         Ring1 = 'Flame Ring',
         Ring2 = 'Rajas Ring',
         Back = 'Cuchulain\'s Mantle',
-        Waist = 'Potent Belt',
+        Waist = 'Visionary Obi',
         Legs = 'Mirage Shalwar', -- Swap for Enkidu's subligar (subtle blow helps)
         Feet = 'Denali Gamashes',
     },
@@ -390,7 +390,7 @@ local sets = {
     Showoff = {},
     Weapons_Default = {
         Main = 'Mimesis',
-        Sub = 'Joyeuse',
+        Sub = 'Xiutleato',
         -- Range = 'Rising Sun',
     },
     Buff = {

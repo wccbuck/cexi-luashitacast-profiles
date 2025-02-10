@@ -264,30 +264,30 @@ function naSpell.Cast()
                 end
             end
         end
-        if (#charmedPlayers == 0) and (numSleptPlayersWithin10 > 1) and not (mmRecast:GetSpellTimer(7) > 0) then
-            AshitaCore:GetChatManager():QueueCommand(1, '/ma "Curaga" <me>');
-        elseif highestPriority < 999 then
-            local targets = {};
-            if (highestPriority < 6) and (afflictedPlayers:contains(party:GetMemberName(0))) then
-                -- heal yourself first if the condition is doom, plague, or paralysis
-                table.insert(targets, party:GetMemberName(0));
-            else
-                for _, name in ipairs(priorityPlayers) do
-                    if (afflictedPlayers:contains(name)) and not (charmedPlayers:contains(name)) then
+    end
+    if (#charmedPlayers == 0) and (numSleptPlayersWithin10 > 1) and not (mmRecast:GetSpellTimer(7) > 0) then
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Curaga" <me>');
+    elseif highestPriority < 999 then
+        local targets = {};
+        if (highestPriority < 6) and (afflictedPlayers:contains(party:GetMemberName(0))) then
+            -- heal yourself first if the condition is doom, plague, or paralysis
+            table.insert(targets, party:GetMemberName(0));
+        else
+            for _, name in ipairs(priorityPlayers) do
+                if (afflictedPlayers:contains(name)) and not (charmedPlayers:contains(name)) then
+                    table.insert(targets, name);
+                end
+            end
+            if #targets < 1 then
+                for _, name in ipairs(afflictedPlayers) do
+                    if not (charmedPlayers:contains(name)) then
                         table.insert(targets, name);
                     end
                 end
-                if #targets < 1 then
-                    for _, name in ipairs(afflictedPlayers) do
-                        if not (charmedPlayers:contains(name)) then
-                            table.insert(targets, name);
-                        end
-                    end
-                end
             end
-            local target = targets[math.random(#targets)]
-            AshitaCore:GetChatManager():QueueCommand(1, '/ma "'..spellName..'" '..target);
         end
+        local target = targets[math.random(#targets)]
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "'..spellName..'" '..target);
     end
 end
 

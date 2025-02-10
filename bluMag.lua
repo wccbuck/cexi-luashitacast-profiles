@@ -9,7 +9,7 @@ bluMag.Phys = T{
     'Final Sting', 'Goblin Rush', 'Vanity Dive', 'Whirl of Rage', 'Benthic Typhoon', 'Quad. Continuum',
     'Empty Thrash', 'Delta Thrust', 'Heavy Strike', 'Quadrastrike', 'Tourbillion', 'Amorphic Spikes',
     'Barbed Crescent', 'Bilgestorm', 'Bloodrake', 'Glutinous Dart', 'Paralyzing Triad', 'Thrashing Assault',
-    'Sinker Drill', 'Sweeping Gouge', 'Saurian Slide', 'Sub-zero Smash'
+    'Sinker Drill', 'Sweeping Gouge', 'Saurian Slide', 'Sub-zero Smash', 'Glutinous Dart'
 }; -- excludes cannonball and stun spells
 bluMag.PhysDex = T{
     'Asuran Claws', 'Smite of Rage', 'Frenetic Rip', 'Disseverment', 'Claw Cyclone', 'Hysteric Barrage',
@@ -19,12 +19,23 @@ bluMag.PhysAgi = T{
     'Pinecone Bomb', 'Wild Oats', 'Helldive', 'Jet Stream', 'Hydro Shot', 'Feather Storm', 'Spiral Spin'
 };
 bluMag.PhysVit = T{
-    'Power Attack', 'Sprout Smack', 'Grand Slam', 'Quad. Continuum', 'Body Slam', 'Sub-zero Smash'
+    'Power Attack', 'Sprout Smack', 'Grand Slam', 'Quad. Continuum', 'Body Slam', 'Sub-zero Smash', 'Glutinous Dart'
 };
 bluMag.IntNuke = T{
+    -- high WSC spells (marked by !!) probably justify making a unique set just for them
     'Sandspin', 'Blastbomb', 'Bomb Toss', 'Corrosive Ooze', 'Cursed Sphere', 'Ice Break', 'Death Ray',
-    'Blitzstrahl', 'Maelstrom', 'Firespit', 'Acrid Stream', 'Regurgitation'
-}; -- those last three are also modified by MND
+    'Blitzstrahl', 'Maelstrom', 'Spectral Floe',
+    'Firespit', -- mnd 20%
+    'Acrid Stream', -- mnd 30%
+    'Regurgitation', -- mnd 30%
+    'Anvil Lightning', -- dex 80% (!!)
+    'Blinding Fulgor', -- str 30%, dex 30%, agi 30%
+    'Silent Storm', -- agi 80% (!!)
+    'Entomb', -- vit 80% (!!)
+    'Searing Tempest', -- str 80% (!!)
+    'Scouring Spate', -- mnd 80% (!!)
+    'Tenebral Crush', -- mnd 30%, vit 30%
+};
 bluMag.MndNuke = T{
     'Mind Blast', 'Magic Hammer'
 };
