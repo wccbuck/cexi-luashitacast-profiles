@@ -148,7 +148,7 @@ local sets = {
     Steal = {
         Head = 'Rogue\'s Bonnet',
         Hands = rogArmlets,
-        Legs = 'Rogue\'s Culottes', -- swap with assassin's
+        Legs = 'Assassin\'s Culottes',
         Feet = 'Rogue\'s Poulaines',
     },
     Hide = {

@@ -149,7 +149,7 @@ function naSpell.Cast()
                     priority = 0
                     if highestPriority > priority then
                         highestPriority = priority;
-                        afflictedPlayers = {};
+                        afflictedPlayers = T{};
                         numSleptPlayersWithin10 = 0;
                         spellName = "Cursna";
                     end
@@ -160,7 +160,7 @@ function naSpell.Cast()
                     priority = 1
                     if highestPriority > priority then
                         highestPriority = priority;
-                        afflictedPlayers = {};
+                        afflictedPlayers = T{};
                         numSleptPlayersWithin10 = 0;
                         spellName = "Cure";
                     end
@@ -177,7 +177,7 @@ function naSpell.Cast()
                     priority = 2
                     if highestPriority > priority then
                         highestPriority = priority;
-                        afflictedPlayers = {};
+                        afflictedPlayers = T{};
                         numSleptPlayersWithin10 = 0;
                         spellName = "Stona";
                     end
@@ -188,7 +188,7 @@ function naSpell.Cast()
                     priority = 3
                     if highestPriority > priority then
                         highestPriority = priority;
-                        afflictedPlayers = {};
+                        afflictedPlayers = T{};
                         numSleptPlayersWithin10 = 0;
                         spellName = "Viruna";
                     end
@@ -199,7 +199,7 @@ function naSpell.Cast()
                     priority = 4
                     if highestPriority > priority then
                         highestPriority = priority;
-                        afflictedPlayers = {};
+                        afflictedPlayers = T{};
                         numSleptPlayersWithin10 = 0;
                         spellName = "Silena";
                     end
@@ -210,7 +210,7 @@ function naSpell.Cast()
                     priority = 5
                     if highestPriority > priority then
                         highestPriority = priority;
-                        afflictedPlayers = {};
+                        afflictedPlayers = T{};
                         numSleptPlayersWithin10 = 0;
                         spellName = "Paralyna";
                     end
@@ -221,7 +221,7 @@ function naSpell.Cast()
                     priority = 6
                     if highestPriority > priority then
                         highestPriority = priority;
-                        afflictedPlayers = {};
+                        afflictedPlayers = T{};
                         numSleptPlayersWithin10 = 0;
                         spellName = "Cursna";
                     end
@@ -232,7 +232,7 @@ function naSpell.Cast()
                     priority = 7
                     if highestPriority > priority then
                         highestPriority = priority;
-                        afflictedPlayers = {};
+                        afflictedPlayers = T{};
                         numSleptPlayersWithin10 = 0;
                         spellName = "Blindna";
                     end
@@ -243,7 +243,7 @@ function naSpell.Cast()
                     priority = 8
                     if highestPriority > priority then
                         highestPriority = priority;
-                        afflictedPlayers = {};
+                        afflictedPlayers = T{};
                         numSleptPlayersWithin10 = 0;
                         spellName = "Viruna";
                     end
@@ -254,7 +254,7 @@ function naSpell.Cast()
                     priority = 9
                     if highestPriority > priority then
                         highestPriority = priority;
-                        afflictedPlayers = {};
+                        afflictedPlayers = T{};
                         numSleptPlayersWithin10 = 0;
                         spellName = "Silena";
                     end
@@ -265,13 +265,15 @@ function naSpell.Cast()
             end
         end
     end
+
     if (#charmedPlayers == 0) and (numSleptPlayersWithin10 > 1) and not (mmRecast:GetSpellTimer(7) > 0) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Curaga" <me>');
     elseif highestPriority < 999 then
         local targets = {};
-        if (highestPriority < 6) and (afflictedPlayers:contains(party:GetMemberName(0))) then
+        local me = party:GetMemberName(0);
+        if (highestPriority < 6) and (afflictedPlayers:contains(me)) then
             -- heal yourself first if the condition is doom, plague, or paralysis
-            table.insert(targets, party:GetMemberName(0));
+            table.insert(targets, me);
         else
             for _, name in ipairs(priorityPlayers) do
                 if (afflictedPlayers:contains(name)) and not (charmedPlayers:contains(name)) then
