@@ -17,7 +17,7 @@ local dragonHarness = {
 
 local dragonCap = {
     Name = 'Dragon Cap +1',
-    Augment = { [1] = 'Dagger skill +6', [2] = 'AGI+4', [3] = '"Subtle Blow"+4' }
+    Augment = { [1] = 'Dagger skill +8', [2] = '"Treasure Hunter"+1', [3] = 'AGI+6', [4] = '"Subtle Blow"+6' }
 };
 
 local hctMittens = {
@@ -58,6 +58,8 @@ local sets = {
         Back = 'Cuchulain\'s Mantle',
     },
     Idle = { -- gets applied on top of TPGain
+        Head = dragonCap,
+        Hands = rogArmlets,
     },
     WS_Default = {
         Head = 'Gnadbhod\'s Helm', -- eventually hct
@@ -118,7 +120,8 @@ local sets = {
     },
     TH = {
         Sub = 'Thief\'s Knife',
-        Head = 'Wh. Rarab Cap +1',
+        -- Head = 'Wh. Rarab Cap +1',
+        Head = dragonCap,
         -- Hands = 'Assassin\'s Armlets',
         Hands = rogArmlets,
     },

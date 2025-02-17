@@ -250,7 +250,7 @@ function naSpell.Cast()
                     if highestPriority == priority then
                         table.insert(afflictedPlayers, party:GetMemberName(memberIdx));
                     end
-                elseif buffId == 9 and not (mmRecast:GetSpellTimer(17) > 0) then -- Silenced non-mage
+                elseif buffId == 6 and not (mmRecast:GetSpellTimer(17) > 0) then -- Silenced non-mage
                     priority = 9
                     if highestPriority > priority then
                         highestPriority = priority;

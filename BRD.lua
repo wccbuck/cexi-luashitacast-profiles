@@ -137,7 +137,7 @@ local sets = {
         Ear1 = 'Musical Earring',
         Body = chlJust,
         Hands = 'Choral Cuffs',
-        Ring1 = 'Angel\'s Ring',
+        Ring1 = 'Omega Ring',
         Ring2 = 'Angel\'s Ring',
         Back = 'Jester\'s Cape',
         Waist = 'Corsette +1',
@@ -197,7 +197,6 @@ local sets = {
     },
     PDT = {
         -- TODO
-        Body = 'Narasimha\'s Vest', -- replace with augmented scorp harness
         Hands = 'Melaco Mittens',
         Legs = 'Goliard Trews',
     },
