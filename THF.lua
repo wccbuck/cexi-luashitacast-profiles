@@ -2,7 +2,7 @@ utilities = gFunc.LoadFile('utilities.lua');
 local isTargetTagged = gFunc.LoadFile('isTargetTagged');
 
 local profile = {};
-local thtier = 6; -- the treasure hunter tier at which we should switch to TP gain set
+local thtier = 7; -- the treasure hunter tier at which we should switch to TP gain set
 
 -- some equipment pieces I use in multiple places
 local ohat = {
@@ -110,7 +110,7 @@ local sets = {
         Ear1 = 'Wilhelm\'s Earring',
         Ear2 = 'Altdorf\'s Earring',
         Body = 'Denali Jacket',
-        Hands = 'Enkidu\'s Mittens', -- get pahluwan?
+        Hands = 'Enkidu\'s Mittens',
         Ring1 = 'Garrulous Ring',
         Ring2 = 'Rajas Ring',
         Back = 'Amemet Mantle',
@@ -177,7 +177,6 @@ local sets = {
         Neck = 'Jeweled Collar',
         Ear1 = 'Colossus\'s Earring',
         -- Body = 'Avalon Breastplate', -- Tiamat drop
-        -- Body = 'Blue Cotehardie' -- see grand trials. -3%
         Hands = 'Denali Wristbands',
         Ring1 = 'Merman\'s Ring',
         Ring2 = 'Merman\'s Ring',
@@ -208,7 +207,7 @@ local sets = {
         Ear1 = 'Wilhelm\'s Earring',
         Ear2 = 'Altdorf\'s Earring',
         Body = 'Denali Jacket',
-        Hands = 'Enkidu\'s Mittens', -- get pahluwan
+        Hands = 'Barb. Moufles',
         Ring1 = 'Merman\'s Ring',
         Ring2 = 'Merman\'s Ring',
         Back = 'Aife\'s Mantle', -- agi+ and storeTP+

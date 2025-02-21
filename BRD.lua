@@ -38,7 +38,7 @@ local instruments = {
     Mambo = 'Hellish Bugle',
     Ballad = 'Terpander',
     Lullaby = 'Terpander',
-    Madrigal = 'Traversiere', -- get +1
+    Madrigal = 'Traversiere +1',
     Mazurka = 'Harlequin\'s Horn',
     March = 'Ryl.Spr. Horn', -- replace with faerie piccolo (quest)
     Requiem = 'Requiem Flute',
@@ -48,18 +48,22 @@ local instruments = {
 
 local sets = {
     Idle = {
-        Head = 'Bard\'s Roundlet',
-        Neck = 'Fylgja Torque +1',
+        Head = 'Genbu\'s Kabuto', -- -pdt
+        Neck = 'Incanter\'s Torque',
         Ear1 = 'Musical Earring',
         Ear2 = 'Soil Earring',
         Body = chlJust,
         Hands = 'Melaco Mittens',
         Ring1 = 'Mercenary\'s Ring',
         Ring2 = 'Tamas Ring',
-        Back = 'Dew Silk Cape +1', -- replace with hexerei
+        Back = 'Umbra Cape',
         Waist = 'Marid Belt',
         Legs = 'Goliard Trews',
         Feet = 'Suzaku\'s Sune-Ate',
+    },
+    Sing_Weapons = {
+        Main = 'Silktone',
+        Sub = genbuShield,
     },
     TPGain = {
         -- TODO
@@ -104,7 +108,7 @@ local sets = {
     Cursna = {
         -- Ranged = 'Angel Lyre',
         Head = 'Windfall Hat', -- fast cast
-        Neck = 'Colossus\'s Torque', -- healing magic
+        Neck = 'Incanter\'s Torque', -- healing magic
         Ear2 = 'Loquac. Earring', -- fast cast
         Body = 'Goliard Saio', -- haste
         -- Hands = 'Patrician\'s Cuffs', -- if we need to get to a multiple of 30 for healing magic
@@ -117,23 +121,28 @@ local sets = {
     },
     Wind = {
         Head = 'Bard\'s Roundlet', -- sing+5
+        Neck = 'Incanter\'s Torque',
         Ear1 = 'Musical Earring', -- wind, string +5
         Body = chlJust, 
         Hands = 'Choral Cuffs', -- sing+5
         Ring1 = 'Trumpet Ring', -- wind+2
+        Ring2 = 'Trumpet Ring', -- wind+2
+        Waist = 'Ninurta\'s Sash', -- haste
         Legs = zenithSlacks, -- wind+4
         Feet = 'Oracle\'s Pigaches', -- wind+5
     },
     String = {
         Head = 'Bard\'s Roundlet', -- sing+5
+        Neck = 'Incanter\'s Torque',
         Ear1 = 'Musical Earring', -- wind, string +5
         Body = chlJust, -- string +6
         Hands = 'Choral Cuffs', -- sing+5
+        Waist = 'Ninurta\'s Sash', -- haste
         Feet = 'Bard\'s Slippers', -- string+3
     },
     Lullaby = {
         Head = 'Bard\'s Roundlet',
-        Neck = 'Bird Whistle',
+        Neck = 'Incanter\'s Torque',
         Ear1 = 'Musical Earring',
         Body = chlJust,
         Hands = 'Choral Cuffs',
@@ -197,7 +206,9 @@ local sets = {
     },
     PDT = {
         -- TODO
+        Head = 'Genbu\'s Kabuto',
         Hands = 'Melaco Mittens',
+        Back = 'Umbra Cape',
         Legs = 'Goliard Trews',
     },
     MDT = {
@@ -252,7 +263,7 @@ profile.HandleDefault = function()
     else
         gFunc.EquipSet(sets.Idle);
         -- TODO make the next line configurable
-        -- gFunc.EquipSet(sets.Weapons_Default);
+        gFunc.EquipSet(sets.Sing_Weapons);
     end
 
     if (T{'PDT', 'MDT', 'BDT'}:contains(utilities.OverrideSet)) then

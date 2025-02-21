@@ -57,7 +57,7 @@ local sets = {
         Hands = 'Blessed Mitts',
         Ring1 = 'Star Ring',
         Ring2 = 'Tamas Ring',
-        Back = 'Dew Silk Cape +1', -- replace with hexerei or cheviot
+        Back = 'Umbra Cape',
         Waist = 'Cleric\'s Belt',
         Legs = 'Goliard Trews',
         Feet = zenithPumps,
@@ -68,16 +68,19 @@ local sets = {
         Neck = 'Chivalrous Chain',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Ethereal Earring',
-        Body = 'Nashira Manteel',
+        Body = 'Nashira Manteel', -- swap with reverend
         Hands = 'Blessed Mitts',
         Ring1 = 'Rajas Ring',
         Ring2 = 'Tamas Ring',
-        Back = 'Aesir Mantle',
+        Back = 'Aife\'s Mantle',
         Waist = 'Ninurta\'s Sash',
         Legs = { Name = 'Prince\'s Slops', Augment = { [1] = 'Pet: Rng. Acc.+6', [2] = '"Mag.Def.Bns."+2', [3] = 'Accuracy+3', [4] = 'Pet: Accuracy+6', [5] = 'Attack+3' } },
         Feet = 'Blessed Pumps',
     },
-    WS_Default = {}, -- TODO
+    WS_Default = {
+        -- TODO
+        -- note that Mystic Boon has no SC properties and therefore doesn't get a bonus from Fotia
+    }, 
     Haste = {
         Head = 'Windfall Hat',
         Ear2 = 'Loquac. Earring',
@@ -98,10 +101,10 @@ local sets = {
         -- At 300 skill: 20%
         -- At 330 skill: 21%
         Head = 'Windfall Hat',
-        Neck = 'Colossus\'s Torque',
+        Neck = 'Incanter\'s Torque',
         Ear2 = 'Loquac. Earring',
         Body = 'Nashira Manteel',
-        Hands = 'Healer\'s Mitts',
+        Hands = 'Hlr. Mitts +1',
         Back = 'Veela Cape',
         Waist = 'Ninurta\'s Sash',
         Legs = 'Cleric\'s Pantaln.',
@@ -138,7 +141,7 @@ local sets = {
     Divine = {
         Ammo = 'Mana Ampulla',
         Head = healerCap,
-        Neck = 'Divine Torque',
+        Neck = 'Incanter\'s Torque',
         Ear2 = 'Aqua Earring',
         Body = 'Errant Hpl.',
         Hands = 'Blessed Mitts',
@@ -203,7 +206,7 @@ local sets = {
     Enfeeble = {
         Ammo = 'Mana Ampulla',
         Head = healerCap,
-        Neck = 'Gnole Torque',
+        Neck = 'Incanter\'s Torque',
         Ear2 = 'Aqua Earring',
         Body = 'Errant Hpl.',
         Hands = 'Cleric\'s Mitts',
@@ -226,6 +229,7 @@ local sets = {
     PDT = {
         -- TODO
         -- eventually Healer's Bliaut +1 (DT-5%)
+        Back = 'Umbra Cape',
         Legs = 'Goliard Trews',
     },
     MDT = {

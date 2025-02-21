@@ -19,9 +19,13 @@ local mynKote = {
     Augment = { [1] = 'Haste+3', [2] = '"Zanshin"+3' }
 };
 
-local byakkoHaidate = {
-    Name = 'Byakko\'s Haidate',
-    Augment = { [1] = 'VIT+3', [2] = '"Store TP"+5', [3] = 'Crit. hit damage +1%' }
+-- local byakkoHaidate = {
+--     Name = 'Byakko\'s Haidate',
+--     Augment = { [1] = 'VIT+3', [2] = '"Store TP"+5', [3] = 'Crit. hit damage +1%' }
+-- };
+
+local mynHaidate = {
+    Name = 'Myn. Haidate +1', Augment = { [1] = '"Store TP"+5', [2] = 'Haste+5' }
 };
 
 local hmnSuneate = 'Hmn. Sune-Ate +1'; -- TODO get augs
@@ -32,14 +36,13 @@ local sets = {
         Neck = 'Chivalrous Chain', -- swap for rikugame nodowa
         Ear1 = 'Brutal Earring',
         Ear2 = 'Bushinomimi',
-        Body = 'Askar Korazin', -- swap for Shura+1 haste+3%
-        -- Body = 'Shura Togi +1',
+        Body = { Name = 'Shura Togi +1', Augment = { [1] = 'Crit.hit rate+3', [2] = 'Haste+3' } },
         Hands = mynKote, -- swap for swift gages
         Ring1 = 'Toreador\'s Ring', -- mars? ecphoria?
         Ring2 = 'Rajas Ring',
         Back = 'Aife\'s Mantle',
         Waist = 'Ninurta\'s Sash',
-        Legs = byakkoHaidate, -- swap for AF+1
+        Legs = mynHaidate,
         Feet = hmnSuneate,
     },
     TPGain_Low_Eva = {
@@ -181,9 +184,11 @@ profile.HandleDefault = function()
         -- if all three weapon slots are empty during combat,
         -- equip the default weapon set (useful against merrows)
         utilities.ResetDefaultWeapons(sets.Weapons_Default);
-        if (gData.GetBuffCount('Third Eye') > 0) then
-            gFunc.EquipSet(sets.ThirdEye);
-        end
+        
+        -- saotome haidate dont appear to work correctly
+        -- if (gData.GetBuffCount('Third Eye') > 0) then
+        --     gFunc.EquipSet(sets.ThirdEye);
+        -- end
 
         if (gData.GetBuffCount('Sleep') > 0 and player.HP > 200) then
             gFunc.EquipSet(sets.Berserker);
@@ -217,8 +222,9 @@ profile.HandleAbility = function()
     local ability = gData.GetAction();
     if (ability.Name == 'Meditate') then
 		gFunc.EquipSet(sets.Meditate);
-    elseif (ability.Name == 'Third Eye') then
-		gFunc.EquipSet(sets.ThirdEye);
+    -- saotome haidate dont appear to work correctly
+    -- elseif (ability.Name == 'Third Eye') then
+	-- 	gFunc.EquipSet(sets.ThirdEye);
 	end
 
     utilities.CheckCancels();

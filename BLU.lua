@@ -72,6 +72,7 @@ local sets = {
     Idle = {
         Body = 'Mirage Jubbah',
         -- Legs = 'Magus Shalwar +1' -- uncomment this when you get + augment this (refresh + regen)
+        Back = 'Umbra Cape',
     },
     TPGain = {
         Head = 'Dampening Tam',
@@ -213,7 +214,7 @@ local sets = {
         -- blue mag skill and magic accuracy only
         -- used for enfeebs, buffs, and drains
         Head = 'Mirage Keffiyeh',
-        Neck = 'Lieut. Gorget',
+        Neck = 'Incanter\'s Torque',
         Ear1 = 'Aqua Earring',
         Body = 'Magus Jubbah',
         Ring1 = 'Antica Ring',
@@ -366,6 +367,7 @@ local sets = {
         -- Body = 'Scorpion Harness +1' -- see grand trials. -3%
         Hands = 'Denali Wristbands',
         Ring1 = 'Sattva Ring',
+        Back = 'Umbra Cape',
         Waist = 'Marid Belt',
         Legs = bloodCuisses,
     },
