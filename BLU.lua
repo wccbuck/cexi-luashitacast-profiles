@@ -76,7 +76,8 @@ local sets = {
     },
     TPGain = {
         Head = 'Dampening Tam',
-        Neck = 'Tiercel Necklace',
+        Neck = 'Fortitude Torque',
+        -- Neck = 'Tiercel Necklace',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Suppanomimi',
         Body = bloodMail,
@@ -305,7 +306,7 @@ local sets = {
         -- def, vit, acc, str
         Ammo = 'Bibiki Seashell',
         Head = 'Mirage Keffiyeh', -- replace with dusk mask
-        Neck = 'Chivalrous Chain',
+        Neck = 'Fortitude Torque',
         Ear1 = optEarring,
         Ear2 = 'Suppanomimi',
         Body = 'Enkidu\'s Harness',

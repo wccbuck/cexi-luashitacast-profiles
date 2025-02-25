@@ -120,7 +120,7 @@ local sets = {
         -- Feet = 'Rostrum Pumps',
     },
     PrecastHeal = {
-        Feet = zenithPumps,
+        Feet = zenithPumps, -- cure clogs?
     },
     Regen = {
         Head = 'Goliard Chapeau',

@@ -33,7 +33,7 @@ local hmnSuneate = 'Hmn. Sune-Ate +1'; -- TODO get augs
 local sets = {
     TPGain = {
         Head = acesHelm, -- swap for relic+1 or conq helm
-        Neck = 'Chivalrous Chain', -- swap for rikugame nodowa
+        Neck = 'Rikugame Nodowa',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Bushinomimi',
         Body = { Name = 'Shura Togi +1', Augment = { [1] = 'Crit.hit rate+3', [2] = 'Haste+3' } },
@@ -88,7 +88,7 @@ local sets = {
     },
     PDT = {
         Head = acesHelm,
-        Neck = 'Chivalrous Chain', -- swap for either fortified chain or fortitude torque (+5 vit)
+        Neck = 'Rikugame Nodowa',
         Ear1 = 'Colossus\'s Earring',
         Ear2 = 'Soil Earring',
         Body = 'Arhat\'s Gi +1',

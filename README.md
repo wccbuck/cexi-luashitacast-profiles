@@ -33,9 +33,9 @@ These profiles add the following helpful commands to the game. If you want to us
 ### Job-Specific Custom Commands
 
 * THF
-** `thtier`: Use this command to set your preferred level of treasure hunter you'd like to reach before swapping your TH gear to standard melee gear. By default it's set to 6, so if you tagged the mob with TH5 gear equipped, it'll swap after your first proc. `/thtier 1` or just `/thtier` will set it to swap off of your TH gear after the first proc. [More info on Treasure Hunter and the proc system](https://www.bg-wiki.com/ffxi/Treasure_Hunter)
+ * `thtier`: Use this command to set your preferred level of treasure hunter you'd like to reach before swapping your TH gear to standard melee gear. By default it's set to 6, so if you tagged the mob with TH5 gear equipped, it'll swap after your first proc. `/thtier 1` or just `/thtier` will set it to swap off of your TH gear after the first proc. [More info on Treasure Hunter and the proc system](https://www.bg-wiki.com/ffxi/Treasure_Hunter)
 * BLU
-** `learning`: Use this command to toggle Magus Bazubands on or off.
+ * `learning`: Use this command to toggle Magus Bazubands on or off.
 
 ## Setup
 
