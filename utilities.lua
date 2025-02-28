@@ -10,7 +10,7 @@ utilities.OverrideSet = 'NONE';
 utilities.OverrideSetOptions = {'NONE', 'PDT', 'MDT', 'BDT', 'IDLE', 'SHOWOFF'};
 utilities.TargetEva = 'default'; -- 'default', 'high', or 'low'
 
-utilities.AliasList = T{'warpring','sproutberet','echadring','empressband','pdt','mdt','bdt','idle','showoff','acc'};
+utilities.AliasList = T{'warpring','sproutberet','echadring','empressband','reraise','warp','pdt','mdt','bdt','idle','showoff','acc'};
 
 -- Add all of the above aliases to the bottom of your catseyexi-client/Ashita/scripts/default.txt file like so:
 --      /alias /warpring /lac fwd warpring
@@ -62,6 +62,10 @@ function utilities.HandleCommands(args)
 		equipAndUseItem('Ring2', 'Echad Ring', 8);
     elseif args[1] == 'empressband' then
         equipAndUseItem('Ring2', 'Empress Band', 8);
+	-- elseif args[1] == 'reraise' then
+    --     equipAndUseItem('Head', 'Wh. Rarab Cap +1', 33); -- further testing required
+	elseif args[1] == 'warp' then
+		AshitaCore:GetChatManager():QueueCommand(1, '/item "Instant Warp" <me>');
     elseif T{'pdt', 'mdt', 'bdt', 'idle', 'showoff'}:contains(args[1]) then
 		local set = string.upper(args[1]);
 		local isOverride = utilities.OverrideSet == set;
@@ -141,7 +145,7 @@ function utilities.CheckDefaults()
 	if (eqp.Ring2 ~= nil) and (utilities.LockingRings:contains(eqp.Ring2.Name)) then
 		gFunc.Equip('Ring2', eqp.Ring2.Name);
 	end
-    if (eqp.Head ~= nil) and (eqp.Head.Name == 'Sprout Beret') then
+    if (eqp.Head ~= nil) and (eqp.Head.Name == 'Sprout Beret' or eqp.Head.Name == 'Wh. Rarab Cap +1') then
 		gFunc.Equip('Head', eqp.Head.Name);
 	end
 end
@@ -169,7 +173,7 @@ function utilities.ResetDefaultWeapons(weaponset)
 end
 
 local greenPhrases = {
-	"Treasure Hunter effectiveness"
+	"Treasure Hunter effectiveness", "Something is interrupting ventures at"
 };
 
 local redPhrases = {
