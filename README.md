@@ -1,7 +1,7 @@
 # cexi-luashitacast-profiles
 A set of lua files to be used with Luashitacast on the [CatsEye XI](https://www.catseyexi.com) private server for the game Final Fantasy XI.
 
-These scripts are works-in-progress that I use for my own character in-game (Ziphion). I'm posting these publicly as a way to offer more examples for people to reference as they craft their own lua scripts. Only a few jobs are represented here (SAM, THF, WHM, BLU, and BRD); as I start using other jobs more, I will add luas for them here.
+These scripts are works-in-progress that I use for my own character in-game (Ziphion). I'm posting these publicly as a way to offer more examples for people to reference as they craft their own lua scripts. Only a few jobs are represented here (SAM, THF, WHM, BLU, BRD, and BLM); as I start using other jobs more, I will add luas for them here.
 
 ## Features
 
