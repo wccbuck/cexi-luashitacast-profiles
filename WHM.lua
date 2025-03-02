@@ -140,7 +140,7 @@ local sets = {
     },
     Divine = {
         Ammo = 'Mana Ampulla',
-        Head = healerCap,
+        Head = 'Marduk\'s Tiara',
         Neck = 'Incanter\'s Torque',
         Ear2 = 'Aqua Earring',
         Body = 'Errant Hpl.',

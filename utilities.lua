@@ -10,7 +10,7 @@ utilities.OverrideSet = 'NONE';
 utilities.OverrideSetOptions = {'NONE', 'PDT', 'MDT', 'BDT', 'IDLE', 'SHOWOFF'};
 utilities.TargetEva = 'default'; -- 'default', 'high', or 'low'
 
-utilities.AliasList = T{'warpring','sproutberet','echadring','empressband','reraise','warp','pdt','mdt','bdt','idle','showoff','acc'};
+utilities.AliasList = T{'warpring','sproutberet','echadring','empressband','reraise','pdt','mdt','bdt','idle','showoff','acc'};
 
 -- Add all of the above aliases to the bottom of your catseyexi-client/Ashita/scripts/default.txt file like so:
 --      /alias /warpring /lac fwd warpring
@@ -64,8 +64,6 @@ function utilities.HandleCommands(args)
         equipAndUseItem('Ring2', 'Empress Band', 8);
 	-- elseif args[1] == 'reraise' then
     --     equipAndUseItem('Head', 'Wh. Rarab Cap +1', 33); -- further testing required
-	elseif args[1] == 'warp' then
-		AshitaCore:GetChatManager():QueueCommand(1, '/item "Instant Warp" <me>');
     elseif T{'pdt', 'mdt', 'bdt', 'idle', 'showoff'}:contains(args[1]) then
 		local set = string.upper(args[1]);
 		local isOverride = utilities.OverrideSet == set;

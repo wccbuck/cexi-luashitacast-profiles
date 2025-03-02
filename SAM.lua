@@ -32,7 +32,7 @@ local hmnSuneate = 'Hmn. Sune-Ate +1'; -- TODO get augs
 
 local sets = {
     TPGain = {
-        Head = acesHelm, -- swap for relic+1 or conq helm
+        Head = 'Sao. Kabuto +1',
         Neck = 'Rikugame Nodowa',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Bushinomimi',
@@ -116,22 +116,6 @@ local sets = {
     },
     BDT = {},
     Showoff = {
-        Main = { Name = 'Amanomurakumo', Augment = 'DMG:+6' },
-        Sub = 'Pole Grip',
-        Range = 'Ifrit\'s Bow',
-        Ammo = 'Iron Arrow',
-        Head = { Name = 'Shr.Znr.Kabuto +1', Augment = { [1] = 'Weapon skill damage +4%', [2] = '"Conserve TP"+5', [3] = 'Sklchn.dmg.+4%' } },
-        Neck = 'Fotia Gorget',
-        Ear1 = 'Brutal Earring',
-        Ear2 = 'Bushinomimi',
-        Body = { Name = 'Hmn. Domaru +1', Augment = { [1] = 'STR+6', [2] = 'Sklchn.dmg.+3%', [3] = '"Conserve TP"+6', [4] = 'Attack+12' } },
-        Hands = mynKote,
-        Ring1 = 'Ecphoria Ring',
-        Ring2 = 'Rajas Ring',
-        Back = 'Cuchulain\'s Mantle',
-        Waist = 'Ninurta\'s Sash',
-        Legs = { Name = 'Shura Haidate +1', Augment = { [1] = 'Rng.Acc.+3', [2] = 'Accuracy+3', [3] = '"Dual Wield"+4' } },
-        Feet = hmnSuneate,
     },
     Weapons_Default = {
         Main = { Name = 'Amanomurakumo', Augment = 'DMG:+6' },

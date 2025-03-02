@@ -157,6 +157,7 @@ profile.HandleDefault = function()
 end
 
 profile.HandleAbility = function()
+    utilities.CheckCancels();
 end
 
 profile.HandleItem = function()

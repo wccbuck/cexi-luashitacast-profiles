@@ -43,7 +43,7 @@ local instruments = {
     March = 'Ryl.Spr. Horn', -- replace with faerie piccolo (quest)
     Requiem = 'Requiem Flute',
     Elegy = 'Horn +1',
-    -- get piccolo for threnody
+    Threnody = 'Piccolo +1',
 };
 
 local sets = {
@@ -67,7 +67,7 @@ local sets = {
     },
     TPGain = {
         -- TODO
-        Range = 'Hellish Bugle',
+        -- Range = 'Hellish Bugle',
     },
     WS_Default = {
         -- TODO
@@ -120,24 +120,24 @@ local sets = {
         -- Feet = 'Rostrum Pumps', -- fast cast
     },
     Wind = {
-        Head = 'Bard\'s Roundlet', -- sing+5
+        Head = 'Marduk\'s Tiara', -- sing+7
         Neck = 'Incanter\'s Torque',
         Ear1 = 'Musical Earring', -- wind, string +5
         Body = chlJust, 
-        Hands = 'Choral Cuffs', -- sing+5
+        Hands = 'Chl. Cuffs +1', -- sing+10
         Ring1 = 'Trumpet Ring', -- wind+2
         Ring2 = 'Trumpet Ring', -- wind+2
         Back = 'Echo Cape', -- wind+3
-        Waist = 'Ninurta\'s Sash', -- haste
-        Legs = zenithSlacks, -- wind+4
+        Waist = 'Ninurta\'s Sash', -- haste. swap for marching belt, dyna tav 1.0 boss drop
+        Legs = 'Marduk\'s Shalwar', -- wind+5
         Feet = 'Oracle\'s Pigaches', -- wind+5
     },
     String = {
-        Head = 'Bard\'s Roundlet', -- sing+5
+        Head = 'Marduk\'s Tiara', -- sing+7
         Neck = 'Incanter\'s Torque',
         Ear1 = 'Musical Earring', -- wind, string +5
         Body = chlJust, -- string +6
-        Hands = 'Choral Cuffs', -- sing+5
+        Hands = 'Chl. Cuffs +1', -- sing+10
         Waist = 'Ninurta\'s Sash', -- haste
         Feet = 'Bard\'s Slippers', -- string+3
     },
@@ -146,14 +146,15 @@ local sets = {
         Neck = 'Incanter\'s Torque',
         Ear1 = 'Musical Earring',
         Body = chlJust,
-        Hands = 'Choral Cuffs',
+        Hands = 'Chl. Cuffs +1',
         Ring1 = 'Omega Ring',
         Ring2 = 'Angel\'s Ring',
         Back = 'Bard\'s Cape',
         Waist = 'Corsette +1',
-        Legs = 'Errant Slops',
+        Legs = 'Marduk\'s Shalwar',
         Feet = 'Goliard Clogs',
     },
+    -- make an elegy set with AF pants +1 augmented
     Lullaby_Weapons = {
         Main = 'Chatoyant Staff',
         Sub = 'Light Grip',
