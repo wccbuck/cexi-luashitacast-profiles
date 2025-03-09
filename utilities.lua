@@ -123,13 +123,9 @@ function utilities.CheckCancels()
 		AshitaCore:GetChatManager():QueueCommand(1, '/cancel Sneak');
 		(function() AshitaCore:GetChatManager():QueueCommand(1, '/ja "Spectral Jig" <me>') end):once(2);
 	elseif (action.Name == 'Sneak' and sneak > 0 and target.Name == me) then
-		gFunc.CancelAction();
-		AshitaCore:GetChatManager():QueueCommand(1, '/cancel Sneak');
-		(function() AshitaCore:GetChatManager():QueueCommand(1, '/ma "Sneak" <me>') end):once(1);
+		(function() AshitaCore:GetChatManager():QueueCommand(1, '/cancel Sneak') end):once(0.5);
 	elseif (action.Name == 'Stoneskin' and stoneskin > 0) then
-		gFunc.CancelAction();
-		AshitaCore:GetChatManager():QueueCommand(1, '/cancel Stoneskin');
-		(function() AshitaCore:GetChatManager():QueueCommand(1, '/ma "Stoneskin" <me>') end):once(1);
+		(function() AshitaCore:GetChatManager():QueueCommand(1, '/cancel Stoneskin') end):once(0.5);
     else
         utilities.CancelShadows(action);
 	end
@@ -168,6 +164,20 @@ function utilities.ResetDefaultWeapons(weaponset)
         gFunc.EquipSet(weaponset);
     end
 
+end
+
+function utilities.DelayExec(commands)
+	-- use this function like so:
+	-- utilities.DelayExec:bind1({
+	-- 	{ Command='/echo "Line 1"', Delay=0 },
+	-- 	{ Command='/echo "Line 2"', Delay=2 },
+	-- 	{ Command='/jump', Delay=2 },
+	-- }):oncef(1);
+
+    for _,entry in pairs(commands) do
+        coroutine.sleep(entry.Delay);
+        AshitaCore:GetChatManager():QueueCommand(1, entry.Command);
+    end
 end
 
 local greenPhrases = {

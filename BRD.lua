@@ -53,7 +53,7 @@ local sets = {
         Ear1 = 'Musical Earring',
         Ear2 = 'Soil Earring',
         Body = chlJust,
-        Hands = 'Melaco Mittens',
+        Hands = 'Chl. Cuffs +1',
         Ring1 = 'Mercenary\'s Ring',
         Ring2 = 'Tamas Ring',
         Back = 'Umbra Cape',
@@ -145,6 +145,7 @@ local sets = {
         Head = 'Bard\'s Roundlet',
         Neck = 'Incanter\'s Torque',
         Ear1 = 'Musical Earring',
+        Ear2 = 'Beastly Earring',
         Body = chlJust,
         Hands = 'Chl. Cuffs +1',
         Ring1 = 'Omega Ring',
@@ -244,6 +245,20 @@ profile.HandleCommand = function(args)
     elseif args[1] == 'naspellprio' then
         -- comma-delimited list of player names
         naSpell.SetPlayerPriority(args);
+    elseif (args[1] == 'quicksing') and #args > 1 then
+        -- pianissimo trick: cast pianissimo and cancel it before the song ends
+        -- for an extra -50% cast time
+        local pianissimo = gData.GetBuffCount('Pianissimo');
+        local night = gData.GetBuffCount('Nightingale');
+        if (pianissimo + night == 0) then
+            utilities.DelayExec:bind1({
+                { Command='/ja "Pianissimo" <me>', Delay=0 },
+                { Command='/up "'..args[2]..'" <me>', Delay=1 },
+                { Command='/cancel Pianissimo', Delay=1 },
+              }):oncef(1);
+        else
+            AshitaCore:GetChatManager():QueueCommand(1, '/up "'..args[2]..'" <me>');
+        end
     end
     utilities.HandleCommands(args);
 end
@@ -285,11 +300,18 @@ end
 
 profile.HandlePrecast = function()
     local spell = gData.GetAction();
-    gFunc.EquipSet(sets.Precast);
-    if (spell.Skill == 'Healing Magic') then
-        gFunc.EquipSet(sets.PrecastHeal);
-    elseif (spell.Skill == 'Singing') then
-        gFunc.EquipSet(sets.PrecastSong);
+    local night = gData.GetBuffCount('Nightingale');
+    if (night == 0) or (spell.Skill ~= 'Singing') then
+        gFunc.EquipSet(sets.Precast);
+        if (spell.Skill == 'Healing Magic') then
+            gFunc.EquipSet(sets.PrecastHeal);
+        elseif (spell.Skill == 'Singing') then
+            gFunc.EquipSet(sets.PrecastSong);
+            -- local player = gData.GetPlayer();
+            -- if (player.HPP < 75 and player.TP < 1000) then
+            --     gFunc.EquipSet(sets.MinstrelRing);
+            -- end
+        end
     end
     utilities.CheckCancels();
 end

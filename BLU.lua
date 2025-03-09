@@ -91,8 +91,8 @@ local sets = {
     },
     TPGain_Ammo = {
         -- Ammo = 'White Tathlum',
-        -- Ammo = 'Hedgehog Bomb',
-        Ammo = 'Tiphia Sting',
+        -- Ammo = 'Tiphia Sting',
+        Ammo = 'Oneiros Pebble', -- +3 vit, +3 acc
     },
     TPGain_High_Eva = {
         Body = 'Homam Corazza',
@@ -197,7 +197,7 @@ local sets = {
     -- },
     Headbutt = {
         -- all accuracy.
-        Ammo = 'Tiphia Sting',
+        Ammo = 'Oneiros Pebble'
         Head = ohat,
         Neck = 'Peacock Charm',
         Ear1 = optEarring,
@@ -226,7 +226,7 @@ local sets = {
         Feet = bloodGreaves,
     },
     Phys_Spell = {
-        Ammo = 'Tiphia Sting',
+        Ammo = 'Oneiros Pebble'
         Head = 'Dampening Tam',
         Neck = 'Chivalrous Chain',
         Ear1 = 'Pixie Earring',
@@ -255,7 +255,7 @@ local sets = {
         Feet = bloodGreaves,
     },
     Phys_Spell_Vit = { -- e.g. quad continuum
-        -- Ammo = 'Bibiki Seashell', --Tiphia Sting probably better
+        -- Neck = 'Fortitude Torque',
     },
     Mag_Spell_Charisma = { -- eyes on me
         Ammo = 'Hedgehog Bomb',
@@ -269,7 +269,7 @@ local sets = {
         Ring2 = 'Angel\'s Ring',
         Back = 'Jester\'s Cape',
         Waist = 'Salire Belt',
-        Legs = 'Errant Slops',
+        Legs = 'Errant Slops', -- nimue's tights, byakko 2.0
         Feet = 'Yigit Crackows',
     },
     Mag_Spell_Intelligence = {

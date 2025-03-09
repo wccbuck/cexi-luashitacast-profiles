@@ -177,6 +177,7 @@ local sets = {
         Neck = 'Jeweled Collar',
         Ear1 = 'Colossus\'s Earring',
         -- Body = 'Avalon Breastplate', -- Tiamat drop
+        -- Body = 'Blue Cotehardie' -- see grand trials. -3%
         Hands = 'Denali Wristbands',
         Ring1 = 'Merman\'s Ring',
         Ring2 = 'Merman\'s Ring',
@@ -191,7 +192,7 @@ local sets = {
     Showoff = {},
     Weapons_Default = {
         Main = 'X\'s Knife',
-        Sub = 'Atoyac',
+        Sub = 'Thief\'s Knife',
         Range = 'Staurobow',
         Ammo = 'Crossbow Bolt',
     },
@@ -229,7 +230,10 @@ profile.OnLoad = function()
     utilities.Initialize();
     gFunc.Echo(2,  'TH Tier set to [' .. thtier .. ']');
 
-    (function () AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 20') end):once(3);
+    (function ()
+        AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 20');
+        gFunc.ForceEquipSet(sets.Weapons_Default);
+    end):once(3);
     -- TODO: set these based on subjob
     -- AshitaCore:GetChatManager():QueueCommand(1, '/macro book 2');
     -- AshitaCore:GetChatManager():QueueCommand(1, '/macro set 1');
