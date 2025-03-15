@@ -62,7 +62,7 @@ local sets = {
         Hands = rogArmlets,
     },
     WS_Default = {
-        Head = 'Gnadbhod\'s Helm', -- eventually hct
+        Head = 'Maat\'s Cap',
         Neck = 'Fotia Gorget',
         Ear1 = 'Aesir Ear Pendant',
         Ear2 = 'Bushinomimi',
@@ -90,7 +90,7 @@ local sets = {
         Feet = 'Adsilio Boots +1',
     },
     WS_Mandalic = {
-        Head = 'Gnadbhod\'s Helm', -- eventually hct
+        Head = 'Maat\'s Cap',
         Neck = 'Fotia Gorget',
         Ear1 = 'Aesir Ear Pendant',
         Ear2 = 'Pixie Earring',
@@ -105,7 +105,7 @@ local sets = {
     },
     WS_Mercy = {}, -- STR
     WS_LastStand = {
-        Head = dragonCap,
+        Head = 'Maat\'s Cap',
         Neck = 'Fotia Gorget',
         Ear1 = 'Wilhelm\'s Earring',
         Ear2 = 'Altdorf\'s Earring',
@@ -177,7 +177,6 @@ local sets = {
         Neck = 'Jeweled Collar',
         Ear1 = 'Colossus\'s Earring',
         -- Body = 'Avalon Breastplate', -- Tiamat drop
-        -- Body = 'Blue Cotehardie' -- see grand trials. -3%
         Hands = 'Denali Wristbands',
         Ring1 = 'Merman\'s Ring',
         Ring2 = 'Merman\'s Ring',

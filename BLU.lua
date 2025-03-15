@@ -103,7 +103,7 @@ local sets = {
     },
     WS_Default = {
         Ammo = 'Tiphia Sting',
-        Head = 'Gnadbhod\'s Helm', -- swap this to Maat's cap when you get it
+        Head = 'Maat\'s Cap',
         Neck = 'Fotia Gorget',
         Ear1 = 'Aesir Ear Pendant',
         Ear2 = 'Suppanomimi',
@@ -197,13 +197,13 @@ local sets = {
     -- },
     Headbutt = {
         -- all accuracy.
-        Ammo = 'Oneiros Pebble'
+        Ammo = 'Oneiros Pebble',
         Head = ohat,
         Neck = 'Peacock Charm',
         Ear1 = optEarring,
         Ear2 = 'Suppanomimi',
         Body = 'Homam Corazza',
-        Hands = { Name = 'Mrg. Bazubands +1', Augment = { [1] = 'VIT+4', [2] = 'STR+4', [3] = 'Accuracy+6', [4] = 'Attack+6', [5] = 'Haste+4' } },
+        Hands = mrgBaz,
         Ring1 = 'Toreador\'s Ring',
         Ring2 = 'Rajas Ring',
         Back = 'Mirage Mantle',
@@ -226,7 +226,7 @@ local sets = {
         Feet = bloodGreaves,
     },
     Phys_Spell = {
-        Ammo = 'Oneiros Pebble'
+        Ammo = 'Oneiros Pebble',
         Head = 'Dampening Tam',
         Neck = 'Chivalrous Chain',
         Ear1 = 'Pixie Earring',
@@ -252,14 +252,16 @@ local sets = {
         Feet = bloodGreaves,
     },
     Phys_Spell_Agi = { -- e.g. jet stream
+        Head = 'Maat\'s Cap',
         Feet = bloodGreaves,
     },
     Phys_Spell_Vit = { -- e.g. quad continuum
+        Head = 'Maat\'s Cap',
         -- Neck = 'Fortitude Torque',
     },
     Mag_Spell_Charisma = { -- eyes on me
         Ammo = 'Hedgehog Bomb',
-        Head = 'Errant Hat',
+        Head = 'Maat\'s Cap',
         Neck = 'Bird Whistle',
         Ear1 = 'Moldavite Earring',
         Ear2 = 'Novio Earring',
@@ -270,11 +272,11 @@ local sets = {
         Back = 'Jester\'s Cape',
         Waist = 'Salire Belt',
         Legs = 'Errant Slops', -- nimue's tights, byakko 2.0
-        Feet = 'Yigit Crackows',
+        Feet = 'Denali Gamashes',
     },
     Mag_Spell_Intelligence = {
         Ammo = 'Phantom Tathlum',
-        Head = 'Magus Keffiyeh',
+        Head = 'Maat\'s Cap',
         Neck = 'Lmg. Medallion +1',
         Ear1 = 'Moldavite Earring',
         Ear2 = 'Novio Earring',
@@ -285,11 +287,11 @@ local sets = {
         Back = 'Voluspa Mantle',
         Waist = 'Salire Belt',
         Legs = 'Errant Slops',
-        Feet = 'Yigit Crackows',
+        Feet = 'Denali Gamashes',
     },
     Mag_Spell_Mind = {
         Ammo = 'Hedgehog Bomb',
-        Head = 'Yigit Turban',
+        Head = 'Maat\'s Cap',
         Neck = 'Gnole Torque',
         Ear1 = 'Moldavite Earring',
         Ear2 = 'Novio Earring',
@@ -300,12 +302,15 @@ local sets = {
         Back = 'Dew Silk Cape +1',
         Waist = 'Salire Belt',
         Legs = 'Errant Slops',
-        Feet = 'Yigit Crackows',
+        Feet = 'Denali Gamashes',
+    },
+    Searing_Tempest = {
+        -- applied on top of Mag_Spell_Intelligence
     },
     Cannonball = {
         -- def, vit, acc, str
-        Ammo = 'Bibiki Seashell',
-        Head = 'Mirage Keffiyeh', -- replace with dusk mask
+        Ammo = 'Oneiros Pebble',
+        Head = 'Maat\'s Cap',
         Neck = 'Fortitude Torque',
         Ear1 = optEarring,
         Ear2 = 'Suppanomimi',
@@ -331,7 +336,7 @@ local sets = {
         Ammo = 'Phantom Tathlum',
         Head = 'Magus Keffiyeh',
         Neck = 'Lmg. Medallion +1',
-        Ear1 = 'Bushinomimi', -- swap for static earring or INT+
+        Ear1 = 'Abyssal Earring',
         Ear2 = 'Aqua Earring', -- swap for INT+
         Body = bloodMail,
         Hands = 'Yigit Gages',
@@ -395,6 +400,7 @@ local sets = {
         Main = 'Mimesis',
         Sub = 'Xiutleato',
         -- Range = 'Rising Sun',
+        Ammo = 'Oneiros Pebble',
     },
     Buff = {
         Back = 'Grapevine Cape',
@@ -517,7 +523,6 @@ profile.HandleMidcast = function()
         elseif utilities.TargetEva == 'high' then
             gFunc.EquipSet(sets.Phys_Spell_High_Eva);
         end
-
         if bluMag.PhysAgi:contains(spell.Name) then
             gFunc.EquipSet(sets.Phys_Spell_Agi);
         elseif bluMag.PhysDex:contains(spell.Name) then
@@ -527,21 +532,25 @@ profile.HandleMidcast = function()
         end
     elseif bluMag.IntNuke:contains(spell.Name) then
         gFunc.EquipSet(sets.Mag_Spell_Intelligence);
+        if (spell.Name == 'Searing Tempest') then
+            gFunc.EquipSet(sets.Searing_Tempest);
+        end
     elseif bluMag.MndNuke:contains(spell.Name) then
         gFunc.EquipSet(sets.Mag_Spell_Mind);
     elseif bluMag.ChrNuke:contains(spell.Name) then
         gFunc.EquipSet(sets.Mag_Spell_Charisma);
     elseif (spell.Skill == 'Healing Magic') or (bluMag.Cure:contains(spell.Name)) then
         gFunc.EquipSet(sets.Cure);
-    elseif (spell.Skill == 'Enhancing Magic') or (bluMag.Buff:contains(spell.Name)) then
-        -- https://www.bg-wiki.com/ffxi/CatsEyeXI_Systems/Jobs#Blue_Mage
-        -- "Blue Magic affected by Diffusion gets the bonus from gear that
-        -- increases Enhancing Magic Duration after the 8-22-2024 update."
-        gFunc.EquipSet(sets.Buff);
     elseif bluMag.Breath:contains(spell.Name) then
         gFunc.EquipSet(sets.Breath);
     else
         gFunc.EquipSet(sets.BluMagSkill);
+        if (spell.Skill == 'Enhancing Magic') or (bluMag.Buff:contains(spell.Name)) then
+            -- https://www.bg-wiki.com/ffxi/CatsEyeXI_Systems/Jobs#Blue_Mage
+            -- "Blue Magic affected by Diffusion gets the bonus from gear that
+            -- increases Enhancing Magic Duration after the 8-22-2024 update."
+            gFunc.EquipSet(sets.Buff);
+        end
     end
 end
 

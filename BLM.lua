@@ -108,9 +108,26 @@ local sets = {
         Legs = 'Errant Slops',
         Feet = 'Goliard Clogs',
     },
+    Dark = {
+        -- mostly dark magic skill+, also magic accuracy, int (for magic accuracy)
+        Ammo = 'Phtm. Tathlum',
+        Head = 'Windfall Hat', -- just for recast. could swap for zenith crown with dark augment
+        Neck = 'Incanter\'s Torque',
+        Ear1 = 'Aqua Earring', -- swap with dark earring
+        Ear2 = 'Abyssal Earring',
+        Body = 'Nashira Manteel',
+        Hands = 'Sorcerer\'s Gloves',
+        Ring1 = 'Omega Ring',
+        Ring2 = 'Tamas Ring',
+        Back = 'Voluspa Mantle',
+        Waist = 'Salire Belt', -- swap with charmer's sash
+        Legs = 'Wizard\'s Tonban',
+        Feet = 'Src. Sabots +1', -- swap with Igqira Huaraches (esp augmented)
+    },
     PDT = {}, -- TODO
     MDT = {},
     BDT = {},
+
 };
 profile.Sets = sets;
 
@@ -179,6 +196,8 @@ profile.HandleMidcast = function()
         gFunc.EquipSet(sets.Nuke);
     elseif (spell.Skill == 'Enfeebling Magic') then
         gFunc.EquipSet(sets.Enfeeble);
+    elseif (spell.Skill == 'Dark Magic') then
+        gFunc.EquipSet(sets.Dark);
     end
 end
 
