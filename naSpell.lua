@@ -266,7 +266,7 @@ function naSpell.Cast()
         end
     end
 
-    if (#charmedPlayers == 0) and (numSleptPlayersWithin10 > 1) and not (mmRecast:GetSpellTimer(7) > 0) then
+    if (#charmedPlayers == 0) and (numSleptPlayersWithin10 > 2) and not (mmRecast:GetSpellTimer(7) > 0) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Curaga" <me>');
     elseif highestPriority < 999 then
         local targets = {};

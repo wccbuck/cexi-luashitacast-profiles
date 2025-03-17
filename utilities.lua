@@ -10,7 +10,7 @@ utilities.OverrideSet = 'NONE';
 utilities.OverrideSetOptions = {'NONE', 'PDT', 'MDT', 'BDT', 'IDLE', 'SHOWOFF'};
 utilities.TargetEva = 'default'; -- 'default', 'high', or 'low'
 
-utilities.AliasList = T{'warpring','sproutberet','echadring','empressband','reraise','pdt','mdt','bdt','idle','showoff','acc'};
+utilities.AliasList = T{'warpring','sproutberet','echadring','empressband','reraise','pdt','mdt','bdt','idle','showoff','acc','randmount'};
 
 -- Add all of the above aliases to the bottom of your catseyexi-client/Ashita/scripts/default.txt file like so:
 --      /alias /warpring /lac fwd warpring
@@ -82,6 +82,15 @@ function utilities.HandleCommands(args)
 		else
 			utilities.TargetEva = 'default'
 			gFunc.Echo(255, 'Accuracy [DEFAULT]');
+		end
+	elseif args[1] == 'randmount' then
+		local mounted = gData.GetBuffCount('Mounted');
+		if (mounted > 0) then
+			AshitaCore:GetChatManager():QueueCommand(1, '/dismount');
+		else
+			local mounts = {'Raptor', 'Crab', 'Fenrir', 'Magic Pot', 'Tulfaire', 'Hippogryph', 'Raaz'};
+			local mount = mounts[math.random(#mounts)]
+			AshitaCore:GetChatManager():QueueCommand(1, '/mount "'..mount..'"');
 		end
     end
 end
@@ -167,6 +176,7 @@ function utilities.ResetDefaultWeapons(weaponset)
 end
 
 function utilities.DelayExec(commands)
+	-- Thorny on the ashita discord helped me put this together.
 	-- use this function like so:
 	-- utilities.DelayExec:bind1({
 	-- 	{ Command='/echo "Line 1"', Delay=0 },

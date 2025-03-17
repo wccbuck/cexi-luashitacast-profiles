@@ -231,6 +231,7 @@ profile.OnLoad = function()
 
     (function ()
         AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 20');
+        AshitaCore:GetChatManager():QueueCommand(1, '/macro book 1');
         gFunc.ForceEquipSet(sets.Weapons_Default);
     end):once(3);
     -- TODO: set these based on subjob

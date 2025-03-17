@@ -330,7 +330,6 @@ local sets = {
         Body = bloodMail,
         Ring2 = 'Flame Ring',
         Legs = bloodCuisses,
-        Feet = bloodGreaves,
     },
     BlazingBound = {
         Ammo = 'Phantom Tathlum',
@@ -367,9 +366,11 @@ local sets = {
     },
     PDT = {
         -- TODO
-        Ammo = 'Bibiki Seashell',
+        -- Ammo = 'Bibiki Seashell',
+        Ammo = 'Oneiros Pebble',
         Ear1 = 'Colossus\'s Earring',
         Ear2 = 'Soil Earring',
+        Body = bloodMail,
         -- Body = 'Scorpion Harness +1' -- see grand trials. -3%
         Hands = 'Denali Wristbands',
         Ring1 = 'Sattva Ring',

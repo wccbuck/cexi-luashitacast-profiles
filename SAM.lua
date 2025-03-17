@@ -28,7 +28,9 @@ local mynHaidate = {
     Name = 'Myn. Haidate +1', Augment = { [1] = '"Store TP"+5', [2] = 'Haste+5' }
 };
 
-local hmnSuneate = 'Hmn. Sune-Ate +1'; -- TODO get augs
+local hmnSuneate = {
+    Name = 'Hmn. Sune-Ate +1', Augment = { [1] = 'STR+4', [2] = 'Polearm skill +10', [3] = 'AGI+8', [4] = 'Archery skill +6' }
+};
 
 local sets = {
     TPGain = {
@@ -86,6 +88,31 @@ local sets = {
     WS_High_Eva = {
 
     },
+    Ranged = {
+        Head = { Name = 'Optical Hat', Augment = { [1] = 'Haste+3', [2] = 'HP+15', [3] = 'AGI+3', [4] = 'DEX+3' } },
+        Neck = 'Peacock Charm', -- swap to Hope Torque when you get it
+        Ear1 = 'Altdorf\'s Earring',
+        Ear2 = 'Wilhelm\'s Earring',
+        Body = 'Enkidu\'s Harness',
+        Hands = 'Seiryu\'s Kote',
+        Ring1 = 'Merman\'s Ring',
+        Ring2 = 'Merman\'s Ring',
+        Back = 'Aife\'s Mantle',
+        Waist = 'Buccaneer\'s Belt',
+        Legs = mynHaidate,
+        Feet = hmnSuneate,
+    },
+    ApexArrow = {
+        -- this gets applied on top of WS_Default
+        Ear1 = 'Altdorf\'s Earring',
+        Ear2 = 'Wilhelm\'s Earring',
+        Hands = 'Seiryu\'s Kote',
+        Ring1 = 'Garrulous Ring',
+        Ring2 = 'Merman\'s Ring',
+        Back = 'Fowler\'s Mantle',
+        Waist = 'Buccaneer\'s Belt',
+        Feet = hmnSuneate,
+    },
     PDT = {
         Head = acesHelm,
         Neck = 'Rikugame Nodowa',
@@ -139,7 +166,11 @@ profile.OnLoad = function()
     gSettings.AllowAddSet = true;
     utilities.Initialize();
 
-    (function () AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 19') end):once(3);
+    (function ()
+        AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 19');
+        AshitaCore:GetChatManager():QueueCommand(1, '/macro book 1');
+        gFunc.ForceEquipSet(sets.Weapons_Default);
+    end):once(3);
     -- TODO: set these based on subjob
     -- AshitaCore:GetChatManager():QueueCommand(1, '/macro book 2');
     -- AshitaCore:GetChatManager():QueueCommand(1, '/macro set 1');
@@ -228,6 +259,7 @@ profile.HandlePreshot = function()
 end
 
 profile.HandleMidshot = function()
+    gFunc.EquipSet(sets.Ranged);
 end
 
 profile.HandleWeaponskill = function()
@@ -245,11 +277,15 @@ profile.HandleWeaponskill = function()
     elseif utilities.TargetEva == 'high' then
         gFunc.EquipSet(sets.WS_High_Eva);
     end
+
+    local ws = gData.GetAction();
+    if (ws.Name == 'Apex Arrow') then
+        gFunc.EquipSet(sets.ApexArrow);
+    end
     -- could put other WS sets here but they pretty much all are optimized around
     -- the pieces in WS_Default
     -- for example, if you don't have fotia:
 
-    -- local ws = gData.GetAction();
     -- if (ws.Name == 'Tachi: Kaiten') then
     --     gFunc.EquipSet(sets.WS_ThunGorget);
     -- elseif (ws.Name == 'Tachi: Shoha') then
