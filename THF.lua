@@ -309,6 +309,10 @@ profile.HandleAbility = function()
     local ability = gData.GetAction();
     if (T{'Flee', 'Steal', 'Hide', 'Provoke'}:contains(ability.Name)) then
         gFunc.EquipSet(sets[ability.Name]);
+    elseif (ability.Name == 'Trick Attack') then
+        -- this is handled in HandleDefault as well, but sometimes the autoattack can happen
+        -- before gData.GetBuffCount('Trick Attack') updates
+        gFunc.EquipSet(sets.TrickAttack);
     end
 
     utilities.CheckCancels();
@@ -324,6 +328,10 @@ end
 
 profile.HandleMidcast = function()
     -- TODO: fast cast, haste
+    -- I don't think you can proc TH on spells, so I'm not passing in thtier.
+    if (not isTargetTagged()) then
+        gFunc.EquipSet(sets.TH);
+    end
 end
 
 profile.HandlePreshot = function()

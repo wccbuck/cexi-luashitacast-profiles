@@ -255,7 +255,7 @@ profile.HandleCommand = function(args)
                 { Command='/ja "Pianissimo" <me>', Delay=0 },
                 { Command='/up "'..args[2]..'" <me>', Delay=1 },
                 { Command='/cancel Pianissimo', Delay=1 },
-              }):oncef(1);
+            }):oncef(1);
         else
             AshitaCore:GetChatManager():QueueCommand(1, '/up "'..args[2]..'" <me>');
         end

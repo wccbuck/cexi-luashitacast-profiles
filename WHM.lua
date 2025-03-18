@@ -67,20 +67,41 @@ local sets = {
         Head = { Name = 'Optical Hat', Augment = { [1] = 'Haste+3', [2] = 'HP+15', [3] = 'AGI+3', [4] = 'DEX+3' } },
         Neck = 'Chivalrous Chain',
         Ear1 = 'Brutal Earring',
-        Ear2 = 'Ethereal Earring',
+        Ear2 = 'Ethereal Earring', -- swap with hollow
         Body = 'Nashira Manteel', -- swap with reverend
         Hands = 'Blessed Mitts',
         Ring1 = 'Rajas Ring',
-        Ring2 = 'Tamas Ring',
+        Ring2 = 'Toreador\'s Ring',
         Back = 'Aife\'s Mantle',
         Waist = 'Ninurta\'s Sash',
         Legs = { Name = 'Prince\'s Slops', Augment = { [1] = 'Pet: Rng. Acc.+6', [2] = '"Mag.Def.Bns."+2', [3] = 'Accuracy+3', [4] = 'Pet: Accuracy+6', [5] = 'Attack+3' } },
         Feet = 'Blessed Pumps',
     },
     WS_Default = {
-        -- TODO
+        -- realmrazer: mnd 73%
+        Ammo = 'Tiphia Sting',
+        Head = 'Maat\'s Cap',
+        Neck = 'Fotia Gorget',
+        Ear1 = 'Aesir Ear Pendant',
+        Ear2 = 'Bushinomimi',
+        Body = 'Blessed Bliaut', -- mnd+5 (augment for dex+ and atk+)
+        -- other body options:
+        -- - tabin jupon +1 (str+2, dex+2, acc+7)
+        -- - marduk's jubbah (mnd+12)
+        Hands = 'Hlr. Mitts +1', --mnd+7, str+7
+        Ring1 = 'Rajas Ring',
+        Ring2 = 'Aqua Ring', -- replace with Strigoi?
+        Back = 'Cuchulain\'s Mantle',
+        Waist = 'Visionary Obi',
+        Legs = { Name = 'Prince\'s Slops', Augment = { [1] = 'Pet: Rng. Acc.+6', [2] = '"Mag.Def.Bns."+2', [3] = 'Accuracy+3', [4] = 'Pet: Accuracy+6', [5] = 'Attack+3' } },
+        -- best legs piece: blessed trousers augmented (str, attack, double attack)
+        Feet = 'Goliard Clogs', -- dex+4 mnd+4. swap for marduk's (mnd+10)
+    },
+    WS_Mystic_Boon = {
         -- note that Mystic Boon has no SC properties and therefore doesn't get a bonus from Fotia
-    }, 
+        -- str 30%, mnd 70%
+        Neck = 'Chivalrous Chain', -- laran's pendant?
+    },
     Haste = {
         Head = 'Windfall Hat',
         Ear2 = 'Loquac. Earring',
@@ -142,6 +163,7 @@ local sets = {
         Ammo = 'Mana Ampulla',
         Head = 'Marduk\'s Tiara',
         Neck = 'Jokushu Chain', -- 10 divine
+        -- Ear1 = 'Knight\'s Earring',
         Ear2 = 'Aqua Earring',
         Body = 'Errant Hpl.',
         Hands = 'Blessed Mitts',
@@ -367,6 +389,10 @@ profile.HandleWeaponskill = function()
     -- end
     --
     gFunc.EquipSet(sets.WS_Default);
+    local ws = gData.GetAction();
+    if (ws.Name == 'Mystic Boon') then
+        gFunc.EquipSet(sets.WS_Mystic_Boon);
+    end
 end
 
 return profile;

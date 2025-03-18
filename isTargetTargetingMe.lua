@@ -51,7 +51,7 @@ local function isTargetTargetingMe()
     return targeted and os.clock() - targeted < 10;
 end
 
-ashita.events.register('packet_in', 'action_tracker_cb', function(e)
+ashita.events.register('packet_in', 'packet_in_targeting_me_cb', function(e)
     if (e.id == 0x28) then
         handleActionPacket(e);
     elseif (e.id == 0x0029) then

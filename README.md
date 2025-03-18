@@ -29,6 +29,7 @@ These profiles add the following helpful commands to the game. If you want to us
 * `/warpring`, `/sproutberet`, `/echadring`, `/empressband`: These commands equip the appropriate item, wait for the cooldown, use the item, and then unequip it. Helpful for when your Dedication runs out during gains.
 * `/showoff`: Similar to the damage-taken and idle equipment overrides, this command replaces your idle set with a "showoff" set you can put on while AFK'ing in Lower Jeuno.
 	> Unlike the damage-taken sets, your showoff set is only applied when you aren't moving or engaged in melee, so your Kupo Suit can still be equipped while you're running around town.
+* `/randmount`: Randomly select a mount from a hard-coded list, or dismount if you repeat the command. Not nearly as well-featured as onimitch's mountmaster (https://github.com/onimitch/ffxi-mountmaster/tree/main) but I wanted a way to randomize from a select subset of my mounts.
 
 ### Job-Specific Custom Commands
 
@@ -36,6 +37,9 @@ These profiles add the following helpful commands to the game. If you want to us
 	* `thtier`: Use this command to set your preferred level of treasure hunter you'd like to reach before swapping your TH gear to standard melee gear. By default it's set to 6, so if you tagged the mob with TH5 gear equipped, it'll swap after your first proc. `/thtier 1` or just `/thtier` will set it to swap off of your TH gear after the first proc. [More info on Treasure Hunter and the proc system](https://www.bg-wiki.com/ffxi/Treasure_Hunter)
 * BLU
 	* `learning`: Use this command to toggle Magus Bazubands on or off.
+* BRD
+	* `quicksing`: Use this on a self-target song to use Pianissimo, start casting the song, then cancel Pianissimo before the song finishes casting. This allows you to take advantage of Pianissimo's shortened casting time without making the spell single target. This command does not attempt this "Pianissimo trick" if you currently have Pianissimo or Nightingale active when you use the command. You could also do this with an in-game macro, but I made this command so that I could save macro slots.
+		> This command requires the Upcast addon (https://github.com/dewiniaid/ffxi-ashita-upcast). If you don't have it / don't want to use it, replace `/up` with `/ma` in your BRD.lua within profile.HandleCommand.
 
 ## Setup
 

@@ -205,8 +205,12 @@ profile.HandleDefault = function()
         --     gFunc.EquipSet(sets.ThirdEye);
         -- end
 
-        if (gData.GetBuffCount('Sleep') > 0 and player.HP > 200) then
-            gFunc.EquipSet(sets.Berserker);
+        if (gData.GetBuffCount('Sleep') > 0) then
+            if (player.HP > 200) then
+                gFunc.EquipSet(sets.Berserker);
+            else
+                gFunc.EquipSet(sets.Sleep);
+            end
         end
 
     else
