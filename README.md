@@ -1,7 +1,7 @@
 # cexi-luashitacast-profiles
 A set of lua files to be used with Luashitacast on the [CatsEye XI](https://www.catseyexi.com) private server for the game Final Fantasy XI.
 
-These scripts are works-in-progress that I use for my own character in-game (Ziphion). I'm posting these publicly as a way to offer more examples for people to reference as they craft their own lua scripts. Only a few jobs are represented here (SAM, THF, WHM, BLU, BRD, and BLM); as I start using other jobs more, I will add luas for them here.
+These scripts are works-in-progress that I use for my own character in-game (Ziphion). I'm posting these publicly as a way to offer more examples for people to reference as they craft their own lua scripts. Only a few jobs are represented here (SAM, THF, WHM, BLU, BRD, BLM, and SMN); as I start using other jobs more, I will add luas for them here.
 
 ## Features
 
@@ -40,6 +40,8 @@ These profiles add the following helpful commands to the game. If you want to us
 * BRD
 	* `quicksing`: Use this on a self-target song to use Pianissimo, start casting the song, then cancel Pianissimo before the song finishes casting. This allows you to take advantage of Pianissimo's shortened casting time without making the spell single target. This command does not attempt this "Pianissimo trick" if you currently have Pianissimo or Nightingale active when you use the command. You could also do this with an in-game macro, but I made this command so that I could save macro slots.
 		> This command requires the Upcast addon (https://github.com/dewiniaid/ffxi-ashita-upcast). If you don't have it / don't want to use it, replace `/up` with `/ma` in your BRD.lua within profile.HandleCommand.
+* SMN
+	* `pupinparty` / `bstinparty`: Use this command to toggle Affinity Earring / Fidelity Earring on or off while your avatar is engaged or using a blood pact. Keep in mind that these earrings *do not work yet* in LSB (as of March 2025), so it's better to keep these toggles off for now.
 
 ## Setup
 
