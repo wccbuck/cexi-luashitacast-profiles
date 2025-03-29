@@ -67,7 +67,7 @@ local sets = {
         Head = { Name = 'Optical Hat', Augment = { [1] = 'Haste+3', [2] = 'HP+15', [3] = 'AGI+3', [4] = 'DEX+3' } },
         Neck = 'Chivalrous Chain',
         Ear1 = 'Brutal Earring',
-        Ear2 = 'Ethereal Earring', -- swap with hollow
+        Ear2 = 'Hollow Earring',
         Body = 'Nashira Manteel', -- swap with reverend
         Hands = 'Blessed Mitts',
         Ring1 = 'Rajas Ring',
@@ -82,7 +82,7 @@ local sets = {
         Ammo = 'Tiphia Sting',
         Head = 'Maat\'s Cap',
         Neck = 'Fotia Gorget',
-        Ear1 = 'Aesir Ear Pendant',
+        Ear1 = 'Brutal Earring',
         Ear2 = 'Bushinomimi',
         Body = 'Blessed Bliaut', -- mnd+5 (augment for dex+ and atk+)
         -- other body options:
@@ -189,7 +189,7 @@ local sets = {
         Body = 'Oracle\'s Robe',
         Hands = 'Oracle\'s Gloves',
         Ring1 = 'Star Ring',
-        Ring2 = 'Tamas Ring',
+        Ring2 = 'Star Ring',
         Back = {
             Name = 'Blue Cape',
             Augment = {
@@ -246,6 +246,7 @@ local sets = {
     },
     Weapons_Default = {
         Main = 'Tamaxchi',
+        -- Main = 'Werebuster',
         Sub = genbuShield,
     },
     PDT = {

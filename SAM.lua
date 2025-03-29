@@ -70,7 +70,7 @@ local sets = {
     WS_Default = {
         Head = { Name = 'Shr.Znr.Kabuto +1', Augment = { [1] = 'Weapon skill damage +4%', [2] = '"Conserve TP"+5', [3] = 'Sklchn.dmg.+4%' } },
         Neck = 'Fotia Gorget',
-        Ear1 = 'Aesir Ear Pendant',
+        Ear1 = 'Brutal Earring',
         Ear2 = 'Bushinomimi',
         Body = { Name = 'Hmn. Domaru +1', Augment = { [1] = 'STR+6', [2] = 'Sklchn.dmg.+3%', [3] = '"Conserve TP"+6', [4] = 'Attack+12' } },
         Hands = mynKote,
@@ -88,12 +88,17 @@ local sets = {
     WS_High_Eva = {
 
     },
+    GKT_Skill = {
+        Head = 'Sao. Kabuto +1',
+        Ear2 = 'Bushinomimi',
+        -- justice torque, moepapa annulet
+    },
     Ranged = {
         Head = { Name = 'Optical Hat', Augment = { [1] = 'Haste+3', [2] = 'HP+15', [3] = 'AGI+3', [4] = 'DEX+3' } },
         Neck = 'Peacock Charm', -- swap to Hope Torque when you get it
         Ear1 = 'Altdorf\'s Earring',
         Ear2 = 'Wilhelm\'s Earring',
-        Body = 'Enkidu\'s Harness',
+        Body = 'Kyudogi',
         Hands = 'Seiryu\'s Kote',
         Ring1 = 'Merman\'s Ring',
         Ring2 = 'Merman\'s Ring',
@@ -149,6 +154,12 @@ local sets = {
         Sub = 'Pole Grip',
         Range = 'Ifrit\'s Bow',
         Ammo = 'Iron Arrow',
+    },
+    Weapons_Archery = {
+        Main = 'Thunder Staff',
+        Sub = 'Axe Grip',
+        Range = 'Ajjub Bow',
+        Ammo = 'Demon Arrow',
     },
     Sleep = {
         Neck = 'Opo-opo Necklace',
@@ -285,6 +296,9 @@ profile.HandleWeaponskill = function()
     local ws = gData.GetAction();
     if (ws.Name == 'Apex Arrow') then
         gFunc.EquipSet(sets.ApexArrow);
+    elseif (ws.Name == 'Tachi: Ageha') then
+        -- need to keep GKT skill high enough
+        gFunc.EquipSet(sets.GKT_Skill);
     end
     -- could put other WS sets here but they pretty much all are optimized around
     -- the pieces in WS_Default

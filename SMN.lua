@@ -62,7 +62,7 @@ local sets = {
         Body = 'Oracle\'s Robe',
         Hands = 'Oracle\'s Gloves',
         Ring1 = 'Star Ring',
-        Ring2 = 'Tamas Ring',
+        Ring2 = 'Star Ring',
         Back = {
             Name = 'Blue Cape',
             Augment = {
@@ -120,7 +120,7 @@ local sets = {
         Back = 'Aife\'s Mantle', -- pet attack +10
         Waist = 'Mujin Obi',
         Legs = 'Evoker\'s Spats', -- pet acc +10
-        Feet = 'Summoner\'s Pgch.', -- swap for +1 augmented (pet DA/crit+3%)
+        Feet = 'Summoner\'s Pgch.', -- pet attack +7. swap for +1 augmented (pet DA/crit+3%)
     },
     BP_Mag = {
         -- bp damage, pet MAB+, smn skill
@@ -188,6 +188,7 @@ local sets = {
         -- hands: evoker's bracers +1, pet damage taken -5%
         -- waist: beastly girdle (yasuo drop), pet damage taken -5%, augments give acc+, regen
         Legs = 'Goliard Trews', -- pet def +10
+        Feet = 'Koschei Crackows', -- avatar def +5
         -- Legs = 'Enticer\'s Pants' -- pet damage taken -2%
         -- (or, smn spats +1: pet magic damage taken -4%)
     },
@@ -256,11 +257,12 @@ profile.HandleCommand = function(args)
     if args[1] == 'spirit' then
         local environment = gData.GetEnvironment();
         local weatherElement = environment.WeatherElement;
-        -- TODO: Remove "Thunder" when you get thunder spirit
+        -- Add whichever spirits you don't have yet to the {"None", "Unknown"} table.
+        -- e.g. {"None", "Unknown", "Thunder"}. If it's lightning day, you'll summon dark spirit instead.
         local spiritElement = "Dark";
-        if (T{"None", "Unknown", "Thunder"}:contains(weatherElement)) then
+        if (T{"None", "Unknown"}:contains(weatherElement)) then
             local dayElement = environment.DayElement;
-            if (not T{"None", "Unknown", "Thunder"}:contains(dayElement)) then
+            if (not T{"None", "Unknown"}:contains(dayElement)) then
                 spiritElement = dayElement;
             end
         else

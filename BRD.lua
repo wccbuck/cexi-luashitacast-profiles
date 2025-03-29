@@ -44,6 +44,7 @@ local instruments = {
     Requiem = 'Requiem Flute',
     Elegy = 'Horn +1',
     Threnody = 'Piccolo +1',
+    Carol = 'Crumhorn',
 };
 
 local sets = {
@@ -54,7 +55,7 @@ local sets = {
         Ear2 = 'Soil Earring',
         Body = chlJust,
         Hands = 'Chl. Cuffs +1',
-        Ring1 = 'Mercenary\'s Ring',
+        Ring1 = 'Corneus Ring',
         Ring2 = 'Tamas Ring',
         Back = 'Umbra Cape',
         Waist = 'Marid Belt',
@@ -177,7 +178,7 @@ local sets = {
         Body = 'Oracle\'s Robe',
         Hands = 'Oracle\'s Gloves',
         Ring1 = 'Star Ring',
-        Ring2 = 'Tamas Ring',
+        Ring2 = 'Star Ring',
         Back = {
             Name = 'Blue Cape',
             Augment = {

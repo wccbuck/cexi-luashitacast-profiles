@@ -88,13 +88,12 @@ function utilities.HandleCommands(args)
 		if (mounted > 0) then
 			AshitaCore:GetChatManager():QueueCommand(1, '/dismount');
 		else
-			local mounts = {'Crab', 'Fenrir', 'Magic Pot', 'Tulfaire', 'Hippogryph', 'Raaz'};
+			local mounts = {'Crab', 'Fenrir', 'Magic Pot', 'Tulfaire', 'Hippogryph', 'Raaz', 'Xzomit', 'Bomb'};
 			local mount = mounts[math.random(#mounts)]
 			AshitaCore:GetChatManager():QueueCommand(1, '/mount "'..mount..'"');
 		end
     end
 end
-
 
 function utilities.CancelShadows(spell)
     -- improved on GetAwayCoxn's "DoShadows" which was loosely based on

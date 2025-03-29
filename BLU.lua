@@ -15,15 +15,6 @@ local bloodCuisses = {
     Augment = { [1] = 'VIT+6', [2] = '"Fast Cast"+4', [3] = 'Evasion+4' }
 };
 
-local bloodGreaves = {
-    Name = 'Blood Greaves',
-    Augment = {
-        [1] = 'Blue Magic skill +5',
-        [2] = '"Resist Gravity"+2',
-        [3] = '"Subtle Blow"+4'
-    }
-};
-
 local ohat = {
     Name = 'Optical Hat',
     Augment = { [1] = 'Haste+3', [2] = 'HP+15', [3] = 'AGI+3', [4] = 'DEX+3' }
@@ -59,11 +50,6 @@ local mrgBaz = {
         [4] = 'Attack+8',
         [5] = 'Haste+5'
     }
-};
-
-local optEarring = {
-    Name = 'Optical Earring',
-    Augment = { [1] = 'DEX+1', [2] = 'HP+2' }
 };
 
 local learning = false;
@@ -105,7 +91,7 @@ local sets = {
         Ammo = 'Tiphia Sting',
         Head = 'Maat\'s Cap',
         Neck = 'Fotia Gorget',
-        Ear1 = 'Aesir Ear Pendant',
+        Ear1 = 'Brutal Earring',
         Ear2 = 'Suppanomimi',
         Body = bloodMail,
         Hands = 'Enkidu\'s Mittens',
@@ -113,7 +99,7 @@ local sets = {
         Ring2 = 'Rajas Ring',
         Back = 'Cuchulain\'s Mantle',
         Waist = 'Potent Belt',
-        Legs = princesSlops,
+        Legs = 'Mirage Shalwar +1',
         Feet = 'Denali Gamashes', -- replace with Setanta's when you get it and add denali to req + savage blade
     },
     WS_Requiescat = {
@@ -174,6 +160,7 @@ local sets = {
         Ear2 = 'Darkness Earring',
         Body = 'Errant Hpl.',
         Ring1 = 'Star Ring',
+        Ring2 = 'Star Ring',
         Back = 'Invigorating Cape',
         Waist = 'Hierarch Belt',
         Legs = 'Yigit Seraweels',
@@ -193,15 +180,15 @@ local sets = {
     --     Ring2 = 'Balrahn\'s Ring',
     --     Back = 'Mirage Mantle',
     --     Waist = 'Potent Belt',
-    --     Legs = 'Mirage Shalwar',
-    --     Feet = bloodGreaves,
+    --     Legs = 'Mirage Shalwar +1',
+    --     Feet = 'Blood Greaves',
     -- },
     Headbutt = {
         -- all accuracy.
         Ammo = 'Oneiros Pebble',
         Head = ohat,
         Neck = 'Peacock Charm',
-        Ear1 = optEarring, -- swap with hollow earring
+        Ear1 = 'Hollow Earring',
         Ear2 = 'Suppanomimi',
         Body = 'Homam Corazza',
         Hands = mrgBaz,
@@ -223,8 +210,8 @@ local sets = {
         Ring2 = 'Balrahn\'s Ring',
         Back = 'Mirage Mantle',
         Waist = 'Salire Belt',
-        Legs = 'Mirage Shalwar',
-        Feet = bloodGreaves,
+        Legs = 'Mirage Shalwar +1',
+        Feet = 'Blood Greaves',
     },
     Phys_Spell = {
         Ammo = 'Oneiros Pebble',
@@ -238,8 +225,8 @@ local sets = {
         Ring2 = 'Rajas Ring',
         Back = 'Cuchulain\'s Mantle',
         Waist = 'Visionary Obi',
-        Legs = 'Mirage Shalwar', -- Swap for Enkidu's subligar (subtle blow helps)
-        Feet = 'Denali Gamashes',
+        Legs = 'Mirage Shalwar +1',
+        Feet = 'Blood Greaves', -- or denali gamashes if you don't have acc+5 blu mag+5
     },
     Phys_Spell_High_Eva = {
         Neck = 'Peacock Charm',
@@ -250,11 +237,11 @@ local sets = {
         Waist = 'Warwolf Belt',
     },
     Phys_Spell_Dex = { -- e.g. disseverment, frenetic rip, hysteric barrage
-        Feet = bloodGreaves,
+        Feet = 'Blood Greaves',
     },
     Phys_Spell_Agi = { -- e.g. jet stream
         Head = 'Maat\'s Cap',
-        Feet = bloodGreaves,
+        Feet = 'Blood Greaves',
     },
     Phys_Spell_Vit = { -- e.g. quad continuum
         Head = 'Maat\'s Cap',
@@ -284,11 +271,12 @@ local sets = {
         Body = bloodMail,
         Hands = 'Yigit Gages',
         Ring1 = 'Tamas Ring',
-        Ring2 = 'Snow Ring',
+        Ring2 = 'Galdr Ring',
         Back = 'Voluspa Mantle',
         Waist = 'Salire Belt',
         Legs = 'Errant Slops',
-        Feet = 'Denali Gamashes',
+        -- Feet = 'Denali Gamashes',
+        Feet = 'Yigit Crackows',
     },
     Mag_Spell_Mind = {
         Ammo = 'Hedgehog Bomb',
@@ -303,7 +291,8 @@ local sets = {
         Back = 'Dew Silk Cape +1',
         Waist = 'Salire Belt',
         Legs = 'Errant Slops',
-        Feet = 'Denali Gamashes',
+        -- Feet = 'Denali Gamashes',
+        Feet = 'Yigit Crackows',
     },
     Searing_Tempest = {
         -- applied on top of Mag_Spell_Intelligence
@@ -313,7 +302,7 @@ local sets = {
         Ammo = 'Oneiros Pebble',
         Head = 'Maat\'s Cap',
         Neck = 'Fortitude Torque',
-        Ear1 = optEarring, -- swap with hollow earring
+        Ear1 = 'Hollow Earring',
         Ear2 = 'Suppanomimi',
         Body = 'Enkidu\'s Harness',
         Hands = mrgBaz,
@@ -321,15 +310,15 @@ local sets = {
         Ring2 = 'Rajas Ring',
         Back = 'Cuchulain\'s Mantle',
         Waist = 'Warwolf Belt',
-        Legs = princesSlops,
-        Feet = bloodGreaves,
+        Legs = 'Mirage Shalwar +1',
+        Feet = 'Blood Greaves',
     },
     Cannonball_SA = {
         -- sneak attack, no need for acc. This gets placed on top of Cannonball set
         Ear1 = 'Soil Earring',
         Ear2 = 'Bushinomimi',
         Body = bloodMail,
-        Ring2 = 'Flame Ring',
+        Ring2 = 'Corneus Ring',
         Legs = bloodCuisses,
     },
     BlazingBound = {
@@ -365,11 +354,22 @@ local sets = {
     Breath = {
         Head = 'Saurian Helm', -- or Mirage Keffiyeh but that has less HP+
     },
+    SpIntDown = {
+        -- Head = 'Nashira Turban', -- 10%
+        -- Neck = 'Willpower Torque', -- 5%
+        -- Ear1 = 'Magnetic Earring', -- 8%
+        -- Hands = 'Swift Gages', -- 10%
+        -- Back = 'Solitaire Cape', -- 8%
+        Waist = 'Ninurta\'s Sash', -- 6%, or druid's rope 10%
+        Legs = 'Magus Shalwar', -- 10%, 12% if +1
+        -- Feet = 'Karasutengu', -- 15%
+    },
     PDT = {
         -- TODO
         -- Ammo = 'Bibiki Seashell',
         Ammo = 'Oneiros Pebble',
-        Ear1 = 'Colossus\'s Earring',
+        -- Ear1 = 'Colossus\'s Earring',
+        Ear1 = 'Ethereal Earring',
         Ear2 = 'Soil Earring',
         Body = bloodMail,
         -- Body = 'Scorpion Harness +1' -- see grand trials. -3%

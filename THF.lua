@@ -2,7 +2,7 @@ utilities = gFunc.LoadFile('utilities.lua');
 local isTargetTagged = gFunc.LoadFile('isTargetTagged');
 
 local profile = {};
-local thtier = 7; -- the treasure hunter tier at which we should switch to TP gain set
+local thtier = 8; -- the treasure hunter tier at which we should switch to TP gain set
 
 -- some equipment pieces I use in multiple places
 local ohat = {
@@ -64,7 +64,7 @@ local sets = {
     WS_Default = {
         Head = 'Maat\'s Cap',
         Neck = 'Fotia Gorget',
-        Ear1 = 'Aesir Ear Pendant',
+        Ear1 = 'Brutal Earring',
         Ear2 = 'Bushinomimi',
         Body = dragonHarness,
         Hands = hctMittens,
@@ -92,7 +92,8 @@ local sets = {
     WS_Mandalic = {
         Head = 'Maat\'s Cap',
         Neck = 'Fotia Gorget',
-        Ear1 = 'Aesir Ear Pendant',
+        -- Ear1 = 'Aesir Ear Pendant',
+        Ear1 = 'Brutal Earring',
         Ear2 = 'Pixie Earring',
         Body = dragonHarness,
         Hands = hctMittens,
@@ -164,6 +165,9 @@ local sets = {
         Body = 'Kupo Suit',
         Legs = 'displaced',
     },
+    Step = {
+        Ear1 = 'Choreia Earring',
+    },
     PDT = {
         -- TODO
         -- Body = 'Scorpion Harness +1' -- see grand trials. -3%
@@ -190,17 +194,16 @@ local sets = {
     },
     Showoff = {},
     Weapons_Default = {
-        Main = 'X\'s Knife',
+        -- Main = 'X\'s Knife',
+        Main = 'Sandung',
         Sub = 'Thief\'s Knife',
         Range = 'Staurobow',
         Ammo = 'Crossbow Bolt',
     },
-    -- Weapons_TH = {
-    --     Main = 'X\'s Knife',
-    --     Sub = 'Thief\'s Knife',
-    --     Range = 'Staurobow',
-    --     Ammo = 'Crossbow Bolt',
-    -- },
+    Weapons_DD = {
+        Main = 'Sandung',
+        Sub = 'X\'s Knife',
+    },
     Ranged = {
         Head = ohat,
         Neck = 'Peacock Charm',
@@ -313,6 +316,8 @@ profile.HandleAbility = function()
         -- this is handled in HandleDefault as well, but sometimes the autoattack can happen
         -- before gData.GetBuffCount('Trick Attack') updates
         gFunc.EquipSet(sets.TrickAttack);
+    elseif (string.lower(ability.Name):match('step')) then
+        gFunc.EquipSet(sets.Step);
     end
 
     utilities.CheckCancels();
