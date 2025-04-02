@@ -14,7 +14,7 @@ local zenithMitts = {
 
 local sets = {
     Idle = {
-        Head = 'Src. Petasos +1', -- replace with refresh-augment AF+1
+        Head = 'Wzd. Petasos +1',
         Neck = 'Lmg. Medallion +1',
         Ear1 = 'Novio Earring',
         Ear2 = 'Soil Earring', -- -pdt
@@ -62,7 +62,7 @@ local sets = {
                 [11] = 'HP+30'
             }
         },
-        -- waist
+        Waist = 'Qiqirn Sash',
         Legs = 'Yigit Seraweels',
         Feet = 'Goliard Clogs',
     },

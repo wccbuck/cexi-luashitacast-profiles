@@ -195,7 +195,7 @@ local sets = {
                 [11] = 'HP+30'
             }
         },
-        -- Waist = 'Qiqirn Sash',
+        Waist = 'Qiqirn Sash',
         Legs = 'Yigit Seraweels',
         Feet = 'Goliard Clogs',
     },
