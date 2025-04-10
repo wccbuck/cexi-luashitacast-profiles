@@ -1,6 +1,7 @@
 utilities = gFunc.LoadFile('utilities.lua');
 bluMag = gFunc.LoadFile('bluMag.lua');
 isTargetTargetingMe = gFunc.LoadFile('isTargetTargetingMe');
+isTargetTagged = gFunc.LoadFile('isTargetTagged');
 
 local profile = {};
 
@@ -57,8 +58,8 @@ local learning = false;
 local sets = {
     Idle = {
         Body = 'Morrigan\'s Robe',
-        -- Legs = 'Magus Shalwar +1' -- uncomment this when you get + augment this (refresh + regen)
-        Back = 'Umbra Cape',
+        Legs = 'Magus Shalwar +1',
+        -- Back = 'Umbra Cape',
     },
     TPGain = {
         Head = 'Dampening Tam',
@@ -175,7 +176,7 @@ local sets = {
     --     Neck = 'Lieut. Gorget',
     --     Ear1 = 'Aqua Earring',
     --     Ear2 = 'Suppanomimi',
-	-- 	Body = 'Magus Jubbah',
+	-- 	Body = 'Magus Jubbah +1',
     --     Hands = magBaz,
     --     Ring1 = 'Antica Ring',
     --     Ring2 = 'Balrahn\'s Ring',
@@ -206,7 +207,7 @@ local sets = {
         Head = 'Mirage Keffiyeh',
         Neck = 'Incanter\'s Torque',
         Ear1 = 'Aqua Earring',
-        Body = 'Magus Jubbah',
+        Body = 'Magus Jubbah +1',
         Ring1 = 'Antica Ring',
         Ring2 = 'Balrahn\'s Ring',
         Back = 'Mirage Mantle',
@@ -220,7 +221,7 @@ local sets = {
         Neck = 'Chivalrous Chain',
         Ear1 = 'Pixie Earring',
         Ear2 = 'Suppanomimi',
-        Body = 'Magus Jubbah',
+        Body = 'Magus Jubbah +1',
         Hands = mrgBaz,
         Ring1 = 'Flame Ring',
         Ring2 = 'Rajas Ring',
@@ -362,7 +363,7 @@ local sets = {
         -- Hands = 'Swift Gages', -- 10%
         -- Back = 'Solitaire Cape', -- 8%
         Waist = 'Ninurta\'s Sash', -- 6%, or druid's rope 10%
-        Legs = 'Magus Shalwar', -- 10%, 12% if +1
+        Legs = 'Magus Shalwar +1', -- 12% 
         -- Feet = 'Karasutengu', -- 15%
     },
     PDT = {
@@ -420,6 +421,9 @@ local sets = {
     Sleep = {
         Neck = 'Opo-opo Necklace',
     },
+    TH = {
+        Head = 'Wh. Rarab Cap +1',
+    },
 };
 profile.Sets = sets;
 
@@ -429,7 +433,11 @@ profile.Packer = {
 profile.OnLoad = function()
     gSettings.AllowAddSet = true;
     utilities.Initialize();
-    (function () AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 16') end):once(3);
+    (function ()
+        AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 16');
+        AshitaCore:GetChatManager():QueueCommand(1, '/macro book 4');
+        gFunc.ForceEquipSet(sets.Weapons_Default);
+    end):once(3);
 
 end
 
@@ -463,6 +471,9 @@ profile.HandleDefault = function()
         -- if (isTargetTargetingMe() and player.MPP < 90) then
         --     gFunc.EquipSet(sets.Ethereal);
         -- end
+        if ((player.SubJob == "THF") and (not isTargetTagged())) then
+            gFunc.EquipSet(sets.TH);
+        end
     elseif (player.IsMoving) then
         gFunc.EquipSet(sets.Fast);
     elseif (player.Status == 'Resting') then
@@ -559,6 +570,9 @@ profile.HandleMidcast = function()
             -- increases Enhancing Magic Duration after the 8-22-2024 update."
             gFunc.EquipSet(sets.Buff);
         end
+    end
+    if ((player.SubJob == "THF") and (not isTargetTagged())) then
+        gFunc.EquipSet(sets.TH);
     end
 end
 

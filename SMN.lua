@@ -8,8 +8,28 @@ local bstinparty = false;
 
 local sets = {
     Idle = {
-        -- refresh, avatar perpetuation cost, mp and -dt otherwise
+        -- refresh, regen, mp and -dt otherwise
         -- TODO
+        Head = 'Evk. Horn +1', -- refresh
+        Neck = 'Incanter\'s Torque',
+        Ear1 = 'Loquac. Earring',
+        Ear2 = 'Antivenom Earring',
+        Body = 'Yinyang Robe',
+        Hands = 'Marduk\'s Dastanas',
+        Ring1 = 'Evoker\'s Ring',
+        Ring2 = 'Tamas Ring',
+        Back = 'Summoner\'s Cape',
+        Waist = 'Mujin Obi',
+        Legs = 'Goliard Trews',
+        Feet = 'Summoner\'s Pgch.', -- swap for evoker's +1
+    },
+    Weapons_Default = {
+        Main = 'Chatoyant Staff',
+        Sub = 'Norn\'s Grip',
+        Ammo = 'Hedgehog Bomb', -- replace with soothing sachet, arfarvegr drop (pashhow DKP)
+    },
+    Pet_Idle = {
+        -- similar to Idle, except add avatar perpetuation cost
         Head = 'Evk. Horn +1', -- refresh
         Neck = 'Incanter\'s Torque',
         Ear1 = 'Loquac. Earring',
@@ -23,13 +43,20 @@ local sets = {
         Legs = 'Goliard Trews',
         Feet = 'Summoner\'s Pgch.', -- swap for evoker's +1
     },
-    Weapons_Default = {
-        Main = 'Chatoyant Staff',
-        Sub = 'Norn\'s Grip',
-        Ammo = 'Hedgehog Bomb', -- replace with soothing sachet, arfarvegr drop (pashhow DKP)
-    },
     Pet_TPGain = {
         -- similar to Idle, except add pet buffs (acc+ etc)
+        Head = 'Evk. Horn +1', -- refresh
+        Neck = 'Incanter\'s Torque',
+        Ear1 = 'Loquac. Earring',
+        Ear2 = 'Antivenom Earring',
+        Body = 'Yinyang Robe',
+        Hands = 'Summoner\'s Brcr.',
+        Ring1 = 'Evoker\'s Ring',
+        Ring2 = 'Tamas Ring',
+        Back = 'Summoner\'s Cape',
+        Waist = 'Mujin Obi',
+        Legs = 'Goliard Trews',
+        Feet = 'Summoner\'s Pgch.', -- swap for evoker's +1
     },
     Affinity = {
         -- if party has puppetmaster in it, use this when pet is engaged or during physical BP
@@ -319,7 +346,7 @@ profile.HandleDefault = function()
     elseif (player.IsMoving) then
 		gFunc.EquipSet(sets.Fast);        
     elseif (pet ~= nil) then
-        gFunc.EquipSet(sets.Idle);
+        gFunc.EquipSet(sets.Pet_Idle);
         if (pet.Status == 'Engaged') then
             gFunc.EquipSet(sets.Pet_TPGain);
             if (pupinparty) and (bstinparty) then

@@ -1,5 +1,5 @@
 utilities = gFunc.LoadFile('utilities.lua');
-local isTargetTagged = gFunc.LoadFile('isTargetTagged');
+isTargetTagged = gFunc.LoadFile('isTargetTagged');
 
 local profile = {};
 local thtier = 8; -- the treasure hunter tier at which we should switch to TP gain set

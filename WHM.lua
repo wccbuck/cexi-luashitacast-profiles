@@ -54,7 +54,7 @@ local sets = {
         Ear1 = 'Light Earring',
         Ear2 = 'Soil Earring',
         Body = 'Aristocrat\'s Coat',
-        Hands = 'Blessed Mitts',
+        Hands = 'Marduk\'s Dastanas',
         Ring1 = 'Star Ring',
         Ring2 = 'Tamas Ring',
         Back = 'Umbra Cape',
@@ -128,7 +128,7 @@ local sets = {
         Hands = 'Hlr. Mitts +1',
         Back = 'Veela Cape',
         Waist = 'Ninurta\'s Sash',
-        Legs = 'Cleric\'s Pantaln.',
+        Legs = 'Clr. Pantaln. +1',
         Feet = 'Blessed Pumps',
     },
     Precast = {
@@ -222,7 +222,7 @@ local sets = {
         Ring2 = 'Tamas Ring',
         Back = 'Grapevine Cape',
         Waist = 'Cleric\'s Belt',
-        Legs = 'Cleric\'s Pantaln.',
+        Legs = 'Clr. Pantaln. +1',
         Feet = 'Clr. Duckbills +1',
     },
     Enfeeble = {

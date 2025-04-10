@@ -88,7 +88,10 @@ function utilities.HandleCommands(args)
 		if (mounted > 0) then
 			AshitaCore:GetChatManager():QueueCommand(1, '/dismount');
 		else
-			local mounts = {'Crab', 'Fenrir', 'Magic Pot', 'Tulfaire', 'Hippogryph', 'Raaz', 'Xzomit', 'Bomb'};
+			local mounts = {
+				'Crab', 'Fenrir', 'Magic Pot', 'Tulfaire', 'Hippogryph', 'Raaz', 'Xzomit', 'Bomb',
+				'Adamantoise', 'Buffalo', 'Wivre', 'Warmachine', 'Goobbue',
+			};
 			local mount = mounts[math.random(#mounts)]
 			AshitaCore:GetChatManager():QueueCommand(1, '/mount "'..mount..'"');
 		end
@@ -147,7 +150,7 @@ function utilities.CheckDefaults()
 	if (eqp.Ring2 ~= nil) and (utilities.LockingRings:contains(eqp.Ring2.Name)) then
 		gFunc.Equip('Ring2', eqp.Ring2.Name);
 	end
-    if (eqp.Head ~= nil) and (eqp.Head.Name == 'Sprout Beret' or eqp.Head.Name == 'Wh. Rarab Cap +1') then
+    if (eqp.Head ~= nil) and (eqp.Head.Name == 'Sprout Beret') then
 		gFunc.Equip('Head', eqp.Head.Name);
 	end
 end
