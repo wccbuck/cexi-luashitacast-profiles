@@ -43,7 +43,7 @@ local sets = {
         Ear2 = 'Suppanomimi',
         Body = 'Homam Corazza',
         Hands = 'Homam Manopolas',
-        Ring1 = 'Toreador\'s Ring',
+        Ring1 = 'Mars\'s Ring',
         Ring2 = 'Rajas Ring',
         -- Back = 'Aesir Mantle',
         Back = 'Aife\'s Mantle',
@@ -62,7 +62,7 @@ local sets = {
         Hands = rogArmlets,
     },
     WS_Default = {
-        Head = 'Maat\'s Cap',
+        Head = 'Hecatomb Cap +1',
         Neck = 'Fotia Gorget',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Bushinomimi',
@@ -72,7 +72,7 @@ local sets = {
         Ring2 = 'Rajas Ring',
         Back = 'Cuchulain\'s Mantle',
         Waist = 'Warwolf Belt',
-        Legs = acroBreeches, -- eventually hct
+        Legs = 'Hct. Subligar +1',
         Feet = 'Adsilio Boots +1',
     },
     WS_Exent = {
@@ -90,7 +90,7 @@ local sets = {
         Feet = 'Adsilio Boots +1',
     },
     WS_Mandalic = {
-        Head = 'Maat\'s Cap',
+        Head = 'Hecatomb Cap +1',
         Neck = 'Fotia Gorget',
         -- Ear1 = 'Aesir Ear Pendant',
         Ear1 = 'Brutal Earring',
@@ -101,7 +101,7 @@ local sets = {
         Ring2 = 'Rajas Ring',
         Back = 'Cuchulain\'s Mantle',
         Waist = 'Cuchulain\'s Belt',
-        Legs = acroBreeches,
+        Legs = 'Hct. Subligar +1',
         Feet = 'Adsilio Boots +1',
     },
     WS_Mercy = {}, -- STR

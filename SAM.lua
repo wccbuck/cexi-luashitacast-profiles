@@ -40,7 +40,8 @@ local sets = {
         Ear2 = 'Bushinomimi',
         Body = { Name = 'Shura Togi +1', Augment = { [1] = 'Crit.hit rate+3', [2] = 'Haste+3' } },
         Hands = mynKote, -- swap for swift gages
-        Ring1 = 'Toreador\'s Ring', -- mars? ecphoria?
+        -- Ring1 = 'Toreador\'s Ring',
+        Ring1 = 'Mars\'s Ring',
         Ring2 = 'Rajas Ring',
         Back = 'Aife\'s Mantle',
         Waist = 'Ninurta\'s Sash',

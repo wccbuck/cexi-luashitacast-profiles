@@ -43,9 +43,17 @@ local sets = {
         Legs = 'Blessed Trousers',
         Feet = zenithPumps,
     },
-    Heal_Weapons = {
+    Cure_Weapons = {
         Main = 'Tamaxchi',
         Sub = genbuShield,
+    },
+    Status_Weapons = {
+        Main = 'Yagrush',
+        Sub = genbuShield,
+    },
+    DW_Weapons = {
+        Main = 'Yagrush',
+        Sub = 'Tamaxchi',
     },
     Idle = {
         -- refresh, regen, -dt
@@ -68,10 +76,10 @@ local sets = {
         Neck = 'Chivalrous Chain',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Hollow Earring',
-        Body = 'Nashira Manteel', -- swap with reverend
+        Body = 'Reverend Mail',
         Hands = 'Blessed Mitts',
         Ring1 = 'Rajas Ring',
-        Ring2 = 'Toreador\'s Ring',
+        Ring2 = 'Mars\'s Ring',
         Back = 'Aife\'s Mantle',
         Waist = 'Ninurta\'s Sash',
         Legs = { Name = 'Prince\'s Slops', Augment = { [1] = 'Pet: Rng. Acc.+6', [2] = '"Mag.Def.Bns."+2', [3] = 'Accuracy+3', [4] = 'Pet: Accuracy+6', [5] = 'Attack+3' } },
@@ -170,7 +178,7 @@ local sets = {
         Ring1 = 'Aqua Ring',
         Ring2 = 'Tamas Ring',
         Back = 'Dew Silk Cape +1',
-        Waist = 'Cleric\'s Belt',
+        Waist = 'Salire Belt',
         Legs = 'Healer\'s Pantaln.',
         Feet = 'Clr. Duckbills +1',
     },
@@ -245,9 +253,11 @@ local sets = {
         Feet = 'Herald\'s Gaiters'
     },
     Weapons_Default = {
-        Main = 'Tamaxchi',
-        -- Main = 'Werebuster',
+        Main = 'Yagrush',
+        -- Main = 'Tamaxchi',
         Sub = genbuShield,
+        -- Sub = 'Tamaxchi',
+        Ammo = 'Hedgehog Bomb',
     },
     PDT = {
         -- TODO
@@ -341,6 +351,9 @@ profile.HandleMidcast = function()
     if (T{'Haste', 'Erase', 'Esuna'}:contains(spell.Name)) then
         -- lower recast
         gFunc.EquipSet(sets.Haste);
+        if (spell.Name == 'Erase') and (player.Status ~= 'Engaged') then
+            gFunc.EquipSet(sets.Status_Weapons);
+        end
     elseif (spell.Skill == 'Enhancing Magic') then
         if (string.contains(spell.Name, 'Regen')) then
             gFunc.EquipSet(sets.Regen);
@@ -359,12 +372,19 @@ profile.HandleMidcast = function()
             gFunc.EquipSet(sets.Cursna);
         else
             gFunc.EquipSet(sets.Heal);
-            if (player.Status ~= 'Engaged') then
-                gFunc.EquipSet(sets.Heal_Weapons);
+        end
+        if (player.Status ~= 'Engaged') then
+            if (spell.Name:match('^Cure')) or (spell.Name:match('^Cura')) then
+                gFunc.EquipSet(sets.Cure_Weapons);
+            else
+                gFunc.EquipSet(sets.Status_Weapons);
             end
         end
     elseif (spell.Skill == 'Enfeebling Magic') then
         gFunc.EquipSet(sets.Enfeeble);
+        if (player.Status ~= 'Engaged') then
+            gFunc.EquipSet(sets.Status_Weapons); -- yagrush has m.acc+
+        end
     elseif (spell.Skill == 'Divine Magic') then
         gFunc.EquipSet(sets.Divine);
         if (player.Status ~= 'Engaged' and spell.Name ~= 'Enlight') then

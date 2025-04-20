@@ -70,7 +70,8 @@ local sets = {
         Body = bloodMail,
         -- Body = 'Morrigan\'s Robe',
         Hands = mrgBaz,
-        Ring1 = 'Toreador\'s Ring',
+        -- Ring1 = 'Toreador\'s Ring',
+        Ring1 = 'Mars\'s Ring',
         Ring2 = 'Rajas Ring',
         Back = 'Mirage Mantle', -- acc, store TP
         Waist = 'Ninurta\'s Sash',
@@ -94,7 +95,7 @@ local sets = {
         Head = 'Maat\'s Cap',
         Neck = 'Fotia Gorget',
         Ear1 = 'Brutal Earring',
-        Ear2 = 'Suppanomimi',
+        Ear2 = 'Emberpearl Earring',
         Body = 'Morrigan\'s Robe',
         Hands = 'Enkidu\'s Mittens',
         Ring1 = 'Flame Ring', -- replace with Strigoi when you get it
@@ -123,7 +124,7 @@ local sets = {
         -- this overrides anything set in specific WS sets
         Head = ohat, -- remove this line when you get Maat's cap
         Hands = 'Enkidu\'s Mittens',
-        Ring1 = 'Toreador\'s Ring', -- remove this line when you get strigoi's
+        Ring1 = 'Mars\'s Ring', -- remove this line when you get strigoi's
     },
     WS_Low_Eva = {
     },
@@ -156,6 +157,7 @@ local sets = {
         Legs = bloodCuisses,
     },
     Rest = {
+        Main = 'Chatoyant Staff',
         Head = 'Yigit Turban',
         Neck = 'Gnole Torque',
         Ear1 = 'Antivenom Earring',
@@ -194,7 +196,7 @@ local sets = {
         Ear2 = 'Suppanomimi',
         Body = 'Homam Corazza',
         Hands = mrgBaz,
-        Ring1 = 'Toreador\'s Ring',
+        Ring1 = 'Mars\'s Ring',
         Ring2 = 'Rajas Ring',
         Back = 'Mirage Mantle',
         Waist = 'Potent Belt',
@@ -232,7 +234,7 @@ local sets = {
     },
     Phys_Spell_High_Eva = {
         Neck = 'Peacock Charm',
-        Ring1 = 'Toreador\'s Ring',
+        Ring1 = 'Mars\'s Ring',
     },
     Phys_Spell_Low_Eva = {
         Ear1 = 'Bushinomimi',
@@ -260,7 +262,7 @@ local sets = {
         Ring1 = 'Omega Ring',
         Ring2 = 'Angel\'s Ring',
         Back = 'Jester\'s Cape',
-        Waist = 'Salire Belt',
+        Waist = 'Charmer\'s Sash',
         Legs = 'Errant Slops', -- nimue's tights, byakko 2.0
         Feet = 'Denali Gamashes',
     },
@@ -275,7 +277,7 @@ local sets = {
         Ring1 = 'Tamas Ring',
         Ring2 = 'Galdr Ring',
         Back = 'Voluspa Mantle',
-        Waist = 'Salire Belt',
+        Waist = 'Charmer\'s Sash',
         Legs = 'Errant Slops', -- swap for morrigan
         -- Feet = 'Denali Gamashes',
         Feet = 'Yigit Crackows', -- swap for morrigan
@@ -332,7 +334,7 @@ local sets = {
         Body = bloodMail,
         Hands = 'Yigit Gages',
         Ring1 = 'Tamas Ring',
-        Ring2 = 'Snow Ring',
+        Ring2 = 'Galdr Ring',
         Back = 'Lamia Mantle',
         Waist = 'Salire Belt', -- swap for int+ like penitent belt
         Legs = 'Errant Slops',
@@ -357,13 +359,13 @@ local sets = {
         Head = 'Saurian Helm', -- or Mirage Keffiyeh but that has less HP+
     },
     SpIntDown = {
-        -- Head = 'Nashira Turban', -- 10%
+        Head = 'Nashira Turban', -- 10%
         -- Neck = 'Willpower Torque', -- 5%
         -- Ear1 = 'Magnetic Earring', -- 8%
         -- Hands = 'Swift Gages', -- 10%
         -- Back = 'Solitaire Cape', -- 8%
         Waist = 'Ninurta\'s Sash', -- 6%, or druid's rope 10%
-        Legs = 'Magus Shalwar +1', -- 12% 
+        Legs = 'Magus Shalwar +1', -- 12%
         -- Feet = 'Karasutengu', -- 15%
     },
     PDT = {
@@ -481,6 +483,7 @@ profile.HandleDefault = function()
     else
         gFunc.EquipSet(sets.TPGain);
         gFunc.EquipSet(sets.Idle);
+        gFunc.EquipSet(sets.Weapons_Default); -- TODO, solve this more elegantly
         if (utilities.OverrideSet == 'SHOWOFF') then
             gFunc.EquipSet(sets.Showoff);
         end
@@ -571,6 +574,7 @@ profile.HandleMidcast = function()
             gFunc.EquipSet(sets.Buff);
         end
     end
+    local player = gData.GetPlayer();
     if ((player.SubJob == "THF") and (not isTargetTagged())) then
         gFunc.EquipSet(sets.TH);
     end

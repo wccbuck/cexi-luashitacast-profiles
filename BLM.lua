@@ -120,7 +120,7 @@ local sets = {
         Ring1 = 'Omega Ring',
         Ring2 = 'Tamas Ring',
         Back = 'Voluspa Mantle',
-        Waist = 'Salire Belt', -- swap with charmer's sash
+        Waist = 'Charmer\'s Sash',
         Legs = 'Wizard\'s Tonban',
         Feet = 'Src. Sabots +1', -- swap with Igqira Huaraches (esp augmented)
     },
