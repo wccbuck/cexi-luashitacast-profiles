@@ -66,6 +66,7 @@ In order to use the custom commands above, you need to add the following aliases
 * `/alias /showoff /lac fwd showoff`
 * (Optional, THF only) `/alias /thtier /lac fwd thtier`
 * (Optional, BLU only) `/alias /learning /lac fwd learning`
+* (Optional, BRD only) `/alias /quicksing /lac fwd quicksing`
 
 If you don't want to do that, you can use the full "`/lac fwd echadring`" syntax, or un-comment the code in utilities.lua that sets the aliases when each script is loaded and clears them when unloaded.
 > The reason why I prefer adding these to ashita default scripts is so that I am not constantly setting and clearing aliases every time I change jobs; sometimes doing this too frequently caused my client to crash.

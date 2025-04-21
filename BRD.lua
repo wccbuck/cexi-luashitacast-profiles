@@ -51,7 +51,6 @@ local sets = {
     Idle = {
         Head = 'Genbu\'s Kabuto', -- -pdt
         Neck = 'Incanter\'s Torque',
-        Ammo = 'Orphic Egg',
         Ear1 = 'Musical Earring',
         Ear2 = 'Soil Earring',
         Body = chlJust,
@@ -123,7 +122,6 @@ local sets = {
         -- Feet = 'Rostrum Pumps', -- fast cast
     },
     Wind = {
-        Ammo = 'Orphic Egg',
         Head = 'Marduk\'s Tiara', -- sing+7
         Neck = 'Incanter\'s Torque',
         Ear1 = 'Musical Earring', -- wind, string +5
@@ -137,7 +135,6 @@ local sets = {
         Feet = 'Oracle\'s Pigaches', -- wind+5
     },
     String = {
-        Ammo = 'Orphic Egg',
         Head = 'Marduk\'s Tiara', -- sing+7
         Neck = 'Incanter\'s Torque',
         Ear1 = 'Musical Earring', -- wind, string +5
