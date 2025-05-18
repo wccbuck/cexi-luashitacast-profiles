@@ -164,7 +164,7 @@ local sets = {
         Back = 'Summoner\'s Cape',
         Waist = 'Mujin Obi',
         Legs = 'Marduk\'s Shalwar',
-        Feet = 'Zenith Pumps +1',
+        Feet = 'Nashira Crackows',
     },
     Heal = {
         -- cure potency, mind

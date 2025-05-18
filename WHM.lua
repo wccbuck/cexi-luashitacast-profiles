@@ -30,7 +30,7 @@ local healerCap = {
 local sets = {
     Heal = {
         Ammo = 'Hedgehog Bomb',
-        Head = 'Goliard Chapeau',
+        Head = 'Maat\'s Cap',
         Neck = 'Fylgja Torque +1',
         Ear1 = 'Light Earring',
         Ear2 = 'Roundel Earring',
@@ -91,7 +91,7 @@ local sets = {
         Head = 'Maat\'s Cap',
         Neck = 'Fotia Gorget',
         Ear1 = 'Brutal Earring',
-        Ear2 = 'Bushinomimi',
+        Ear2 = 'Emberpearl Earring',
         Body = 'Blessed Bliaut', -- mnd+5 (augment for dex+ and atk+)
         -- other body options:
         -- - tabin jupon +1 (str+2, dex+2, acc+7)

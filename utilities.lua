@@ -90,7 +90,7 @@ function utilities.HandleCommands(args)
 		else
 			local mounts = {
 				'Crab', 'Fenrir', 'Magic Pot', 'Tulfaire', 'Hippogryph', 'Raaz', 'Xzomit', 'Bomb',
-				'Adamantoise', 'Buffalo', 'Wivre', 'Warmachine', 'Goobbue',
+				'Adamantoise', 'Buffalo', 'Wivre', 'Warmachine', 'Goobbue', 'Crawler', 'Spheroid'
 			};
 			local mount = mounts[math.random(#mounts)]
 			AshitaCore:GetChatManager():QueueCommand(1, '/mount "'..mount..'"');

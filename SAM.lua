@@ -39,13 +39,16 @@ local sets = {
         Ear1 = 'Brutal Earring',
         Ear2 = 'Bushinomimi',
         Body = { Name = 'Shura Togi +1', Augment = { [1] = 'Crit.hit rate+3', [2] = 'Haste+3' } },
-        Hands = mynKote, -- swap for swift gages
+        Hands = 'Swift Gages',
         -- Ring1 = 'Toreador\'s Ring',
         Ring1 = 'Mars\'s Ring',
         Ring2 = 'Rajas Ring',
         Back = 'Aife\'s Mantle',
         Waist = 'Ninurta\'s Sash',
         Legs = mynHaidate,
+        Feet = 'Ruthless Greaves',
+    },
+    TPGain_Polearm = {
         Feet = hmnSuneate,
     },
     TPGain_Low_Eva = {
@@ -75,12 +78,12 @@ local sets = {
         Ear2 = 'Bushinomimi',
         Body = { Name = 'Hmn. Domaru +1', Augment = { [1] = 'STR+6', [2] = 'Sklchn.dmg.+3%', [3] = '"Conserve TP"+6', [4] = 'Attack+12' } },
         Hands = mynKote,
-        Ring1 = 'Flame Ring',
+        Ring1 = 'Strigoi Ring',
         Ring2 = 'Rajas Ring',
         Back = 'Cuchulain\'s Mantle',
         Waist = 'Potent Belt',
         Legs = { Name = 'Shura Haidate +1', Augment = { [1] = 'Rng.Acc.+3', [2] = 'Accuracy+3', [3] = '"Dual Wield"+4' } },
-        Feet = hmnSuneate,
+        Feet = 'Ruthless Greaves',
     },
     WS_Low_Eva = {
         -- hachiryu haidate

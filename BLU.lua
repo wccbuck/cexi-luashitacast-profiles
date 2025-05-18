@@ -57,6 +57,7 @@ local learning = false;
 
 local sets = {
     Idle = {
+        Ammo = 'Oneiros Pebble', -- +3 vit, +3 acc
         Body = 'Morrigan\'s Robe',
         Legs = 'Magus Shalwar +1',
         -- Back = 'Umbra Cape',
@@ -69,7 +70,8 @@ local sets = {
         Ear2 = 'Suppanomimi',
         Body = bloodMail,
         -- Body = 'Morrigan\'s Robe',
-        Hands = mrgBaz,
+        -- Hands = mrgBaz,
+        Hands = 'Swift Gages',
         -- Ring1 = 'Toreador\'s Ring',
         Ring1 = 'Mars\'s Ring',
         Ring2 = 'Rajas Ring',
@@ -98,7 +100,7 @@ local sets = {
         Ear2 = 'Emberpearl Earring',
         Body = 'Morrigan\'s Robe',
         Hands = 'Enkidu\'s Mittens',
-        Ring1 = 'Flame Ring', -- replace with Strigoi when you get it
+        Ring1 = 'Strigoi Ring',
         Ring2 = 'Rajas Ring',
         Back = 'Cuchulain\'s Mantle',
         Waist = 'Potent Belt',
@@ -122,9 +124,9 @@ local sets = {
     },
     WS_High_Eva = {
         -- this overrides anything set in specific WS sets
-        Head = ohat, -- remove this line when you get Maat's cap
+        -- Head = ohat, -- remove this line when you get Maat's cap
         Hands = 'Enkidu\'s Mittens',
-        Ring1 = 'Mars\'s Ring', -- remove this line when you get strigoi's
+        -- Ring1 = 'Mars\'s Ring', -- strigoi might still be better in most cases
     },
     WS_Low_Eva = {
     },
@@ -173,7 +175,7 @@ local sets = {
     --     -- blue mag skill, acc, magic acc, int, str
     --     -- Str affects damage the most, but if I'm using head butt,
     --     -- I don't really care about the damage; I want the stun to stick
-    --     Ammo = 'Phantom Tathlum',
+    --     Ammo = 'Phtm. Tathlum',
     --     Head = 'Mirage Keffiyeh',
     --     Neck = 'Lieut. Gorget',
     --     Ear1 = 'Aqua Earring',
@@ -267,7 +269,7 @@ local sets = {
         Feet = 'Denali Gamashes',
     },
     Mag_Spell_Intelligence = {
-        Ammo = 'Phantom Tathlum',
+        Ammo = 'Phtm. Tathlum',
         Head = 'Maat\'s Cap',
         Neck = 'Lmg. Medallion +1',
         Ear1 = 'Moldavite Earring',
@@ -326,7 +328,7 @@ local sets = {
         Legs = bloodCuisses,
     },
     BlazingBound = {
-        Ammo = 'Phantom Tathlum',
+        Ammo = 'Phtm. Tathlum',
         Head = 'Magus Keffiyeh',
         Neck = 'Lmg. Medallion +1',
         Ear1 = 'Abyssal Earring',
@@ -413,6 +415,10 @@ local sets = {
         Main = 'Kam\'lanaut\'s Sword',
         Sub = 'Save the Queen II',
     },
+    Weapons_Mag = {
+        Main = 'Chatoyant Staff',
+        Sub = 'Staff Strap',
+    },
     Buff = {
         Back = 'Grapevine Cape',
     },
@@ -484,6 +490,7 @@ profile.HandleDefault = function()
         gFunc.EquipSet(sets.TPGain);
         gFunc.EquipSet(sets.Idle);
         gFunc.EquipSet(sets.Weapons_Default); -- TODO, solve this more elegantly
+        -- gFunc.EquipSet(sets.Weapons_Mag);
         if (utilities.OverrideSet == 'SHOWOFF') then
             gFunc.EquipSet(sets.Showoff);
         end

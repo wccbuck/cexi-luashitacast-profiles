@@ -69,6 +69,7 @@ local sets = {
     TPGain = {
         -- TODO
         -- Range = 'Hellish Bugle',
+        -- Hands = 'Swift Gages',
     },
     WS_Default = {
         -- TODO
