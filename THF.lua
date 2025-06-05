@@ -41,7 +41,7 @@ local sets = {
         Neck = 'Love Torque',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Suppanomimi',
-        Body = 'Homam Corazza',
+        Body = 'Skadi\'s Cuirie',
         Hands = 'Swift Gages',
         Ring1 = 'Mars\'s Ring',
         Ring2 = 'Rajas Ring',
@@ -110,7 +110,8 @@ local sets = {
         Neck = 'Fotia Gorget',
         Ear1 = 'Wilhelm\'s Earring',
         Ear2 = 'Altdorf\'s Earring',
-        Body = 'Denali Jacket',
+        -- Body = 'Denali Jacket',
+        Body = 'Skadi\'s Cuirie',
         Hands = 'Enkidu\'s Mittens',
         Ring1 = 'Garrulous Ring',
         Ring2 = 'Rajas Ring',
@@ -162,8 +163,9 @@ local sets = {
         Feet = 'Rogue\'s Poulaines',
     },
     Fast = {
-        Body = 'Kupo Suit',
-        Legs = 'displaced',
+        -- Body = 'Kupo Suit',
+        -- Legs = 'displaced',
+        Feet = 'Skadi\'s Jambeaux',
     },
     Step = {
         Ear1 = 'Choreia Earring',
@@ -174,6 +176,7 @@ local sets = {
         Ear2 = 'Soil Earring',
         Hands = 'Denali Wristbands',
         Ring1 = 'Sattva Ring',
+        Back = 'Shadow Mantle',
     },
     MDT = {
         -- TODO

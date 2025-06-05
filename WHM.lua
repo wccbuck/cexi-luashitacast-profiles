@@ -40,7 +40,8 @@ local sets = {
         Ring2 = 'Tamas Ring',
         Back = 'Dew Silk Cape +1',
         Waist = 'Cleric\'s Belt',
-        Legs = 'Blessed Trousers',
+        -- Legs = 'Blessed Trousers',
+        Legs = 'Clr. Pantaln. +1',
         Feet = zenithPumps,
     },
     Cure_Weapons = {
@@ -61,13 +62,14 @@ local sets = {
         Neck = 'Fylgja Torque +1',
         Ear1 = 'Light Earring',
         Ear2 = 'Soil Earring',
-        Body = 'Aristocrat\'s Coat',
+        Body = 'Clr. Bliaut +1',
+        -- Body = 'Marduk\'s Jubbah',
         Hands = 'Marduk\'s Dastanas',
         Ring1 = 'Star Ring',
         Ring2 = 'Tamas Ring',
         Back = 'Umbra Cape',
         Waist = 'Cleric\'s Belt',
-        Legs = 'Goliard Trews',
+        Legs = 'Clr. Pantaln. +1',
         Feet = zenithPumps,
     },
     TPGain = {
@@ -92,10 +94,10 @@ local sets = {
         Neck = 'Fotia Gorget',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Emberpearl Earring',
-        Body = 'Blessed Bliaut', -- mnd+5 (augment for dex+ and atk+)
+        -- Body = 'Blessed Bliaut', -- mnd+5 (augment for dex+ and atk+)
         -- other body options:
         -- - tabin jupon +1 (str+2, dex+2, acc+7)
-        -- - marduk's jubbah (mnd+12)
+        Body = 'Marduk\'s Jubbah',
         Hands = 'Hlr. Mitts +1', --mnd+7, str+7
         Ring1 = 'Rajas Ring',
         Ring2 = 'Aqua Ring', -- replace with Strigoi?
@@ -114,7 +116,7 @@ local sets = {
         Head = 'Windfall Hat',
         Ear2 = 'Loquac. Earring',
         Hands = 'Blessed Mitts',
-        -- Body = marduk's or dalmatica
+        Body = 'Marduk\'s Jubbah',
         Back = 'Veela Cape',
         Waist = 'Ninurta\'s Sash',
         Legs = 'Blessed Trousers',
@@ -143,10 +145,10 @@ local sets = {
         Head = 'Windfall Hat',
         Ear2 = 'Loquac. Earring',
         Hands = 'Blessed Mitts',
-        -- Body = marduk's or dalmatica
+        Body = 'Marduk\'s Jubbah',
         Back = 'Veela Cape',
         Waist = 'Ninurta\'s Sash',
-        -- Feet = 'Rostrum Pumps',
+        Feet = 'Rostrum Pumps',
     },
     PrecastHeal = {
         Feet = zenithPumps, -- cure clogs?
@@ -155,7 +157,7 @@ local sets = {
         Head = 'Goliard Chapeau',
         Neck = 'Fylgja Torque +1',
         Ear2 = 'Loquac. Earring',
-        Body = 'Cleric\'s Bliaut',
+        Body = 'Clr. Bliaut +1',
         Hands = 'Blessed Mitts',
         Ring1 = 'Aqua Ring',
         Ring2 = 'Tamas Ring',
@@ -261,8 +263,9 @@ local sets = {
     },
     PDT = {
         -- TODO
-        -- eventually Healer's Bliaut +1 (DT-5%)
-        Back = 'Umbra Cape',
+        Body = 'Clr. Bliaut +1',
+        -- Back = 'Umbra Cape',
+        Back = 'Shadow Mantle',
         Legs = 'Goliard Trews',
     },
     MDT = {

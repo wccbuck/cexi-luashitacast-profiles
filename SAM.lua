@@ -38,7 +38,8 @@ local sets = {
         Neck = 'Rikugame Nodowa',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Bushinomimi',
-        Body = { Name = 'Shura Togi +1', Augment = { [1] = 'Crit.hit rate+3', [2] = 'Haste+3' } },
+        -- Body = { Name = 'Shura Togi +1', Augment = { [1] = 'Crit.hit rate+3', [2] = 'Haste+3' } }, -- this puts me over the haste cap
+        Body = 'Usukane Haramaki',
         Hands = 'Swift Gages',
         -- Ring1 = 'Toreador\'s Ring',
         Ring1 = 'Mars\'s Ring',
@@ -131,7 +132,7 @@ local sets = {
         Hands = 'Melaco Mittens',
         Ring1 = 'Sattva Ring',
         Ring2 = 'Rajas Ring', -- swap for succor ring or defending ring
-        Back = 'Cuchulain\'s Mantle', -- swap for boxer's mantle, then shadow mantle
+        Back = 'Shadow Mantle',
         Waist = 'Marid Belt',
         Legs = 'Hydra Cuisses +1',
         Feet = 'Askar Gambieras',

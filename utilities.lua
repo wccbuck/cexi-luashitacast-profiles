@@ -33,6 +33,7 @@ utilities.AliasList = T{'warpring','sproutberet','echadring','empressband','rera
 
 function utilities.Initialize()
 	-- utilities.SetAlias:once(2);
+	math.randomseed(os.time())
 end
 
 function unequipSlot(slot)
@@ -90,7 +91,8 @@ function utilities.HandleCommands(args)
 		else
 			local mounts = {
 				'Crab', 'Fenrir', 'Magic Pot', 'Tulfaire', 'Hippogryph', 'Raaz', 'Xzomit', 'Bomb',
-				'Adamantoise', 'Buffalo', 'Wivre', 'Warmachine', 'Goobbue', 'Crawler', 'Spheroid'
+				'Adamantoise', 'Buffalo', 'Wivre', 'Warmachine', 'Goobbue', 'Crawler', 'Spheroid',
+				'Tiger', 'Beetle', 'Coeurl', 'Dhalmel', 'Doll',
 			};
 			local mount = mounts[math.random(#mounts)]
 			AshitaCore:GetChatManager():QueueCommand(1, '/mount "'..mount..'"');
@@ -193,7 +195,7 @@ function utilities.DelayExec(commands)
 end
 
 local greenPhrases = {
-	"Treasure Hunter effectiveness", "Something is interrupting ventures at"
+	"Treasure Hunter effectiveness", "Something is interrupting ventures at", "have caused a Rift to appear", "Champions of unity, assemble", "The Summit Smelter has landed in"
 };
 
 local redPhrases = {

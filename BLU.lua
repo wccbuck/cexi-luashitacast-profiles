@@ -152,7 +152,7 @@ local sets = {
         Ring2 = 'Aqua Ring',
         Back = 'Dew Silk Cape +1',
         Waist = 'Salire Belt',
-        Legs = 'Errant Slops',
+        Legs = 'Morrigan\'s Slops',
         Feet = 'Errant Pigaches',
     },
     Fast = {
@@ -266,7 +266,7 @@ local sets = {
         Back = 'Jester\'s Cape',
         Waist = 'Charmer\'s Sash',
         Legs = 'Errant Slops', -- nimue's tights, byakko 2.0
-        Feet = 'Denali Gamashes',
+        Feet = 'Magus Charuqs +1',
     },
     Mag_Spell_Intelligence = {
         Ammo = 'Phtm. Tathlum',
@@ -280,9 +280,9 @@ local sets = {
         Ring2 = 'Galdr Ring',
         Back = 'Voluspa Mantle',
         Waist = 'Charmer\'s Sash',
-        Legs = 'Errant Slops', -- swap for morrigan
+        Legs = 'Morrigan\'s Slops',
         -- Feet = 'Denali Gamashes',
-        Feet = 'Yigit Crackows', -- swap for morrigan
+        Feet = 'Magus Charuqs +1',
     },
     Mag_Spell_Mind = {
         Ammo = 'Hedgehog Bomb',
@@ -296,9 +296,10 @@ local sets = {
         Ring2 = 'Aqua Ring',
         Back = 'Dew Silk Cape +1',
         Waist = 'Salire Belt',
-        Legs = 'Errant Slops', -- swap for morrigan
+        Legs = 'Morrigan\'s Slops',
         -- Feet = 'Denali Gamashes',
-        Feet = 'Yigit Crackows',  -- swap for morrigan
+        -- Feet = 'Yigit Crackows',
+        Feet = 'Magus Charuqs +1',
     },
     Searing_Tempest = {
         -- applied on top of Mag_Spell_Intelligence
@@ -381,9 +382,10 @@ local sets = {
         -- Body = 'Morrigan\'s Robe',
         Hands = 'Denali Wristbands',
         Ring1 = 'Sattva Ring',
-        Back = 'Umbra Cape',
-        -- Waist = 'Marid Belt',
-        Waist = 'Ninurta\'s Sash', -- sp int rate
+        Back = 'Shadow Mantle',
+        -- Back = 'Umbra Cape',
+        Waist = 'Marid Belt',
+        -- Waist = 'Ninurta\'s Sash', -- sp int rate
         Legs = bloodCuisses,
     },
     MDT = {

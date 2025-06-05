@@ -96,7 +96,7 @@ local sets = {
     Precast = {
         Head = 'Windfall Hat',
         Ear2 = 'Loquac. Earring',
-        -- Body = marduk's or dalmatica
+        Body = 'Marduk\'s Jubbah',
         Back = 'Veela Cape',
         Feet = 'Suzaku\'s Sune-Ate', -- fast cast
         -- Feet = 'Rostrum Pumps',
@@ -119,8 +119,8 @@ local sets = {
         Back = 'Veela Cape', -- fast cast
         Waist = 'Ninurta\'s Sash', -- haste
         Legs = 'Byakko\'s Haidate', -- haste
-        Feet = 'Suzaku\'s Sune-Ate', -- haste, fast cast
-        -- Feet = 'Rostrum Pumps', -- fast cast
+        -- Feet = 'Suzaku\'s Sune-Ate', -- haste, fast cast
+        Feet = 'Rostrum Pumps', -- fast cast
     },
     Wind = {
         Head = 'Marduk\'s Tiara', -- sing+7
@@ -214,7 +214,8 @@ local sets = {
         -- TODO
         Head = 'Genbu\'s Kabuto',
         Hands = 'Melaco Mittens',
-        Back = 'Umbra Cape',
+        -- Back = 'Umbra Cape',
+        Back = 'Shadow Mantle',
         Legs = 'Goliard Trews',
     },
     MDT = {

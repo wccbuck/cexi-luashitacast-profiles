@@ -124,7 +124,9 @@ local sets = {
         Legs = 'Wizard\'s Tonban',
         Feet = 'Src. Sabots +1', -- swap with Igqira Huaraches (esp augmented)
     },
-    PDT = {}, -- TODO
+    PDT = { -- TODO
+        Back = 'Shadow Mantle',
+    },
     MDT = {},
     BDT = {},
 

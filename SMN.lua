@@ -117,9 +117,9 @@ local sets = {
         Head = 'Windfall Hat',
         Ear1 = 'Loquac. Earring',
         Ear2 = 'Antivenom Earring',
-        -- Body = marduk's or dalmatica
+        Body = 'Marduk\'s Jubbah',
         Back = 'Veela Cape',
-        -- Feet = 'Rostrum Pumps',
+        Feet = 'Rostrum Pumps',
     },
     Precast_Summon = {
         Hands = 'Carbuncle\'s Cuffs',
@@ -198,7 +198,7 @@ local sets = {
         Back = 'Veela Cape', -- fast cast
         Waist = 'Ninurta\'s Sash', -- haste
         Legs = 'Marduk\'s Shalwar', -- healing magic
-        -- Feet = 'Rostrum Pumps',
+        Feet = 'Rostrum Pumps',
     },
     Enhancing = {
         Back = 'Grapevine Cape',
@@ -206,7 +206,9 @@ local sets = {
     Stoneskin = {
         Neck = 'Stone Gorget',
     },
-    PDT = {},
+    PDT = {
+        Back = 'Shadow Mantle',
+    },
     MDT = {},
     BDT = {},
     Pet_Def = {
