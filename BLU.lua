@@ -5,54 +5,6 @@ isTargetTagged = gFunc.LoadFile('isTargetTagged');
 
 local profile = {};
 
--- some equipment pieces I use in multiple places
-local bloodMail = {
-    Name = 'Blood Scale Mail',
-    Augment = { [1] = 'STR+5', [2] = 'CHR+4', [3] = 'Haste+2' }
-};
-
-local bloodCuisses = {
-    Name = 'Blood Cuisses',
-    Augment = { [1] = 'VIT+6', [2] = '"Fast Cast"+4', [3] = 'Evasion+4' }
-};
-
-local ohat = {
-    Name = 'Optical Hat',
-    Augment = { [1] = 'Haste+3', [2] = 'HP+15', [3] = 'AGI+3', [4] = 'DEX+3' }
-};
-
-local acroBreeches = {
-    Name = 'Acrobat\'s Breeches',
-    Augment = { [1] = '"Dual Wield"+2', [2] = 'Attack+5', [3] = 'DEX+5' }
-};
-
-local princesSlops =  {
-    Name = 'Prince\'s Slops',
-    Augment = { 
-        [1] = 'Pet: Rng. Acc.+6', 
-        [2] = '"Mag.Def.Bns."+2', 
-        [3] = 'Accuracy+3', 
-        [4] = 'Pet: Accuracy+6', 
-        [5] = 'Attack+3' 
-    }
-};
-
-local magBaz = {
-    Name = 'Mag. Bazubands +1',
-    Augment = { [1] = 'Haste+3', [2] = '"Dbl.Atk."+3' }
-};
-
-local mrgBaz = {
-    Name = 'Mrg. Bazubands +1',
-    Augment = {
-        [1] = 'VIT+6',
-        [2] = 'STR+6',
-        [3] = 'Accuracy+8',
-        [4] = 'Attack+8',
-        [5] = 'Haste+5'
-    }
-};
-
 local learning = false;
 
 local sets = {
@@ -63,21 +15,23 @@ local sets = {
         -- Back = 'Umbra Cape',
     },
     TPGain = {
-        Head = 'Dampening Tam',
+        -- Head = 'Dampening Tam',
+        Head = 'Mirage Keffiyeh +1',
         Neck = 'Fortitude Torque',
         -- Neck = 'Tiercel Necklace',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Suppanomimi',
-        Body = bloodMail,
+        Body = 'Samnuha Coat',
+        -- Body = 'Blood Scale Mail',
         -- Body = 'Morrigan\'s Robe',
-        -- Hands = mrgBaz,
+        -- Hands = 'Mrg. Bazubands +1',
         Hands = 'Swift Gages',
         -- Ring1 = 'Toreador\'s Ring',
         Ring1 = 'Mars\'s Ring',
         Ring2 = 'Rajas Ring',
         Back = 'Mirage Mantle', -- acc, store TP
         Waist = 'Ninurta\'s Sash',
-        Legs = acroBreeches,
+        Legs = 'Acrobat\'s Breeches',
         Feet = 'Homam Gambieras',
     },
     TPGain_Ammo = {
@@ -90,7 +44,7 @@ local sets = {
         Neck = 'Chivalrous Chain',
     },
     TPGain_Low_Eva = {
-        Ring1 = 'Flame Ring',
+        Ring1 = 'Strigoi Ring',
     },
     WS_Default = {
         Ammo = 'Tiphia Sting',
@@ -108,33 +62,34 @@ local sets = {
         Feet = 'Denali Gamashes', -- replace with Setanta's when you get it and add denali to req + savage blade
     },
     WS_Requiescat = {
-        -- 5 hits, MND 73%
-        Hands = mrgBaz,
+        -- 5 hits, MND 85%
+        Hands = 'Mrg. Bazubands +1',
         Ring1 = 'Aqua Ring', -- swap with Tjukurrpa Annulet
         Waist = 'Visionary Obi',
     },
     WS_Expiacion = {
-        -- 2 hits, STR 30%, DEX 20%, INT 30%
+        -- 2 hits, STR 95%, INT 95%
         Waist = 'Warwolf Belt',
     },
     WS_SavageBlade = {
-        -- 2 hits, STR 50%, MND 50%
-        Hands = mrgBaz,
+        -- 2 hits, STR 80%, MND 80%
+        Hands = 'Mrg. Bazubands +1',
         Waist = 'Visionary Obi',
     },
     WS_High_Eva = {
         -- this overrides anything set in specific WS sets
-        -- Head = ohat, -- remove this line when you get Maat's cap
+        -- Head = 'Optical Hat', -- remove this line when you get Maat's cap
         Hands = 'Enkidu\'s Mittens',
         -- Ring1 = 'Mars\'s Ring', -- strigoi might still be better in most cases
     },
     WS_Low_Eva = {
     },
     Learning = {
-        Hands = magBaz,
+        Hands = 'Mag. Bazubands +1',
     },
     Precast = {
         Ear1 = 'Loquac. Earring',
+        Body = 'Mirage Jubbah +1',
         Legs = 'Homam Cosciales', -- better than blood cuisses +1
     },
     Ethereal = {
@@ -146,17 +101,17 @@ local sets = {
         Neck = 'Gnole Torque',
         Ear1 = 'Light Earring',
         Ear2 = 'Aqua Earring',
-        Body = bloodMail,
-        Hands = mrgBaz,
+        Body = 'Blood Scale Mail',
+        Hands = 'Mrg. Bazubands +1',
         Ring1 = 'Tamas Ring',
-        Ring2 = 'Aqua Ring',
+        Ring2 = 'Karka Ring',
         Back = 'Dew Silk Cape +1',
         Waist = 'Salire Belt',
         Legs = 'Morrigan\'s Slops',
         Feet = 'Errant Pigaches',
     },
     Fast = {
-        Legs = bloodCuisses,
+        Legs = 'Blood Cuisses',
     },
     Rest = {
         Main = 'Chatoyant Staff',
@@ -176,12 +131,12 @@ local sets = {
     --     -- Str affects damage the most, but if I'm using head butt,
     --     -- I don't really care about the damage; I want the stun to stick
     --     Ammo = 'Phtm. Tathlum',
-    --     Head = 'Mirage Keffiyeh',
+    --     Head = 'Mirage Keffiyeh +1',
     --     Neck = 'Lieut. Gorget',
     --     Ear1 = 'Aqua Earring',
     --     Ear2 = 'Suppanomimi',
 	-- 	Body = 'Magus Jubbah +1',
-    --     Hands = magBaz,
+    --     Hands = 'Mag. Bazubands +1',
     --     Ring1 = 'Antica Ring',
     --     Ring2 = 'Balrahn\'s Ring',
     --     Back = 'Mirage Mantle',
@@ -192,23 +147,23 @@ local sets = {
     Headbutt = {
         -- all accuracy.
         Ammo = 'Oneiros Pebble',
-        Head = ohat,
+        Head = 'Optical Hat',
         Neck = 'Peacock Charm',
         Ear1 = 'Hollow Earring',
         Ear2 = 'Suppanomimi',
         Body = 'Homam Corazza',
-        Hands = mrgBaz,
+        Hands = 'Mrg. Bazubands +1',
         Ring1 = 'Mars\'s Ring',
         Ring2 = 'Rajas Ring',
         Back = 'Mirage Mantle',
         Waist = 'Potent Belt',
-        Legs = princesSlops,
+        Legs = 'Prince\'s Slops', -- acc/att augments
         Feet = 'Homam Gambieras',
     },
     BluMagSkill = {
         -- blue mag skill and magic accuracy only
         -- used for enfeebs, buffs, and drains
-        Head = 'Mirage Keffiyeh',
+        Head = 'Mirage Keffiyeh +1',
         Neck = 'Incanter\'s Torque',
         Ear1 = 'Aqua Earring',
         Body = 'Magus Jubbah +1',
@@ -221,13 +176,14 @@ local sets = {
     },
     Phys_Spell = {
         Ammo = 'Oneiros Pebble',
-        Head = 'Dampening Tam',
+        -- Head = 'Dampening Tam',
+        Head = 'Mirage Keffiyeh +1',
         Neck = 'Chivalrous Chain',
         Ear1 = 'Pixie Earring',
         Ear2 = 'Suppanomimi',
         Body = 'Magus Jubbah +1',
-        Hands = mrgBaz,
-        Ring1 = 'Flame Ring',
+        Hands = 'Mrg. Bazubands +1',
+        Ring1 = 'Strigoi Ring',
         Ring2 = 'Rajas Ring',
         Back = 'Cuchulain\'s Mantle',
         Waist = 'Visionary Obi',
@@ -259,10 +215,10 @@ local sets = {
         Neck = 'Bird Whistle',
         Ear1 = 'Moldavite Earring',
         Ear2 = 'Novio Earring',
-        Body = 'Errant Hpl.',
+        Body = 'Mirage Jubbah +1',
         Hands = 'Yigit Gages',
         Ring1 = 'Omega Ring',
-        Ring2 = 'Angel\'s Ring',
+        Ring2 = 'Light Ring',
         Back = 'Jester\'s Cape',
         Waist = 'Charmer\'s Sash',
         Legs = 'Errant Slops', -- nimue's tights, byakko 2.0
@@ -293,7 +249,7 @@ local sets = {
         Body = 'Morrigan\'s Robe',
         Hands = 'Yigit Gages',
         Ring1 = 'Tamas Ring',
-        Ring2 = 'Aqua Ring',
+        Ring2 = 'Karka Ring',
         Back = 'Dew Silk Cape +1',
         Waist = 'Salire Belt',
         Legs = 'Morrigan\'s Slops',
@@ -312,7 +268,7 @@ local sets = {
         Ear1 = 'Hollow Earring',
         Ear2 = 'Suppanomimi',
         Body = 'Enkidu\'s Harness',
-        Hands = mrgBaz,
+        Hands = 'Mrg. Bazubands +1',
         Ring1 = 'Unyielding Ring',
         Ring2 = 'Rajas Ring',
         Back = 'Cuchulain\'s Mantle',
@@ -324,9 +280,9 @@ local sets = {
         -- sneak attack, no need for acc. This gets placed on top of Cannonball set
         Ear1 = 'Soil Earring',
         Ear2 = 'Bushinomimi',
-        Body = bloodMail,
+        Body = 'Blood Scale Mail',
         Ring2 = 'Corneus Ring',
-        Legs = bloodCuisses,
+        Legs = 'Blood Cuisses',
     },
     BlazingBound = {
         Ammo = 'Phtm. Tathlum',
@@ -334,7 +290,7 @@ local sets = {
         Neck = 'Lmg. Medallion +1',
         Ear1 = 'Abyssal Earring',
         Ear2 = 'Aqua Earring', -- swap for INT+
-        Body = bloodMail,
+        Body = 'Blood Scale Mail',
         Hands = 'Yigit Gages',
         Ring1 = 'Tamas Ring',
         Ring2 = 'Galdr Ring',
@@ -348,8 +304,8 @@ local sets = {
         Head = 'Saurian Helm',
         -- Neck = 'Tempered Chain',
         Ear1 = 'Ethereal Earring',
-        Ear2 = 'Colossus\'s Earring',
-        Body = bloodMail,
+        Ear2 = 'Pigeon Earring +1',
+        Body = 'Blood Scale Mail',
         Hands = 'Homam Manopolas',
         Ring1 = 'Bomb Queen Ring',
         Ring2 = 'Bloodbead Ring',
@@ -365,33 +321,31 @@ local sets = {
         Head = 'Nashira Turban', -- 10%
         -- Neck = 'Willpower Torque', -- 5%
         -- Ear1 = 'Magnetic Earring', -- 8%
-        -- Hands = 'Swift Gages', -- 10%
+        Hands = 'Swift Gages', -- 10%
         -- Back = 'Solitaire Cape', -- 8%
         Waist = 'Ninurta\'s Sash', -- 6%, or druid's rope 10%
         Legs = 'Magus Shalwar +1', -- 12%
         -- Feet = 'Karasutengu', -- 15%
     },
     PDT = {
-        -- TODO
         -- Ammo = 'Bibiki Seashell',
         Ammo = 'Oneiros Pebble',
         -- Ear1 = 'Colossus\'s Earring',
-        Ear1 = 'Ethereal Earring',
+        -- Ear1 = 'Ethereal Earring',
+        Ear1 = 'Genmei Earring',
         Ear2 = 'Soil Earring',
-        Body = bloodMail,
+        Body = 'Blood Scale Mail',
         -- Body = 'Morrigan\'s Robe',
         Hands = 'Denali Wristbands',
         Ring1 = 'Sattva Ring',
         Back = 'Shadow Mantle',
         -- Back = 'Umbra Cape',
         Waist = 'Marid Belt',
-        -- Waist = 'Ninurta\'s Sash', -- sp int rate
-        Legs = bloodCuisses,
+        Legs = 'Blood Cuisses',
     },
     MDT = {
-        -- TODO
         Head = 'Dampening Tam',
-        Ear1 = 'Colossus\'s Earring',
+        Ear1 = 'Merman\'s Earring',
         Ear2 = 'Merman\'s Earring',
         Neck = 'Jeweled Collar',
         Hands = 'Denali Wristbands',
@@ -403,14 +357,13 @@ local sets = {
     },
     BDT = {
         -- TODO
-        Body = bloodMail,
+        Body = 'Blood Scale Mail',
         Hands = 'Denali Wristbands',
     },
     Showoff = {},
     Weapons_Default = {
         Main = 'Mimesis',
         Sub = 'Xiutleato',
-        -- Range = 'Rising Sun',
         Ammo = 'Oneiros Pebble',
     },
     Weapons_Learning = {
@@ -530,6 +483,13 @@ profile.HandlePrecast = function()
     utilities.CheckCancels();
 end
 
+local function isTargetAMob()
+    local targetManager = AshitaCore:GetMemoryManager():GetTarget();
+    local isSubTargetActive = targetManager:GetIsSubTargetActive();
+    local targetId = targetManager:GetServerId(isSubTargetActive == 1 and 1 or 0);
+    return bit.band(targetId, 0xFF000000) ~= 0;
+end
+
 profile.HandleMidcast = function()
     local spell = gData.GetAction();
 
@@ -584,7 +544,7 @@ profile.HandleMidcast = function()
         end
     end
     local player = gData.GetPlayer();
-    if ((player.SubJob == "THF") and (not isTargetTagged())) then
+    if ((player.SubJob == "THF") and (not isTargetTagged()) and isTargetAMob()) then
         gFunc.EquipSet(sets.TH);
     end
 end

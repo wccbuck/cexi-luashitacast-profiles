@@ -3,36 +3,6 @@ naSpell = gFunc.LoadFile('naSpell.lua');
 
 local profile = {};
 
--- some equipment pieces I use in multiple places
-
-local zenithPumps = {
-    Name = 'Zenith Pumps +1',
-    Augment = {
-        [1] = 'Summoning magic skill +5',
-        [2] = '"Cure" spellcasting time -6%',
-        [3] = '"Cure" potency +4%'
-    }
-};
-
-local zenithSlacks = { 
-    Name = 'Zenith Slacks', 
-    Augment = { [1] = 'Song spellcasting time -3%', [2] = 'Wind instrument skill +4' } 
-};
-
-local genbuShield = {
-    Name = 'Genbu\'s Shield',
-    Augment = {
-        [1] = 'HP+15',
-        [2] = '"Cure" spellcasting time -4%',
-        [3] = '"Cure" potency +5%' }
-};
-
-local chlJust = { 
-    Name = 'Chl. Jstcorps +1', 
-    Augment = { [1] = 'Singing skill +5', [2] = 'Wind instrument skill +6' } 
-};
-
-
 local instruments = {
     Minuet = 'Cornette +1',
     Mambo = 'Hellish Bugle',
@@ -53,18 +23,20 @@ local sets = {
         Neck = 'Incanter\'s Torque',
         Ear1 = 'Musical Earring',
         Ear2 = 'Soil Earring',
-        Body = chlJust,
+        Body = 'Chl. Jstcorps +1',
         Hands = 'Marduk\'s Dastanas',
         Ring1 = 'Corneus Ring',
         Ring2 = 'Tamas Ring',
-        Back = 'Umbra Cape',
+        -- Back = 'Umbra Cape',
+        Back = 'Shadow Mantle',
         Waist = 'Marid Belt',
         Legs = 'Goliard Trews',
         Feet = 'Suzaku\'s Sune-Ate',
     },
     Sing_Weapons = {
+        -- chanter's staff if youve got it
         Main = 'Silktone',
-        Sub = genbuShield,
+        Sub = 'Genbu\'s Shield',
     },
     TPGain = {
         -- TODO
@@ -82,31 +54,32 @@ local sets = {
         Ear2 = 'Aqua Earring',
         Body = 'Errant Hpl.',
         Hands = 'Yigit Gages',
-        Ring1 = 'Aqua Ring',
+        Ring1 = 'Karka Ring',
         Ring2 = 'Tamas Ring',
         Back = 'Dew Silk Cape +1',
         Waist = 'Salire Belt',
         Legs = 'Bard\'s Cannions',
-        Feet = zenithPumps,
+        Feet = 'Zenith Pumps +1',
     },
     Heal_Weapons = {
         Main = 'Tamaxchi',
-        Sub = genbuShield,
+        Sub = 'Genbu\'s Shield',
     },
     Precast = {
         Head = 'Windfall Hat',
         Ear2 = 'Loquac. Earring',
         Body = 'Marduk\'s Jubbah',
+        Ring1 = 'Hibernal Ring', -- 2% fast cast
         Back = 'Veela Cape',
-        Feet = 'Suzaku\'s Sune-Ate', -- fast cast
-        -- Feet = 'Rostrum Pumps',
+        -- Feet = 'Suzaku\'s Sune-Ate', -- fast cast
+        Feet = 'Rostrum Pumps',
     },
     PrecastHeal = {
-        Feet = zenithPumps,
+        Feet = 'Zenith Pumps +1',
     },
     PrecastSong = {
         Body = 'Sha\'ir Manteel',
-        Legs = zenithSlacks,
+        Legs = 'Zenith Slacks',
     },
     Cursna = {
         -- Ranged = 'Angel Lyre',
@@ -116,6 +89,7 @@ local sets = {
         Body = 'Goliard Saio', -- haste
         -- Hands = 'Patrician\'s Cuffs', -- if we need to get to a multiple of 30 for healing magic
         Hands = 'Dusk Gloves', -- haste
+        Ring1 = 'Hibernal Ring', -- 2% fast cast
         Back = 'Veela Cape', -- fast cast
         Waist = 'Ninurta\'s Sash', -- haste
         Legs = 'Byakko\'s Haidate', -- haste
@@ -126,7 +100,7 @@ local sets = {
         Head = 'Marduk\'s Tiara', -- sing+7
         Neck = 'Incanter\'s Torque',
         Ear1 = 'Musical Earring', -- wind, string +5
-        Body = chlJust, 
+        Body = 'Chl. Jstcorps +1',
         Hands = 'Chl. Cuffs +1', -- sing+10
         Ring1 = 'Trumpet Ring', -- wind+2
         Ring2 = 'Trumpet Ring', -- wind+2
@@ -139,7 +113,7 @@ local sets = {
         Head = 'Marduk\'s Tiara', -- sing+7
         Neck = 'Incanter\'s Torque',
         Ear1 = 'Musical Earring', -- wind, string +5
-        Body = chlJust, -- string +6
+        Body = 'Chl. Jstcorps +1', -- string +6
         Hands = 'Chl. Cuffs +1', -- sing+10
         Waist = 'Ninurta\'s Sash', -- haste
         Feet = 'Bard\'s Slippers', -- string+3
@@ -149,10 +123,10 @@ local sets = {
         Neck = 'Incanter\'s Torque',
         Ear1 = 'Musical Earring',
         Ear2 = 'Beastly Earring',
-        Body = chlJust,
+        Body = 'Chl. Jstcorps +1',
         Hands = 'Chl. Cuffs +1',
         Ring1 = 'Omega Ring',
-        Ring2 = 'Angel\'s Ring',
+        Ring2 = 'Light Ring',
         Back = 'Bard\'s Cape',
         Waist = 'Corsette +1',
         Legs = 'Marduk\'s Shalwar',
@@ -207,7 +181,7 @@ local sets = {
     },
     Weapons_Default = {
         Main = 'Silktone',
-        Sub = genbuShield,
+        Sub = 'Genbu\'s Shield',
         Range = 'Ryl.Spr. Horn',
     },
     PDT = {

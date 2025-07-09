@@ -2,36 +2,6 @@ utilities = gFunc.LoadFile('utilities.lua');
 
 local profile = {};
 
--- some equipment pieces I use in multiple places
-
-local acesHelm = {
-    Name = 'Ace\'s Helm',
-    Augment = { [1] = 'Phys. dmg. taken -2%', [2] = 'HP+15', [3] = 'MP+15', [4] = 'DEX+4' }
-};
-
-local mynDomaru = {
-    Name = 'Myn. Domaru +1',
-    Augment = { [1] = 'Meditate eff. dur. +1', [2] = '"Regen"+3' }
-};
-
-local mynKote = {
-    Name = 'Myn. Kote +1',
-    Augment = { [1] = 'Haste+3', [2] = '"Zanshin"+3' }
-};
-
--- local byakkoHaidate = {
---     Name = 'Byakko\'s Haidate',
---     Augment = { [1] = 'VIT+3', [2] = '"Store TP"+5', [3] = 'Crit. hit damage +1%' }
--- };
-
-local mynHaidate = {
-    Name = 'Myn. Haidate +1', Augment = { [1] = '"Store TP"+5', [2] = 'Haste+5' }
-};
-
-local hmnSuneate = {
-    Name = 'Hmn. Sune-Ate +1', Augment = { [1] = 'STR+4', [2] = 'Polearm skill +10', [3] = 'AGI+8', [4] = 'Archery skill +6' }
-};
-
 local sets = {
     TPGain = {
         Head = 'Sao. Kabuto +1',
@@ -46,11 +16,11 @@ local sets = {
         Ring2 = 'Rajas Ring',
         Back = 'Aife\'s Mantle',
         Waist = 'Ninurta\'s Sash',
-        Legs = mynHaidate,
+        Legs = 'Myn. Haidate +1',
         Feet = 'Ruthless Greaves',
     },
     TPGain_Polearm = {
-        Feet = hmnSuneate,
+        Feet = 'Hmn. Sune-Ate +1',
     },
     TPGain_Low_Eva = {
     },
@@ -58,11 +28,11 @@ local sets = {
         -- Back = 'Cuchulain\'s Mantle',
     },
     Idle = { -- gets applied on top of TPGain
-        Body = mynDomaru,
+        Body = 'Myn. Domaru +1',
     },
     Meditate = {
-        Head = { Name = 'Myn. Kabuto +1', Augment = { [1] = 'Crit.hit rate+1', [2] = 'Haste+3' } },
-        Body = mynDomaru,
+        Head = 'Myn. Kabuto +1',
+        Body = 'Myn. Domaru +1',
         Hands = 'Saotome Kote',
     },
     ThirdEye = {
@@ -73,25 +43,25 @@ local sets = {
         Legs = 'displaced',
     },
     WS_Default = {
-        Head = { Name = 'Shr.Znr.Kabuto +1', Augment = { [1] = 'Weapon skill damage +4%', [2] = '"Conserve TP"+5', [3] = 'Sklchn.dmg.+4%' } },
+        Head = 'Shr.Znr.Kabuto +1',
         Neck = 'Fotia Gorget',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Bushinomimi',
-        Body = { Name = 'Hmn. Domaru +1', Augment = { [1] = 'STR+6', [2] = 'Sklchn.dmg.+3%', [3] = '"Conserve TP"+6', [4] = 'Attack+12' } },
-        Hands = mynKote,
+        Body = 'Hmn. Domaru +1',
+        Hands = 'Myn. Kote +1',
         Ring1 = 'Strigoi Ring',
         Ring2 = 'Rajas Ring',
         Back = 'Cuchulain\'s Mantle',
-        Waist = 'Potent Belt',
-        Legs = { Name = 'Shura Haidate +1', Augment = { [1] = 'Rng.Acc.+3', [2] = 'Accuracy+3', [3] = '"Dual Wield"+4' } },
+        Waist = 'Warwolf Belt',
+        Legs = 'Hachiryu Haidate',
         Feet = 'Ruthless Greaves',
     },
     WS_Low_Eva = {
-        -- hachiryu haidate
-        Waist = 'Warwolf Belt',
+        -- Waist = 'Warwolf Belt',
     },
     WS_High_Eva = {
-
+        Waist = 'Potent Belt',
+        Legs = 'Shura Haidate +1', -- +2 strength aug after *hundreds* of dryadic tatters... +5 would obv be better
     },
     GKT_Skill = {
         Head = 'Sao. Kabuto +1',
@@ -99,18 +69,18 @@ local sets = {
         -- justice torque, moepapa annulet
     },
     Ranged = {
-        Head = { Name = 'Optical Hat', Augment = { [1] = 'Haste+3', [2] = 'HP+15', [3] = 'AGI+3', [4] = 'DEX+3' } },
+        Head = 'Optical Hat',
         Neck = 'Peacock Charm', -- swap to Hope Torque when you get it
         Ear1 = 'Altdorf\'s Earring',
         Ear2 = 'Wilhelm\'s Earring',
         Body = 'Kyudogi',
         Hands = 'Seiryu\'s Kote',
         Ring1 = 'Merman\'s Ring',
-        Ring2 = 'Merman\'s Ring',
+        Ring2 = 'Blobnag Ring',
         Back = 'Aife\'s Mantle',
         Waist = 'Buccaneer\'s Belt',
-        Legs = mynHaidate,
-        Feet = hmnSuneate,
+        Legs = 'Myn. Haidate +1',
+        Feet = 'Hmn. Sune-Ate +1',
     },
     ApexArrow = {
         -- this gets applied on top of WS_Default
@@ -118,15 +88,15 @@ local sets = {
         Ear2 = 'Wilhelm\'s Earring',
         Hands = 'Seiryu\'s Kote',
         Ring1 = 'Garrulous Ring',
-        Ring2 = 'Merman\'s Ring',
+        Ring2 = 'Blobnag Ring',
         Back = 'Fowler\'s Mantle',
         Waist = 'Buccaneer\'s Belt',
-        Feet = hmnSuneate,
+        Feet = 'Hmn. Sune-Ate +1',
     },
     PDT = {
-        Head = acesHelm,
+        Head = 'Ace\'s Helm',
         Neck = 'Rikugame Nodowa',
-        Ear1 = 'Colossus\'s Earring',
+        Ear1 = 'Genmei Earring',
         Ear2 = 'Soil Earring',
         Body = 'Arhat\'s Gi +1',
         Hands = 'Melaco Mittens',
@@ -138,9 +108,9 @@ local sets = {
         Feet = 'Askar Gambieras',
     },
     MDT = {
-        Head = acesHelm,
+        -- Head = 'Ace\'s Helm',
         Neck = 'Jeweled Collar',
-        Ear1 = 'Colossus\'s Earring',
+        Ear1 = 'Merman\'s Earring',
         Ear2 = 'Merman\'s Earring',
         Body = 'Gavial Mail', -- eventually Nocturnus
         Hands = 'Gavial Fng. Gnt.',
@@ -155,7 +125,7 @@ local sets = {
     Showoff = {
     },
     Weapons_Default = {
-        Main = { Name = 'Amanomurakumo', Augment = 'DMG:+6' },
+        Main = 'Amanomurakumo',
         Sub = 'Pole Grip',
         Range = 'Ifrit\'s Bow',
         Ammo = 'Iron Arrow',
@@ -187,9 +157,6 @@ profile.OnLoad = function()
         AshitaCore:GetChatManager():QueueCommand(1, '/macro book 1');
         gFunc.ForceEquipSet(sets.Weapons_Default);
     end):once(3);
-    -- TODO: set these based on subjob
-    -- AshitaCore:GetChatManager():QueueCommand(1, '/macro book 2');
-    -- AshitaCore:GetChatManager():QueueCommand(1, '/macro set 1');
 end
 
 profile.OnUnload = function()
@@ -216,7 +183,7 @@ profile.HandleDefault = function()
         -- equip the default weapon set (useful against merrows)
         utilities.ResetDefaultWeapons(sets.Weapons_Default);
         
-        -- saotome haidate dont appear to work correctly
+        -- consider re-enabling this if seigan is active
         -- if (gData.GetBuffCount('Third Eye') > 0) then
         --     gFunc.EquipSet(sets.ThirdEye);
         -- end
@@ -257,7 +224,6 @@ profile.HandleAbility = function()
     local ability = gData.GetAction();
     if (ability.Name == 'Meditate') then
 		gFunc.EquipSet(sets.Meditate);
-    -- saotome haidate dont appear to work correctly
     -- elseif (ability.Name == 'Third Eye') then
 	-- 	gFunc.EquipSet(sets.ThirdEye);
 	end

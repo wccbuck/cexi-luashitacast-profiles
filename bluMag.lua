@@ -22,7 +22,7 @@ bluMag.PhysVit = T{
     'Power Attack', 'Sprout Smack', 'Grand Slam', 'Quad. Continuum', 'Body Slam', 'Sub-zero Smash', 'Glutinous Dart'
 };
 bluMag.IntNuke = T{
-    -- high WSC spells (marked by !!) probably justify making a unique set just for them
+    -- high WSC spells (marked by !!) might justify making a unique set just for them
     'Sandspin', 'Blastbomb', 'Bomb Toss', 'Corrosive Ooze', 'Cursed Sphere', 'Ice Break', 'Death Ray',
     'Blitzstrahl', 'Maelstrom', 'Spectral Floe',
     'Firespit', -- mnd 20%
@@ -59,7 +59,7 @@ bluMag.Buff = T{
 };
 bluMag.Drain = T{
     'Osmosis', 'Blood Drain', 'Digest', 'Blood Saber', 'MP Drainkiss'
-}
+};
 bluMag.Cure = T{
     'Pollen', 'Healing Breeze', 'Wild Carrot', 'Magic Fruit', 'Exuviation', 'Plenilune Embrace'
 };

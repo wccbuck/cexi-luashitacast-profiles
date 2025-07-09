@@ -2,27 +2,18 @@ utilities = gFunc.LoadFile('utilities.lua');
 
 local profile = {};
 
-local sorcCoat = { 
-    Name = 'Src. Coat +1', 
-    Augment = { [1] = 'INT+5', [2] = '"Fast Cast"+4', [3] = '"Mag. Atk. Bns."+8' } 
-};
-
-local zenithMitts = {
-    Name = 'Zenith Mitts +1', 
-    Augment = { [1] = '"Conserve MP"+6', [2] = 'Magic burst dmg.+4%', [3] = 'INT+5' }
-};
-
 local sets = {
     Idle = {
         Head = 'Wzd. Petasos +1',
         Neck = 'Lmg. Medallion +1',
         Ear1 = 'Novio Earring',
         Ear2 = 'Soil Earring', -- -pdt
-        Body = sorcCoat, -- refresh
-        Hands = zenithMitts,
+        Body = 'Src. Coat +1', -- refresh
+        Hands = 'Zenith Mitts +1',
         Ring1 = 'Galdr Ring',
         Ring2 = 'Tamas Ring',
-        Back = 'Umbra Cape', -- -pdt
+        -- Back = 'Umbra Cape', -- -pdt
+        Back = 'Shadow Mantle',
         Waist = 'Sorcerer\'s Belt',
         Legs = 'Goliard Trews', -- -dt
         Feet = 'Src. Sabots +1',
@@ -72,18 +63,19 @@ local sets = {
     Precast = {
         Head = 'Windfall Hat',
         Ear2 = 'Loquac. Earring',
-        Body = sorcCoat, -- small amount of fast cast
+        Body = 'Src. Coat +1', -- fast cast
+        Ring1 = 'Hibernal Ring', -- 2% fast cast
         -- Body = dalmatica
         Back = 'Veela Cape',
-        -- Feet = 'Rostrum Pumps',
+        Feet = 'Rostrum Pumps',
     },
     Nuke = {
         Head = 'Src. Petasos +1',
         Neck = 'Lmg. Medallion +1',
         Ear1 = 'Novio Earring',
         Ear2 = 'Moldavite Earring',
-        Body = sorcCoat,
-        Hands = zenithMitts,
+        Body = 'Src. Coat +1',
+        Hands = 'Zenith Mitts +1',
         Ring1 = 'Galdr Ring',
         Ring2 = 'Tamas Ring',
         Back = 'Voluspa Mantle',

@@ -174,7 +174,7 @@ local sets = {
         Ear2 = 'Aqua Earring',
         Body = 'Errant Hpl.',
         Hands = 'Yigit Gages',
-        Ring1 = 'Aqua Ring',
+        Ring1 = 'Karka Ring',
         Ring2 = 'Tamas Ring',
         Back = 'Dew Silk Cape +1',
         Waist = 'Salire Belt',
@@ -183,7 +183,7 @@ local sets = {
     },
     Heal_Weapons = {
         Main = 'Tamaxchi',
-        Sub = genbuShield,
+        Sub = 'Genbu\'s Shield',
     },
     Stoneskin = { -- if sub whm or rdm
         Neck = 'Stone Gorget',

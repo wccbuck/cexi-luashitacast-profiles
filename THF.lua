@@ -4,37 +4,6 @@ isTargetTagged = gFunc.LoadFile('isTargetTagged');
 local profile = {};
 local thtier = 8; -- the treasure hunter tier at which we should switch to TP gain set
 
--- some equipment pieces I use in multiple places
-local ohat = {
-    Name = 'Optical Hat',
-    Augment = { [1] = 'Haste+3', [2] = 'HP+15', [3] = 'AGI+3', [4] = 'DEX+3' }
-};
-
-local dragonHarness = {
-    Name = 'Dragon Harness',
-    Augment = { [1] = 'Sklchn.dmg.+2%', [2] = 'Attack+8', [3] = 'AGI+2', [4] = 'DEX+2' }
-};
-
-local dragonCap = {
-    Name = 'Dragon Cap +1',
-    Augment = { [1] = 'Dagger skill +8', [2] = '"Treasure Hunter"+1', [3] = 'AGI+6', [4] = '"Subtle Blow"+6' }
-};
-
-local hctMittens = {
-    Name = 'Hct. Mittens +1',
-    Augment = { [1] = 'Dagger skill +5', [2] = 'Crit. hit damage +2%' }
-};
-
-local acroBreeches = {
-    Name = 'Acrobat\'s Breeches',
-    Augment = { [1] = '"Dual Wield"+2', [2] = 'Attack+5', [3] = 'DEX+5' }
-};
-
-local rogArmlets = {
-    Name = 'Rog. Armlets +1', 
-    Augment = { [1] = '"Treasure Hunter"+1', [2] = 'Haste+3' }
-};
-
 local sets = {
     TPGain = {
         Head = 'Dampening Tam',
@@ -48,7 +17,7 @@ local sets = {
         -- Back = 'Aesir Mantle',
         Back = 'Aife\'s Mantle',
         Waist = 'Ninurta\'s Sash',
-        Legs = acroBreeches,
+        Legs = 'Acrobat\'s Breeches',
         Feet = 'Homam Gambieras',
     },
     TPGain_Low_Eva = {
@@ -58,16 +27,16 @@ local sets = {
         Back = 'Cuchulain\'s Mantle',
     },
     Idle = { -- gets applied on top of TPGain
-        Head = dragonCap,
-        Hands = rogArmlets,
+        Head = 'Dragon Cap +1',
+        Hands = 'Rog. Armlets +1',
     },
     WS_Default = {
         Head = 'Hecatomb Cap +1',
         Neck = 'Fotia Gorget',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Bushinomimi',
-        Body = dragonHarness,
-        Hands = hctMittens,
+        Body = 'Dragon Harness +1',
+        Hands = 'Hct. Mittens +1',
         Ring1 = 'Zilant Ring',
         Ring2 = 'Rajas Ring',
         Back = 'Cuchulain\'s Mantle',
@@ -76,17 +45,17 @@ local sets = {
         Feet = 'Adsilio Boots +1',
     },
     WS_Exent = {
-        Head = dragonCap,
+        Head = 'Dragon Cap +1',
         Neck = 'Fotia Gorget',
         Ear1 = 'Wilhelm\'s Earring',
         Ear2 = 'Altdorf\'s Earring',
-        Body = dragonHarness,
-        Hands = hctMittens,
+        Body = 'Dragon Harness +1',
+        Hands = 'Hct. Mittens +1',
         Ring1 = 'Garrulous Ring',
         Ring2 = 'Rajas Ring',
         Back = 'Cuchulain\'s Mantle',
         Waist = 'Warwolf Belt',
-        Legs = acroBreeches,
+        Legs = 'Acrobat\'s Breeches',
         Feet = 'Adsilio Boots +1',
     },
     WS_Mandalic = {
@@ -95,8 +64,8 @@ local sets = {
         -- Ear1 = 'Aesir Ear Pendant',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Pixie Earring',
-        Body = dragonHarness,
-        Hands = hctMittens,
+        Body = 'Dragon Harness +1',
+        Hands = 'Hct. Mittens +1',
         Ring1 = 'Zilant Ring',
         Ring2 = 'Rajas Ring',
         Back = 'Cuchulain\'s Mantle',
@@ -113,33 +82,33 @@ local sets = {
         -- Body = 'Denali Jacket',
         Body = 'Skadi\'s Cuirie',
         Hands = 'Enkidu\'s Mittens',
-        Ring1 = 'Garrulous Ring',
-        Ring2 = 'Rajas Ring',
+        Ring1 = 'Blobnag Ring',
+        Ring2 = 'Garrulous Ring',
         Back = 'Amemet Mantle',
         Waist = 'Buccaneer\'s Belt',
-        Legs = acroBreeches,
+        Legs = 'Acrobat\'s Breeches',
         Feet = 'Adsilio Boots +1',
     },
     TH = {
-        Sub = 'Thief\'s Knife',
+        -- Sub = 'Thief\'s Knife',
         -- Head = 'Wh. Rarab Cap +1',
-        Head = dragonCap,
+        Head = 'Dragon Cap +1',
         -- Hands = 'Assassin\'s Armlets',
-        Hands = rogArmlets,
+        Hands = 'Rog. Armlets +1',
     },
     TrickAttack = {
         -- +agi, +enmity
-        Head = dragonCap,
+        Head = 'Dragon Cap +1',
         Ear1 = 'Wilhelm\'s Earring',
         Ear2 = 'Altdorf\'s Earring',
-        Hands = rogArmlets,
+        Hands = 'Rog. Armlets +1',
         Ring1 = 'Sattva Ring',
         Back = 'Assassin\'s Cape',
         Waist = 'Warwolf Belt',
     },
     Provoke = {
         -- +enmity
-        Head = dragonCap,
+        Head = 'Dragon Cap +1',
         Ear1 = 'Eris\' Earring',
         -- Neck = harmonia's?
         -- Body = 'Avalon Breastplate', -- Tiamat drop
@@ -147,12 +116,12 @@ local sets = {
         Ring1 = 'Sattva Ring',
         Back = 'Assassin\'s Cape',
         Waist = 'Warwolf Belt',
-        -- Legs = 'Dragon Subligar',
-        -- Feet = 'Dragon Leggings',
+        Legs = 'Dragon Subligar',
+        Feet = 'Dragon Leggings',
     },
     Steal = {
         Head = 'Rogue\'s Bonnet',
-        Hands = rogArmlets,
+        Hands = 'Rog. Armlets +1',
         Legs = 'Assassin\'s Culottes',
         Feet = 'Rogue\'s Poulaines',
     },
@@ -182,7 +151,8 @@ local sets = {
         -- TODO
         Head = 'Dampening Tam',
         Neck = 'Jeweled Collar',
-        Ear1 = 'Colossus\'s Earring',
+        Ear1 = 'Merman\'s Earring',
+        Ear2 = 'Merman\'s Earring',
         -- Body = 'Avalon Breastplate', -- Tiamat drop
         Hands = 'Denali Wristbands',
         Ring1 = 'Merman\'s Ring',
@@ -191,30 +161,34 @@ local sets = {
         Waist = 'Lieutenant\'s Sash',
     },
     BDT = {
-        Head = dragonCap,
-        Body = dragonHarness,
+        Head = 'Dragon Cap +1',
+        Body = 'Dragon Harness +1',
         Hands = 'Denali Wristbands',
+        Legs = 'Dragon Subligar',
     },
     Showoff = {},
     Weapons_Default = {
         -- Main = 'X\'s Knife',
-        Main = 'Sandung',
-        Sub = 'Thief\'s Knife',
-        Range = 'Staurobow',
-        Ammo = 'Crossbow Bolt',
+        -- Main = 'Sandung',
+        -- Sub = 'Thief\'s Knife',
+        Main = 'Vajra',
+        Sub = 'Sandung',
+        Ammo = 'Yetshila',
+        -- Range = 'Staurobow',
+        -- Ammo = 'Crossbow Bolt',
     },
     Weapons_DD = {
-        Main = 'Sandung',
+        Main = 'Vajra',
         Sub = 'X\'s Knife',
     },
     Ranged = {
-        Head = ohat,
+        Head = 'Optical Hat',
         Neck = 'Peacock Charm',
         Ear1 = 'Wilhelm\'s Earring',
         Ear2 = 'Altdorf\'s Earring',
-        Body = 'Denali Jacket',
+        Body = 'Skadi\'s Cuirie',
         Hands = 'Barb. Moufles',
-        Ring1 = 'Merman\'s Ring',
+        Ring1 = 'Blobnag Ring',
         Ring2 = 'Merman\'s Ring',
         Back = 'Aife\'s Mantle', -- agi+ and storeTP+
         Waist = 'Buccaneer\'s Belt',
@@ -240,9 +214,6 @@ profile.OnLoad = function()
         AshitaCore:GetChatManager():QueueCommand(1, '/macro book 1');
         gFunc.ForceEquipSet(sets.Weapons_Default);
     end):once(3);
-    -- TODO: set these based on subjob
-    -- AshitaCore:GetChatManager():QueueCommand(1, '/macro book 2');
-    -- AshitaCore:GetChatManager():QueueCommand(1, '/macro set 1');
 end
 
 profile.OnUnload = function()
@@ -334,10 +305,17 @@ profile.HandlePrecast = function()
     utilities.CheckCancels();
 end
 
+local function isTargetAMob()
+    local targetManager = AshitaCore:GetMemoryManager():GetTarget();
+    local isSubTargetActive = targetManager:GetIsSubTargetActive();
+    local targetId = targetManager:GetServerId(isSubTargetActive == 1 and 1 or 0);
+    return bit.band(targetId, 0xFF000000) ~= 0;
+end
+
 profile.HandleMidcast = function()
     -- TODO: fast cast, haste
     -- I don't think you can proc TH on spells, so I'm not passing in thtier.
-    if (not isTargetTagged()) then
+    if ((not isTargetTagged()) and isTargetAMob()) then
         gFunc.EquipSet(sets.TH);
     end
 end

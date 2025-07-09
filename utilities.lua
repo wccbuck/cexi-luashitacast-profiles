@@ -92,7 +92,7 @@ function utilities.HandleCommands(args)
 			local mounts = {
 				'Crab', 'Fenrir', 'Magic Pot', 'Tulfaire', 'Hippogryph', 'Raaz', 'Xzomit', 'Bomb',
 				'Adamantoise', 'Buffalo', 'Wivre', 'Warmachine', 'Goobbue', 'Crawler', 'Spheroid',
-				'Tiger', 'Beetle', 'Coeurl', 'Dhalmel', 'Doll',
+				'Tiger', 'Beetle', 'Coeurl', 'Dhalmel', 'Doll', 'Golden Bomb'
 			};
 			local mount = mounts[math.random(#mounts)]
 			AshitaCore:GetChatManager():QueueCommand(1, '/mount "'..mount..'"');
@@ -195,7 +195,13 @@ function utilities.DelayExec(commands)
 end
 
 local greenPhrases = {
-	"Treasure Hunter effectiveness", "Something is interrupting ventures at", "have caused a Rift to appear", "Champions of unity, assemble", "The Summit Smelter has landed in"
+	"Treasure Hunter effectiveness",
+	"Something is interrupting ventures at",
+	"have caused a Rift to appear",
+	"Champions of unity, assemble",
+	"The Summit Smelter has landed in",
+	"Enemy forces are headed towards",
+	"Who will stand against this darkness",
 };
 
 local redPhrases = {

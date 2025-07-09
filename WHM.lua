@@ -3,30 +3,6 @@ naSpell = gFunc.LoadFile('naSpell.lua');
 
 local profile = {};
 
--- some equipment pieces I use in multiple places
-
-local zenithPumps = {
-    Name = 'Zenith Pumps +1',
-    Augment = {
-        [1] = 'Summoning magic skill +5',
-        [2] = '"Cure" spellcasting time -6%',
-        [3] = '"Cure" potency +4%'
-    }
-};
-
-local genbuShield = {
-    Name = 'Genbu\'s Shield',
-    Augment = {
-        [1] = 'HP+15',
-        [2] = '"Cure" spellcasting time -4%',
-        [3] = '"Cure" potency +5%' }
-};
-
-local healerCap = {
-    Name = 'Hlr. Cap +1',
-    Augment = { [1] = 'MP recovered while healing +3', [2] = '"Refresh"+1' }
-};
-
 local sets = {
     Heal = {
         Ammo = 'Hedgehog Bomb',
@@ -36,29 +12,30 @@ local sets = {
         Ear2 = 'Roundel Earring',
         Body = 'Aristocrat\'s Coat',
         Hands = 'Blessed Mitts',
-        Ring1 = 'Aqua Ring',
+        Ring1 = 'Karka Ring',
         Ring2 = 'Tamas Ring',
         Back = 'Dew Silk Cape +1',
         Waist = 'Cleric\'s Belt',
         -- Legs = 'Blessed Trousers',
         Legs = 'Clr. Pantaln. +1',
-        Feet = zenithPumps,
+        Feet = 'Zenith Pumps +1',
     },
     Cure_Weapons = {
-        Main = 'Tamaxchi',
-        Sub = genbuShield,
+        -- Main = 'Tamaxchi', -- I'm over the cure potency cap with this
+        Main = 'Sindri',
+        Sub = 'Genbu\'s Shield',
     },
     Status_Weapons = {
         Main = 'Yagrush',
-        Sub = genbuShield,
+        Sub = 'Genbu\'s Shield',
     },
     DW_Weapons = {
         Main = 'Yagrush',
-        Sub = 'Tamaxchi',
+        Sub = 'Sindri',
     },
     Idle = {
         -- refresh, regen, -dt
-        Head = healerCap,
+        Head = 'Hlr. Cap +1',
         Neck = 'Fylgja Torque +1',
         Ear1 = 'Light Earring',
         Ear2 = 'Soil Earring',
@@ -67,28 +44,30 @@ local sets = {
         Hands = 'Marduk\'s Dastanas',
         Ring1 = 'Star Ring',
         Ring2 = 'Tamas Ring',
-        Back = 'Umbra Cape',
+        --Back = 'Umbra Cape',
+        Back = 'Shadow Mantle',
         Waist = 'Cleric\'s Belt',
         Legs = 'Clr. Pantaln. +1',
-        Feet = zenithPumps,
+        Feet = 'Zenith Pumps +1',
     },
     TPGain = {
+        -- todo: update this with adept trials gear
         Ammo = 'Tiphia Sting',
-        Head = { Name = 'Optical Hat', Augment = { [1] = 'Haste+3', [2] = 'HP+15', [3] = 'AGI+3', [4] = 'DEX+3' } },
+        Head = 'Optical Hat', -- augmented
         Neck = 'Chivalrous Chain',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Hollow Earring',
-        Body = 'Reverend Mail',
+        Body = 'Reverend Mail', -- augmented
         Hands = 'Blessed Mitts',
         Ring1 = 'Rajas Ring',
         Ring2 = 'Mars\'s Ring',
         Back = 'Aife\'s Mantle',
         Waist = 'Ninurta\'s Sash',
-        Legs = { Name = 'Prince\'s Slops', Augment = { [1] = 'Pet: Rng. Acc.+6', [2] = '"Mag.Def.Bns."+2', [3] = 'Accuracy+3', [4] = 'Pet: Accuracy+6', [5] = 'Attack+3' } },
+        Legs = 'Prince\'s Slops', -- augmented
         Feet = 'Blessed Pumps',
     },
     WS_Default = {
-        -- realmrazer: mnd 73%
+        -- realmrazer: mnd 85%
         Ammo = 'Tiphia Sting',
         Head = 'Maat\'s Cap',
         Neck = 'Fotia Gorget',
@@ -100,16 +79,16 @@ local sets = {
         Body = 'Marduk\'s Jubbah',
         Hands = 'Hlr. Mitts +1', --mnd+7, str+7
         Ring1 = 'Rajas Ring',
-        Ring2 = 'Aqua Ring', -- replace with Strigoi?
+        Ring2 = 'Aqua Ring', -- replace with Strigoi? or Karka?
         Back = 'Cuchulain\'s Mantle',
         Waist = 'Visionary Obi',
-        Legs = { Name = 'Prince\'s Slops', Augment = { [1] = 'Pet: Rng. Acc.+6', [2] = '"Mag.Def.Bns."+2', [3] = 'Accuracy+3', [4] = 'Pet: Accuracy+6', [5] = 'Attack+3' } },
+        Legs = 'Prince\'s Slops',
         -- best legs piece: blessed trousers augmented (str, attack, double attack)
         Feet = 'Goliard Clogs', -- dex+4 mnd+4. swap for marduk's (mnd+10)
     },
     WS_Mystic_Boon = {
         -- note that Mystic Boon has no SC properties and therefore doesn't get a bonus from Fotia
-        -- str 30%, mnd 70%
+        -- str 95%, mnd 95%
         Neck = 'Chivalrous Chain', -- laran's pendant?
     },
     Haste = {
@@ -151,7 +130,7 @@ local sets = {
         Feet = 'Rostrum Pumps',
     },
     PrecastHeal = {
-        Feet = zenithPumps, -- cure clogs?
+        Feet = 'Zenith Pumps +1', -- cure clogs?
     },
     Regen = {
         Head = 'Goliard Chapeau',
@@ -159,7 +138,7 @@ local sets = {
         Ear2 = 'Loquac. Earring',
         Body = 'Clr. Bliaut +1',
         Hands = 'Blessed Mitts',
-        Ring1 = 'Aqua Ring',
+        Ring1 = 'Karka Ring',
         Ring2 = 'Tamas Ring',
         Back = 'Grapevine Cape',
         Waist = 'Cleric\'s Belt',
@@ -177,7 +156,7 @@ local sets = {
         Ear2 = 'Aqua Earring',
         Body = 'Errant Hpl.',
         Hands = 'Blessed Mitts',
-        Ring1 = 'Aqua Ring',
+        Ring1 = 'Karka Ring',
         Ring2 = 'Tamas Ring',
         Back = 'Dew Silk Cape +1',
         Waist = 'Salire Belt',
@@ -192,7 +171,7 @@ local sets = {
         Main = 'Chatoyant Staff',
         Sub = 'Staff Strap',
         Ammo = 'Mana Ampulla',
-        Head = healerCap,
+        Head = 'Hlr. Cap +1',
         Neck = 'Gnole Torque',
         Ear1 = 'Antivenom Earring',
         Ear2 = 'Darkness Earring',
@@ -222,13 +201,13 @@ local sets = {
     },
     Barspell = {
         -- also general enhancing
-        Head = healerCap,
+        Head = 'Hlr. Cap +1',
         Neck = 'Fylgja Torque +1',
         Ear1 = 'Brachyura Earring',
         Ear2 = 'Aqua Earring',
         Body = 'Blessed Bliaut',
         Hands = 'Blessed Mitts',
-        Ring1 = 'Aqua Ring',
+        Ring1 = 'Karka Ring',
         Ring2 = 'Tamas Ring',
         Back = 'Grapevine Cape',
         Waist = 'Cleric\'s Belt',
@@ -237,12 +216,12 @@ local sets = {
     },
     Enfeeble = {
         Ammo = 'Mana Ampulla',
-        Head = healerCap,
+        Head = 'Hlr. Cap +1',
         Neck = 'Incanter\'s Torque',
         Ear2 = 'Aqua Earring',
         Body = 'Errant Hpl.',
         Hands = 'Cleric\'s Mitts',
-        Ring1 = 'Aqua Ring',
+        Ring1 = 'Karka Ring',
         Ring2 = 'Tamas Ring',
         Back = 'Dew Silk Cape +1',
         Waist = 'Cleric\'s Belt',
@@ -257,8 +236,8 @@ local sets = {
     Weapons_Default = {
         Main = 'Yagrush',
         -- Main = 'Tamaxchi',
-        Sub = genbuShield,
-        -- Sub = 'Tamaxchi',
+        Sub = 'Genbu\'s Shield',
+        -- Sub = 'Sindri',
         Ammo = 'Hedgehog Bomb',
     },
     PDT = {
