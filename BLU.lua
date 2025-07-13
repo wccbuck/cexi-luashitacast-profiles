@@ -6,6 +6,7 @@ isTargetTagged = gFunc.LoadFile('isTargetTagged');
 local profile = {};
 
 local learning = false;
+local sird = false;
 
 local sets = {
     Idle = {
@@ -167,6 +168,7 @@ local sets = {
         Neck = 'Incanter\'s Torque',
         Ear1 = 'Aqua Earring',
         Body = 'Magus Jubbah +1',
+        Hands = 'Nashira Gages',
         Ring1 = 'Antica Ring',
         Ring2 = 'Balrahn\'s Ring',
         Back = 'Mirage Mantle',
@@ -257,8 +259,25 @@ local sets = {
         -- Feet = 'Yigit Crackows',
         Feet = 'Magus Charuqs +1',
     },
+    -- tempest, floe, and entomb sets are applied on top of Mag_Spell_Intelligence
     Searing_Tempest = {
-        -- applied on top of Mag_Spell_Intelligence
+        -- consider swapping some pieces for str+
+    },
+    Entomb_Floe = {
+        -- prioritize blue magic skill and magic acc over MAB
+        Head = 'Mirage Keffiyeh +1',
+        Neck = 'Incanter\'s Torque',
+        Ear1 = 'Aqua Earring',
+        -- best earring combo: Cassandra/Helenus set. MAB+5 M.Acc+5
+        -- or two HQ aqua earrings. $$$
+        -- Body = 'Magus Jubbah +1',
+        Hands = 'Nashira Gages',
+        Ring1 = 'Tamas Ring',
+        Ring2 = 'Galdr Ring',
+        Back = 'Voluspa Mantle',
+        Waist = 'Salire Belt',
+        Legs = 'Morrigan\'s Slops',
+        Feet = 'Magus Charuqs +1',
     },
     Cannonball = {
         -- def, vit, acc, str
@@ -318,14 +337,17 @@ local sets = {
         Head = 'Saurian Helm', -- or Mirage Keffiyeh but that has less HP+
     },
     SpIntDown = {
+        -- sird, spell interruption rate down
         Head = 'Nashira Turban', -- 10%
         -- Neck = 'Willpower Torque', -- 5%
         -- Ear1 = 'Magnetic Earring', -- 8%
+        Body = 'Magus Jubbah +1', -- blue magic skill +15
         Hands = 'Swift Gages', -- 10%
         -- Back = 'Solitaire Cape', -- 8%
         Waist = 'Ninurta\'s Sash', -- 6%, or druid's rope 10%
         Legs = 'Magus Shalwar +1', -- 12%
         -- Feet = 'Karasutengu', -- 15%
+        Feet = 'Magus Charuqs +1', -- blue magic skill +5
     },
     PDT = {
         -- Ammo = 'Bibiki Seashell',
@@ -411,6 +433,9 @@ profile.HandleCommand = function(args)
     if args[1] == 'learning' then
         learning = not learning;
         gFunc.Echo(255,  'Learning [' .. (learning and 'ON' or 'OFF') .. ']');
+    elseif args[1] == 'sird' then
+        sird = not sird;
+        gFunc.Echo(255,  'Sp. Int. Rate Down [' .. (sird and 'ON' or 'OFF') .. ']');
     end
     utilities.HandleCommands(args);
 end
@@ -525,6 +550,8 @@ profile.HandleMidcast = function()
         gFunc.EquipSet(sets.Mag_Spell_Intelligence);
         if (spell.Name == 'Searing Tempest') then
             gFunc.EquipSet(sets.Searing_Tempest);
+        if ({'Entomb', 'Spectral Floe'}:contains(spell.Name)) then
+            gFunc.EquipSet(sets.Entomb_Floe);
         end
     elseif bluMag.MndNuke:contains(spell.Name) then
         gFunc.EquipSet(sets.Mag_Spell_Mind);
@@ -542,6 +569,9 @@ profile.HandleMidcast = function()
             -- increases Enhancing Magic Duration after the 8-22-2024 update."
             gFunc.EquipSet(sets.Buff);
         end
+    end
+    if sird then
+        gFunc.EquipSet(sets.SpIntDown);
     end
     local player = gData.GetPlayer();
     if ((player.SubJob == "THF") and (not isTargetTagged()) and isTargetAMob()) then
