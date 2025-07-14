@@ -550,7 +550,7 @@ profile.HandleMidcast = function()
         gFunc.EquipSet(sets.Mag_Spell_Intelligence);
         if (spell.Name == 'Searing Tempest') then
             gFunc.EquipSet(sets.Searing_Tempest);
-        if ({'Entomb', 'Spectral Floe'}:contains(spell.Name)) then
+        elseif (T{'Entomb', 'Spectral Floe'}:contains(spell.Name)) then
             gFunc.EquipSet(sets.Entomb_Floe);
         end
     elseif bluMag.MndNuke:contains(spell.Name) then
