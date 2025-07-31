@@ -17,7 +17,8 @@ local sets = {
         -- Back = 'Aesir Mantle',
         Back = 'Aife\'s Mantle',
         Waist = 'Ninurta\'s Sash',
-        Legs = 'Acrobat\'s Breeches',
+        --Legs = 'Acrobat\'s Breeches',
+        Legs = 'Skadi\'s Chausses',
         Feet = 'Homam Gambieras',
     },
     TPGain_Low_Eva = {
@@ -192,7 +193,7 @@ local sets = {
         Ring2 = 'Merman\'s Ring',
         Back = 'Aife\'s Mantle', -- agi+ and storeTP+
         Waist = 'Buccaneer\'s Belt',
-        Legs = 'Dusk Trousers',
+        Legs = 'Skadi\'s Chausses',
         Feet = 'Homam Gambieras',
     },
     Sleep = {

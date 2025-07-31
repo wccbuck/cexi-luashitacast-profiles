@@ -7,6 +7,7 @@ local profile = {};
 
 local learning = false;
 local sird = false;
+local cleave = true;
 
 local sets = {
     Idle = {
@@ -91,6 +92,7 @@ local sets = {
     Precast = {
         Ear1 = 'Loquac. Earring',
         Body = 'Mirage Jubbah +1',
+        -- back = swith
         Legs = 'Homam Cosciales', -- better than blood cuisses +1
     },
     Ethereal = {
@@ -394,7 +396,12 @@ local sets = {
     },
     Weapons_Mag = {
         Main = 'Chatoyant Staff',
-        Sub = 'Staff Strap',
+        Sub = 'Vivid Strap',
+    },
+    Terras_Staff = {
+        Main = 'Terra\'s Staff',
+        Sub = 'Vivid Strap',
+        Ammo = 'Bibiki Seashell',
     },
     Buff = {
         Back = 'Grapevine Cape',
@@ -419,9 +426,13 @@ profile.OnLoad = function()
     gSettings.AllowAddSet = true;
     utilities.Initialize();
     (function ()
-        AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 16');
+        if cleave then
+            AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 56');
+        else
+            AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 16');
+        end
         AshitaCore:GetChatManager():QueueCommand(1, '/macro book 4');
-        gFunc.ForceEquipSet(sets.Weapons_Default);
+        -- gFunc.ForceEquipSet(sets.Weapons_Default);
     end):once(3);
 
 end
@@ -436,6 +447,16 @@ profile.HandleCommand = function(args)
     elseif args[1] == 'sird' then
         sird = not sird;
         gFunc.Echo(255,  'Sp. Int. Rate Down [' .. (sird and 'ON' or 'OFF') .. ']');
+    elseif args[1] == 'cleave' then
+        cleave = not cleave;
+        gFunc.Echo(255,  'Cleaving [' .. (cleave and 'ON' or 'OFF') .. ']');
+        (function ()
+            if cleave then
+                AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 56');
+            else
+                AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 16');
+            end
+        end):once(1);
     end
     utilities.HandleCommands(args);
 end
@@ -469,7 +490,11 @@ profile.HandleDefault = function()
     else
         gFunc.EquipSet(sets.TPGain);
         gFunc.EquipSet(sets.Idle);
-        gFunc.EquipSet(sets.Weapons_Default); -- TODO, solve this more elegantly
+        if cleave then
+            gFunc.EquipSet(sets.Terras_Staff);
+        else
+            gFunc.EquipSet(sets.Weapons_Default); -- TODO, solve this more elegantly
+        end
         -- gFunc.EquipSet(sets.Weapons_Mag);
         if (utilities.OverrideSet == 'SHOWOFF') then
             gFunc.EquipSet(sets.Showoff);
@@ -517,6 +542,9 @@ end
 
 profile.HandleMidcast = function()
     local spell = gData.GetAction();
+    if cleave then
+        gFunc.EquipSet(sets.Weapons_Mag);
+    end
 
     if (bluMag.Stun:contains(spell.Name)) then
         gFunc.EquipSet(sets.Headbutt);
