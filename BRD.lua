@@ -3,6 +3,7 @@ naSpell = gFunc.LoadFile('naSpell.lua');
 
 local profile = {};
 
+-- this file assumes you don't have gjallarhorn.
 local instruments = {
     Minuet = 'Cornette +1',
     Mambo = 'Hellish Bugle',

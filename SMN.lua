@@ -18,13 +18,15 @@ local sets = {
         Hands = 'Marduk\'s Dastanas',
         Ring1 = 'Evoker\'s Ring',
         Ring2 = 'Tamas Ring',
-        Back = 'Summoner\'s Cape',
+        -- Back = 'Summoner\'s Cape',
+        Back = 'Shadow Mantle',
         Waist = 'Mujin Obi',
         Legs = 'Goliard Trews',
-        Feet = 'Summoner\'s Pgch.', -- swap for evoker's +1
+        Feet = 'Evk. Pigaches +1',
     },
     Weapons_Default = {
-        Main = 'Chatoyant Staff',
+        -- Main = 'Chatoyant Staff',
+        Main = 'Baqil Staff',
         Sub = 'Norn\'s Grip',
         Ammo = 'Hedgehog Bomb', -- replace with soothing sachet, arfarvegr drop (pashhow DKP)
     },
@@ -41,7 +43,7 @@ local sets = {
         Back = 'Summoner\'s Cape',
         Waist = 'Mujin Obi',
         Legs = 'Goliard Trews',
-        Feet = 'Summoner\'s Pgch.', -- swap for evoker's +1
+        Feet = 'Evk. Pigaches +1',
     },
     Pet_TPGain = {
         -- similar to Idle, except add pet buffs (acc+ etc)
@@ -50,13 +52,13 @@ local sets = {
         Ear1 = 'Loquac. Earring',
         Ear2 = 'Antivenom Earring',
         Body = 'Yinyang Robe',
-        Hands = 'Summoner\'s Brcr.',
+        Hands = 'Smn. Bracers +1',
         Ring1 = 'Evoker\'s Ring',
         Ring2 = 'Tamas Ring',
         Back = 'Summoner\'s Cape',
         Waist = 'Mujin Obi',
         Legs = 'Goliard Trews',
-        Feet = 'Summoner\'s Pgch.', -- swap for evoker's +1
+        Feet = 'Evk. Pigaches +1',
     },
     Affinity = {
         -- if party has puppetmaster in it, use this when pet is engaged or during physical BP
@@ -118,7 +120,8 @@ local sets = {
         Ear1 = 'Loquac. Earring',
         Ear2 = 'Antivenom Earring',
         Body = 'Marduk\'s Jubbah',
-        Back = 'Veela Cape',
+        Ring1 = 'Dark Ring', -- fast cast
+        Back = 'Swith Cape +1',
         Feet = 'Rostrum Pumps',
     },
     Precast_Summon = {
@@ -128,26 +131,28 @@ local sets = {
         Feet = 'Zenith Pumps +1', -- cure spellcasting time 
     },
     BP_Delay = {
-        -- blood pact delay but also blood boon+ (relic pants aug)
-        Head = 'Summoner\'s Horn',
-        Body = 'Yinyang Robe',
-        Hands = 'Summoner\'s Brcr.',
-        Legs = 'Summoner\'s Spats', -- upgrade this to get blood boon+8
-        Feet = 'Summoner\'s Pgch.',
+        -- blood pact delay
+        -- I thought blood boon helped here but it doesnt
+        Head = 'Summoner\'s Horn', -- delay -3
+        Body = 'Yinyang Robe', -- delay -5
+        -- Hands = 'Nashira Gages', -- delay II -1 (can go up to -3)
+        Hands = 'Smn. Bracers +1', -- delay -2 (only temporary, swap for nashira when nash is -2 and smn cape is -2)
+        Back = 'Summoner\'s Cape', -- delay -1 (eventually -2)
+        Legs = 'Smn. Spats +1', -- delay -2
+        Feet = 'Smn. Pigaches +1', -- delay -2
     },
     BP_Phys = {
         -- bp damage, physical pet bonuses, smn skill
-        -- this set isn't great at the moment; relic+1 augments are on the agenda
         Head = 'Marduk\'s Tiara',
         Neck = 'Incanter\'s Torque',
-        Body = 'Summoner\'s Dblt.', -- swap for +1 augmented (bp dmg +4)
-        Hands = 'Summoner\'s Brcr.', -- swap for +1 augmented (bp dmg +3)
+        Body = 'Smn. Doublet +1', -- bp dmg +4
+        Hands = 'Smn. Bracers +1', -- bp dmg +3
         Ring1 = 'Evoker\'s Ring',
         Ring2 = 'Tamas Ring',
         Back = 'Aife\'s Mantle', -- pet attack +10
         Waist = 'Mujin Obi',
-        Legs = 'Evoker\'s Spats', -- pet acc +10
-        Feet = 'Summoner\'s Pgch.', -- pet attack +7. swap for +1 augmented (pet DA/crit+3%)
+        Legs = 'Evk. Spats +1', -- pet acc +10, atk+3 DA +3%
+        Feet = 'Smn. Pigaches +1', -- pet attack +7. augmented: pet DA/crit+3%
     },
     BP_Mag = {
         -- bp damage, pet MAB+, smn skill
@@ -158,13 +163,18 @@ local sets = {
         -- for bp ward, summon spirits, siphon
         Head = 'Marduk\'s Tiara',
         Neck = 'Incanter\'s Torque',
-        Hands = 'Summoner\'s Brcr.',
+        Hands = 'Smn. Bracers +1',
         Ring1 = 'Evoker\'s Ring',
         Ring2 = 'Tamas Ring',
         Back = 'Summoner\'s Cape',
         Waist = 'Mujin Obi',
-        Legs = 'Marduk\'s Shalwar',
+        -- Legs = 'Marduk\'s Shalwar',
+        Legs = 'Smn. Spats +1', -- augmented gives +10
         Feet = 'Nashira Crackows',
+    },
+    Siphon =
+    {
+        Feet = 'Evk. Pigaches +1', -- elemental siphon +5
     },
     Heal = {
         -- cure potency, mind
@@ -179,7 +189,7 @@ local sets = {
         Back = 'Dew Silk Cape +1',
         Waist = 'Salire Belt',
         Legs = 'Errant Slops',
-        Feet = 'Zenith Pumps +1',
+        Feet = 'Smn. Pigaches +1', -- cure potency 6
     },
     Heal_Weapons = {
         Main = 'Tamaxchi',
@@ -195,7 +205,8 @@ local sets = {
         Neck = 'Incanter\'s Torque', -- healing magic
         Ear2 = 'Loquac. Earring', -- fast cast
         Body = 'Goliard Saio', -- haste
-        Back = 'Veela Cape', -- fast cast
+        Ring1 = 'Dark Ring', -- fast cast
+        Back = 'Swith Cape +1', -- fast cast
         Waist = 'Ninurta\'s Sash', -- haste
         Legs = 'Marduk\'s Shalwar', -- healing magic
         Feet = 'Rostrum Pumps',
@@ -207,9 +218,12 @@ local sets = {
         Neck = 'Stone Gorget',
     },
     PDT = {
+        Hands = 'Smn. Bracers +1',
         Back = 'Shadow Mantle',
     },
-    MDT = {},
+    MDT = {
+        Body = 'Yinyang Robe',
+    },
     BDT = {},
     Pet_Def = {
         -- TODO: pet defense+, pet -dt
@@ -381,11 +395,12 @@ end
 profile.HandleAbility = function()
     local ability = gData.GetAction();
     if (ability.Name == 'Elemental Siphon') then
-        gFunc.EquipSet(sets.Smn_Mag_Skill);
+        gFunc.EquipSet(sets.Smn_Mag_Skill)
+        gFunc.EquipSet(sets.Siphon)
     else
-        gFunc.EquipSet(sets.BP_Delay);
+        gFunc.EquipSet(sets.BP_Delay)
     end
-    utilities.CheckCancels();
+    utilities.CheckCancels()
 end
 
 profile.HandleItem = function()
@@ -414,6 +429,7 @@ profile.HandleMidcast = function()
         end
     elseif (spell.Skill == 'Healing Magic') then
         gFunc.EquipSet(sets.Heal);
+        local player = gData.GetPlayer();
         if (player.Status ~= 'Engaged') then
             gFunc.EquipSet(sets.Heal_Weapons);
         end

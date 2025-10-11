@@ -128,6 +128,7 @@ function utilities.CheckCancels()
 	local action = gData.GetAction();
 	local sneak = gData.GetBuffCount('Sneak');
 	local stoneskin = gData.GetBuffCount('Stoneskin');
+	local aquaveil = gData.GetBuffCount('Aquaveil');
 	local target = gData.GetActionTarget();
 	local me = AshitaCore:GetMemoryManager():GetParty():GetMemberName(0);
 
@@ -137,8 +138,10 @@ function utilities.CheckCancels()
 		(function() AshitaCore:GetChatManager():QueueCommand(1, '/ja "Spectral Jig" <me>') end):once(2);
 	elseif (action.Name == 'Sneak' and sneak > 0 and target.Name == me) then
 		(function() AshitaCore:GetChatManager():QueueCommand(1, '/cancel Sneak') end):once(0.5);
-	elseif (action.Name == 'Stoneskin' and stoneskin > 0) then
+	elseif ((action.Name == 'Stoneskin' or action.Name == 'Diamondhide') and stoneskin > 0) then
 		(function() AshitaCore:GetChatManager():QueueCommand(1, '/cancel Stoneskin') end):once(0.5);
+	elseif ((action.Name == 'Aquaveil' or action.Name == 'Carcharian Verve') and aquaveil > 0) then
+		(function() AshitaCore:GetChatManager():QueueCommand(1, '/cancel Aquaveil') end):once(0.5);
     else
         utilities.CancelShadows(action);
 	end
@@ -197,6 +200,7 @@ end
 local greenPhrases = {
 	"Treasure Hunter effectiveness",
 	"Something is interrupting ventures at",
+	"Something really dangerous has appeared",
 	"have caused a Rift to appear",
 	"Champions of unity, assemble",
 	"The Summit Smelter has landed in",

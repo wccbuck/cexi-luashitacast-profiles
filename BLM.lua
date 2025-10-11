@@ -9,7 +9,7 @@ local sets = {
         Ear1 = 'Novio Earring',
         Ear2 = 'Soil Earring', -- -pdt
         Body = 'Src. Coat +1', -- refresh
-        Hands = 'Zenith Mitts +1',
+        Hands = 'Wzd. Gloves +1',
         Ring1 = 'Galdr Ring',
         Ring2 = 'Tamas Ring',
         -- Back = 'Umbra Cape', -- -pdt
@@ -65,8 +65,9 @@ local sets = {
         Ear2 = 'Loquac. Earring',
         Body = 'Src. Coat +1', -- fast cast
         Ring1 = 'Hibernal Ring', -- 2% fast cast
+        Ring2 = 'Dark Ring', -- fast cast
         -- Body = dalmatica
-        Back = 'Veela Cape',
+        Back = 'Swith Cape +1',
         Feet = 'Rostrum Pumps',
     },
     Nuke = {
@@ -75,7 +76,8 @@ local sets = {
         Ear1 = 'Novio Earring',
         Ear2 = 'Moldavite Earring',
         Body = 'Src. Coat +1',
-        Hands = 'Zenith Mitts +1',
+        -- Hands = 'Zenith Mitts +1',
+        Hands = 'Wzd. Gloves +1', -- with the elemental magic damage bonus, this is BiS
         Ring1 = 'Galdr Ring',
         Ring2 = 'Tamas Ring',
         Back = 'Voluspa Mantle',
@@ -108,8 +110,8 @@ local sets = {
         Ear1 = 'Aqua Earring', -- swap with dark earring
         Ear2 = 'Abyssal Earring',
         Body = 'Nashira Manteel',
-        Hands = 'Sorcerer\'s Gloves',
-        Ring1 = 'Omega Ring',
+        Hands = 'Sorcerer\'s Gloves', -- upgrade, augment
+        Ring1 = 'Galdr Ring',
         Ring2 = 'Tamas Ring',
         Back = 'Voluspa Mantle',
         Waist = 'Charmer\'s Sash',
@@ -182,6 +184,7 @@ end
 profile.HandleMidcast = function()
     local spell = gData.GetAction();
     if (spell.Name == 'Stoneskin' or spell.Name == 'Blink') then
+        -- TODO make an enhancing magic + set
         gFunc.EquipSet(sets.Stoneskin);
     elseif (spell.Skill == 'Elemental Magic') then
         -- if you have uggalepih pendant you can add it here if MPP < 51,

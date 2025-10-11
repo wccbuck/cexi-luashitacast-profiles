@@ -6,15 +6,15 @@ local sets = {
     TPGain = {
         Head = 'Sao. Kabuto +1',
         Neck = 'Rikugame Nodowa',
-        Ear1 = 'Brutal Earring',
+        Ear1 = 'Brutal Earring +1',
         Ear2 = 'Bushinomimi',
         -- Body = { Name = 'Shura Togi +1', Augment = { [1] = 'Crit.hit rate+3', [2] = 'Haste+3' } }, -- this puts me over the haste cap
         Body = 'Usukane Haramaki',
         Hands = 'Swift Gages',
-        -- Ring1 = 'Toreador\'s Ring',
         Ring1 = 'Mars\'s Ring',
         Ring2 = 'Rajas Ring',
-        Back = 'Aife\'s Mantle',
+        -- Back = 'Aife\'s Mantle',
+        Back = 'Cuchulain\'s Mantle',
         Waist = 'Ninurta\'s Sash',
         Legs = 'Myn. Haidate +1',
         Feet = 'Ruthless Greaves',
@@ -43,21 +43,25 @@ local sets = {
         Legs = 'displaced',
     },
     WS_Default = {
-        Head = 'Shr.Znr.Kabuto +1',
+        Head = 'Shr.Znr.Kabuto +1', -- str, ws dmg
         Neck = 'Fotia Gorget',
-        Ear1 = 'Brutal Earring',
+        Ear1 = 'Brutal Earring +1',
         Ear2 = 'Bushinomimi',
         Body = 'Hmn. Domaru +1',
-        Hands = 'Myn. Kote +1',
+        -- Hands = 'Myn. Kote +1',
+        Hands = 'Hachiman Kote +1',
         Ring1 = 'Strigoi Ring',
         Ring2 = 'Rajas Ring',
         Back = 'Cuchulain\'s Mantle',
-        Waist = 'Warwolf Belt',
+        Waist = 'Warwolf Belt', -- replace with +1
         Legs = 'Hachiryu Haidate',
         Feet = 'Ruthless Greaves',
     },
     WS_Low_Eva = {
         -- Waist = 'Warwolf Belt',
+    },
+    WS_Rana = {
+        Neck = 'Justice Torque',
     },
     WS_High_Eva = {
         Waist = 'Potent Belt',
@@ -65,8 +69,9 @@ local sets = {
     },
     GKT_Skill = {
         Head = 'Sao. Kabuto +1',
+        Neck = 'Justice Torque',
         Ear2 = 'Bushinomimi',
-        -- justice torque, moepapa annulet
+        -- moepapa annulet
     },
     Ranged = {
         Head = 'Optical Hat',
@@ -101,14 +106,13 @@ local sets = {
         Body = 'Arhat\'s Gi +1',
         Hands = 'Melaco Mittens',
         Ring1 = 'Sattva Ring',
-        Ring2 = 'Rajas Ring', -- swap for succor ring or defending ring
+        Ring2 = 'Titanium Band',
         Back = 'Shadow Mantle',
-        Waist = 'Marid Belt',
+        Waist = 'Oneiros Belt',
         Legs = 'Hydra Cuisses +1',
         Feet = 'Askar Gambieras',
     },
     MDT = {
-        -- Head = 'Ace\'s Helm',
         Neck = 'Jeweled Collar',
         Ear1 = 'Merman\'s Earring',
         Ear2 = 'Merman\'s Earring',
@@ -121,14 +125,18 @@ local sets = {
         Legs = 'Coral Cuisses',
         Feet = 'Askar Gambieras',
     },
-    BDT = {},
+    BDT = {
+        -- todo
+        Ring2 = 'Titanium Band',
+    },
     Showoff = {
     },
     Weapons_Default = {
-        Main = 'Amanomurakumo',
+        -- Main = 'Amanomurakumo',
+        Main = 'Kogarasumaru',
         Sub = 'Pole Grip',
         Range = 'Ifrit\'s Bow',
-        Ammo = 'Iron Arrow',
+        Ammo = 'Demon Arrow',
     },
     Weapons_Archery = {
         Main = 'Thunder Staff',
@@ -270,20 +278,9 @@ profile.HandleWeaponskill = function()
     elseif (ws.Name == 'Tachi: Ageha') then
         -- need to keep GKT skill high enough
         gFunc.EquipSet(sets.GKT_Skill);
+    elseif (ws.Name == 'Tachi: Rana') then
+        gFunc.EquipSet(sets.WS_Rana);
     end
-    -- could put other WS sets here but they pretty much all are optimized around
-    -- the pieces in WS_Default
-    -- for example, if you don't have fotia:
-
-    -- if (ws.Name == 'Tachi: Kaiten') then
-    --     gFunc.EquipSet(sets.WS_ThunGorget);
-    -- elseif (ws.Name == 'Tachi: Shoha') then
-    --     gFunc.EquipSet(sets.WS_ShadGorget);
-    -- elseif (ws.Name == 'Tachi: Rana') then
-    --     gFunc.EquipSet(sets.WS_ShadGorget);
-    -- elseif (ws.Name == 'Tachi: Gekko') then
-    --     gFunc.EquipSet(sets.WS_SnowGorget);
-    -- end
 end
 
 return profile;

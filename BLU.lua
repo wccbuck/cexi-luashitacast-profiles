@@ -7,21 +7,28 @@ local profile = {};
 
 local learning = false;
 local sird = false;
-local cleave = true;
+local cleave = false;
 
 local sets = {
     Idle = {
         Ammo = 'Oneiros Pebble', -- +3 vit, +3 acc
+        Ear1 = 'Genmei Earring',
+        Ear2 = 'Soil Earring',
+        Neck = 'Oneiros Torque',
         Body = 'Morrigan\'s Robe',
+        Hands = 'Denali Wristbands',
+        Ring1 = 'Sattva Ring',
+        Ring2 = 'Titanium Band',
+        Back = 'Shadow Mantle',
+        Waist = 'Oneiros Belt',
         Legs = 'Magus Shalwar +1',
-        -- Back = 'Umbra Cape',
     },
     TPGain = {
         -- Head = 'Dampening Tam',
         Head = 'Mirage Keffiyeh +1',
         Neck = 'Fortitude Torque',
         -- Neck = 'Tiercel Necklace',
-        Ear1 = 'Brutal Earring',
+        Ear1 = 'Brutal Earring +1',
         Ear2 = 'Suppanomimi',
         Body = 'Samnuha Coat',
         -- Body = 'Blood Scale Mail',
@@ -52,7 +59,7 @@ local sets = {
         Ammo = 'Tiphia Sting',
         Head = 'Maat\'s Cap',
         Neck = 'Fotia Gorget',
-        Ear1 = 'Brutal Earring',
+        Ear1 = 'Brutal Earring +1',
         Ear2 = 'Emberpearl Earring',
         Body = 'Morrigan\'s Robe',
         Hands = 'Enkidu\'s Mittens',
@@ -61,13 +68,15 @@ local sets = {
         Back = 'Cuchulain\'s Mantle',
         Waist = 'Potent Belt',
         Legs = 'Mirage Shalwar +1',
-        Feet = 'Denali Gamashes', -- replace with Setanta's when you get it and add denali to req + savage blade
+        Feet = 'Denali Gamashes', -- replace with Setanta's when you get it
     },
     WS_Requiescat = {
         -- 5 hits, MND 85%
         Hands = 'Mrg. Bazubands +1',
         Ring1 = 'Aqua Ring', -- swap with Tjukurrpa Annulet
+        Back = 'Stormlord Shawl +1',
         Waist = 'Visionary Obi',
+        Feet = 'Denali Gamashes',
     },
     WS_Expiacion = {
         -- 2 hits, STR 95%, INT 95%
@@ -76,11 +85,12 @@ local sets = {
     WS_SavageBlade = {
         -- 2 hits, STR 80%, MND 80%
         Hands = 'Mrg. Bazubands +1',
+        Back = 'Stormlord Shawl +1',
         Waist = 'Visionary Obi',
+        Feet = 'Denali Gamashes',
     },
     WS_High_Eva = {
         -- this overrides anything set in specific WS sets
-        -- Head = 'Optical Hat', -- remove this line when you get Maat's cap
         Hands = 'Enkidu\'s Mittens',
         -- Ring1 = 'Mars\'s Ring', -- strigoi might still be better in most cases
     },
@@ -91,8 +101,10 @@ local sets = {
     },
     Precast = {
         Ear1 = 'Loquac. Earring',
+        Head = 'Entrancing Ribbon',
         Body = 'Mirage Jubbah +1',
-        -- back = swith
+        Ring2 = 'Dark Ring', -- fast cast
+        Back = 'Swith Cape +1',
         Legs = 'Homam Cosciales', -- better than blood cuisses +1
     },
     Ethereal = {
@@ -175,7 +187,8 @@ local sets = {
         Ring2 = 'Balrahn\'s Ring',
         Back = 'Mirage Mantle',
         Waist = 'Salire Belt',
-        Legs = 'Mirage Shalwar +1',
+        -- Legs = 'Mirage Shalwar +1',
+        Legs = 'Homam Cosciales', -- blue magic skill, conserve MP, haste
         Feet = 'Blood Greaves',
     },
     Phys_Spell = {
@@ -238,7 +251,8 @@ local sets = {
         Hands = 'Yigit Gages',
         Ring1 = 'Tamas Ring',
         Ring2 = 'Galdr Ring',
-        Back = 'Voluspa Mantle',
+        -- Back = 'Voluspa Mantle',
+        Back = 'Mirage Mantle', -- blue magic skill and m.acc
         Waist = 'Charmer\'s Sash',
         Legs = 'Morrigan\'s Slops',
         -- Feet = 'Denali Gamashes',
@@ -307,7 +321,7 @@ local sets = {
     },
     BlazingBound = {
         Ammo = 'Phtm. Tathlum',
-        Head = 'Magus Keffiyeh',
+        Head = 'Maat\'s Cap',
         Neck = 'Lmg. Medallion +1',
         Ear1 = 'Abyssal Earring',
         Ear2 = 'Aqua Earring', -- swap for INT+
@@ -353,18 +367,20 @@ local sets = {
     },
     PDT = {
         -- Ammo = 'Bibiki Seashell',
-        Ammo = 'Oneiros Pebble',
+        -- Ammo = 'Oneiros Pebble',
         -- Ear1 = 'Colossus\'s Earring',
         -- Ear1 = 'Ethereal Earring',
+        Neck = 'Oneiros Torque',
         Ear1 = 'Genmei Earring',
         Ear2 = 'Soil Earring',
         Body = 'Blood Scale Mail',
         -- Body = 'Morrigan\'s Robe',
         Hands = 'Denali Wristbands',
         Ring1 = 'Sattva Ring',
+        Ring2 = 'Titanium Band',
         Back = 'Shadow Mantle',
         -- Back = 'Umbra Cape',
-        Waist = 'Marid Belt',
+        Waist = 'Oneiros Belt',
         Legs = 'Blood Cuisses',
     },
     MDT = {
@@ -383,11 +399,12 @@ local sets = {
         -- TODO
         Body = 'Blood Scale Mail',
         Hands = 'Denali Wristbands',
+        Ring2 = 'Titanium Band',
     },
     Showoff = {},
     Weapons_Default = {
-        Main = 'Mimesis',
-        Sub = 'Xiutleato',
+        Main = 'Stormblade',
+        Sub = 'Mimesis',
         Ammo = 'Oneiros Pebble',
     },
     Weapons_Learning = {
@@ -405,6 +422,8 @@ local sets = {
     },
     Buff = {
         Back = 'Grapevine Cape',
+        Legs = 'Homam Cosciales', -- enhancing duration
+        Feet = 'Mirage Charuqs +1', -- https://discord.com/channels/696847769444548700/855508485122555914/1276165277578428538
     },
     Stoneskin = { -- if sub whm or rdm
         Neck = 'Stone Gorget',
@@ -604,6 +623,9 @@ profile.HandleMidcast = function()
     local player = gData.GetPlayer();
     if ((player.SubJob == "THF") and (not isTargetTagged()) and isTargetAMob()) then
         gFunc.EquipSet(sets.TH);
+    end
+    if (T{'PDT', 'MDT', 'BDT'}:contains(utilities.OverrideSet)) and gData.GetBuffCount('Aquaveil') == 0 then
+        gFunc.EquipSet(sets.SpIntDown);
     end
 end
 

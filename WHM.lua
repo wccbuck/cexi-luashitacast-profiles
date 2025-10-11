@@ -6,24 +6,23 @@ local profile = {};
 local sets = {
     Heal = {
         Ammo = 'Hedgehog Bomb',
-        Head = 'Maat\'s Cap',
-        Neck = 'Fylgja Torque +1',
-        Ear1 = 'Light Earring',
-        Ear2 = 'Roundel Earring',
-        Body = 'Aristocrat\'s Coat',
-        Hands = 'Blessed Mitts',
-        Ring1 = 'Karka Ring',
-        Ring2 = 'Tamas Ring',
-        Back = 'Dew Silk Cape +1',
-        Waist = 'Cleric\'s Belt',
-        -- Legs = 'Blessed Trousers',
-        Legs = 'Clr. Pantaln. +1',
-        Feet = 'Zenith Pumps +1',
+        Head = 'Hlr. Cap +1', -- mnd +7
+        Neck = 'Fylgja Torque +1', -- cure pot +3
+        Ear1 = 'Light Earring', -- cure pot +2
+        Ear2 = 'Roundel Earring', -- cure pot +5
+        Body = 'Aristocrat\'s Coat', -- cure pot +12
+        Hands = 'Hlr. Mitts +1', -- mnd +7, cure pot 3, conserve mp 5, healing mag skill 15
+        Ring1 = 'Karka Ring', -- mnd +6
+        Ring2 = 'Tamas Ring', -- mnd +5
+        Back = 'Dew Silk Cape +1', -- cure pot +3, mnd +6
+        Waist = 'Cleric\'s Belt', -- cure pot +5, mnd +6
+        Legs = 'Clr. Pantaln. +1', -- cure pot +6, healing magic +15
+        Feet = 'Zenith Pumps +1', -- cure pot +6
     },
     Cure_Weapons = {
         -- Main = 'Tamaxchi', -- I'm over the cure potency cap with this
-        Main = 'Sindri',
-        Sub = 'Genbu\'s Shield',
+        Main = 'Sindri', -- mnd +6, convert 1% of cure amt to MP
+        Sub = 'Genbu\'s Shield', -- cure pot +5
     },
     Status_Weapons = {
         Main = 'Yagrush',
@@ -42,61 +41,59 @@ local sets = {
         Body = 'Clr. Bliaut +1',
         -- Body = 'Marduk\'s Jubbah',
         Hands = 'Marduk\'s Dastanas',
-        Ring1 = 'Star Ring',
+        Ring1 = 'Defending Ring',
         Ring2 = 'Tamas Ring',
-        --Back = 'Umbra Cape',
-        Back = 'Shadow Mantle',
+        Back = 'Umbra Cape',
         Waist = 'Cleric\'s Belt',
         Legs = 'Clr. Pantaln. +1',
         Feet = 'Zenith Pumps +1',
     },
     TPGain = {
-        -- todo: update this with adept trials gear
         Ammo = 'Tiphia Sting',
-        Head = 'Optical Hat', -- augmented
+        Head = 'Windfall Hat',
         Neck = 'Chivalrous Chain',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Hollow Earring',
-        Body = 'Reverend Mail', -- augmented
+        Body = 'Reverend Mail +1',
         Hands = 'Blessed Mitts',
         Ring1 = 'Rajas Ring',
         Ring2 = 'Mars\'s Ring',
         Back = 'Aife\'s Mantle',
         Waist = 'Ninurta\'s Sash',
-        Legs = 'Prince\'s Slops', -- augmented
+        Legs = 'Blessed Trousers', -- augmented
         Feet = 'Blessed Pumps',
     },
     WS_Default = {
         -- realmrazer: mnd 85%
         Ammo = 'Tiphia Sting',
-        Head = 'Maat\'s Cap',
-        Neck = 'Fotia Gorget',
+        Head = 'Hlr. Cap +1',
+        -- Head = 'Maat\'s Cap',
+        -- Neck = 'Fotia Gorget',
+        Neck = 'Chivalrous Chain',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Emberpearl Earring',
-        -- Body = 'Blessed Bliaut', -- mnd+5 (augment for dex+ and atk+)
-        -- other body options:
-        -- - tabin jupon +1 (str+2, dex+2, acc+7)
+        Body = 'Blessed Bliaut', -- mnd+5 (augment for dex+ and atk+)
         Body = 'Marduk\'s Jubbah',
         Hands = 'Hlr. Mitts +1', --mnd+7, str+7
         Ring1 = 'Rajas Ring',
         Ring2 = 'Aqua Ring', -- replace with Strigoi? or Karka?
         Back = 'Cuchulain\'s Mantle',
         Waist = 'Visionary Obi',
-        Legs = 'Prince\'s Slops',
-        -- best legs piece: blessed trousers augmented (str, attack, double attack)
+        Legs = 'Blessed Trousers',
         Feet = 'Goliard Clogs', -- dex+4 mnd+4. swap for marduk's (mnd+10)
     },
     WS_Mystic_Boon = {
         -- note that Mystic Boon has no SC properties and therefore doesn't get a bonus from Fotia
         -- str 95%, mnd 95%
         Neck = 'Chivalrous Chain', -- laran's pendant?
+        Waist = 'Stormlord Shawl',
     },
     Haste = {
         Head = 'Windfall Hat',
         Ear2 = 'Loquac. Earring',
         Hands = 'Blessed Mitts',
         Body = 'Marduk\'s Jubbah',
-        Back = 'Veela Cape',
+        Back = 'Swith Cape +1',
         Waist = 'Ninurta\'s Sash',
         Legs = 'Blessed Trousers',
         Feet = 'Blessed Pumps',
@@ -115,7 +112,8 @@ local sets = {
         Ear2 = 'Loquac. Earring',
         Body = 'Nashira Manteel',
         Hands = 'Hlr. Mitts +1',
-        Back = 'Veela Cape',
+        Ring1 = 'Dark Ring', -- fast cast
+        Back = 'Swith Cape +1',
         Waist = 'Ninurta\'s Sash',
         Legs = 'Clr. Pantaln. +1',
         Feet = 'Blessed Pumps',
@@ -123,9 +121,10 @@ local sets = {
     Precast = {
         Head = 'Windfall Hat',
         Ear2 = 'Loquac. Earring',
-        Hands = 'Blessed Mitts',
+        Hands = 'Blessed Mitts', -- fast cast aug
+        Ring1 = 'Dark Ring', -- fast cast
         Body = 'Marduk\'s Jubbah',
-        Back = 'Veela Cape',
+        Back = 'Swith Cape +1',
         Waist = 'Ninurta\'s Sash',
         Feet = 'Rostrum Pumps',
     },
@@ -154,7 +153,7 @@ local sets = {
         Neck = 'Jokushu Chain', -- 10 divine
         -- Ear1 = 'Knight\'s Earring',
         Ear2 = 'Aqua Earring',
-        Body = 'Errant Hpl.',
+        Body = 'Marduk\'s Jubbah',
         Hands = 'Blessed Mitts',
         Ring1 = 'Karka Ring',
         Ring2 = 'Tamas Ring',
@@ -201,7 +200,8 @@ local sets = {
     },
     Barspell = {
         -- also general enhancing
-        Head = 'Hlr. Cap +1',
+        -- Head = 'Hlr. Cap +1',
+        Head = 'Seer\'s Crown', -- augment: conserve MP +2
         Neck = 'Fylgja Torque +1',
         Ear1 = 'Brachyura Earring',
         Ear2 = 'Aqua Earring',
@@ -219,7 +219,7 @@ local sets = {
         Head = 'Hlr. Cap +1',
         Neck = 'Incanter\'s Torque',
         Ear2 = 'Aqua Earring',
-        Body = 'Errant Hpl.',
+        Body = 'Marduk\'s Jubbah',
         Hands = 'Cleric\'s Mitts',
         Ring1 = 'Karka Ring',
         Ring2 = 'Tamas Ring',
@@ -244,7 +244,7 @@ local sets = {
         -- TODO
         Body = 'Clr. Bliaut +1',
         -- Back = 'Umbra Cape',
-        Back = 'Shadow Mantle',
+        Back = 'Umbra Cape',
         Legs = 'Goliard Trews',
     },
     MDT = {
