@@ -53,12 +53,12 @@ local sets = {
         Ring1 = 'Strigoi Ring',
         Ring2 = 'Rajas Ring',
         Back = 'Cuchulain\'s Mantle',
-        Waist = 'Warwolf Belt', -- replace with +1
+        Waist = 'Warwolf Belt +1',
         Legs = 'Hachiryu Haidate',
         Feet = 'Ruthless Greaves',
     },
     WS_Low_Eva = {
-        -- Waist = 'Warwolf Belt',
+        -- Waist = 'Warwolf Belt +1',
     },
     WS_Rana = {
         Neck = 'Justice Torque',

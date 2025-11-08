@@ -66,9 +66,9 @@ local sets = {
         Ring1 = 'Strigoi Ring',
         Ring2 = 'Rajas Ring',
         Back = 'Cuchulain\'s Mantle',
-        Waist = 'Potent Belt',
+        Waist = 'Warwolf Belt +1',
         Legs = 'Mirage Shalwar +1',
-        Feet = 'Denali Gamashes', -- replace with Setanta's when you get it
+        Feet = 'Morrigan\'s Pgch.', -- replace with Setanta's when you get it
     },
     WS_Requiescat = {
         -- 5 hits, MND 85%
@@ -76,18 +76,18 @@ local sets = {
         Ring1 = 'Aqua Ring', -- swap with Tjukurrpa Annulet
         Back = 'Stormlord Shawl +1',
         Waist = 'Visionary Obi',
-        Feet = 'Denali Gamashes',
+        Feet = 'Morrigan\'s Pgch.',
     },
     WS_Expiacion = {
         -- 2 hits, STR 95%, INT 95%
-        Waist = 'Warwolf Belt',
+        Waist = 'Warwolf Belt +1',
     },
     WS_SavageBlade = {
         -- 2 hits, STR 80%, MND 80%
         Hands = 'Mrg. Bazubands +1',
         Back = 'Stormlord Shawl +1',
         Waist = 'Visionary Obi',
-        Feet = 'Denali Gamashes',
+        Feet = 'Morrigan\'s Pgch.',
     },
     WS_High_Eva = {
         -- this overrides anything set in specific WS sets
@@ -108,7 +108,7 @@ local sets = {
         Legs = 'Homam Cosciales', -- better than blood cuisses +1
     },
     Ethereal = {
-        Ear1 = 'Ethereal Earring',
+        Ear2 = 'Ethereal Earring',
     },
     Cure = { -- 1 pt MND = 3 pts VIT = 5 pts healing magic skill. Also cure potency+
         Ammo = 'Bibiki Seashell',
@@ -213,7 +213,7 @@ local sets = {
     },
     Phys_Spell_Low_Eva = {
         Ear1 = 'Bushinomimi',
-        Waist = 'Warwolf Belt',
+        Waist = 'Warwolf Belt +1',
     },
     Phys_Spell_Dex = { -- e.g. disseverment, frenetic rip, hysteric barrage
         Feet = 'Blood Greaves',
@@ -229,7 +229,7 @@ local sets = {
     Mag_Spell_Charisma = { -- eyes on me
         Ammo = 'Hedgehog Bomb',
         Head = 'Maat\'s Cap',
-        Neck = 'Bird Whistle',
+        Neck = 'Incanter\'s Torque',
         Ear1 = 'Moldavite Earring',
         Ear2 = 'Novio Earring',
         Body = 'Mirage Jubbah +1',
@@ -244,7 +244,7 @@ local sets = {
     Mag_Spell_Intelligence = {
         Ammo = 'Phtm. Tathlum',
         Head = 'Maat\'s Cap',
-        Neck = 'Lmg. Medallion +1',
+        Neck = 'Incanter\'s Torque',
         Ear1 = 'Moldavite Earring',
         Ear2 = 'Novio Earring',
         Body = 'Morrigan\'s Robe',
@@ -261,7 +261,7 @@ local sets = {
     Mag_Spell_Mind = {
         Ammo = 'Hedgehog Bomb',
         Head = 'Maat\'s Cap',
-        Neck = 'Gnole Torque',
+        Neck = 'Incanter\'s Torque',
         Ear1 = 'Moldavite Earring',
         Ear2 = 'Novio Earring',
         Body = 'Morrigan\'s Robe',
@@ -307,7 +307,7 @@ local sets = {
         Ring1 = 'Unyielding Ring',
         Ring2 = 'Rajas Ring',
         Back = 'Cuchulain\'s Mantle',
-        Waist = 'Warwolf Belt',
+        Waist = 'Warwolf Belt +1',
         Legs = 'Mirage Shalwar +1',
         Feet = 'Blood Greaves',
     },
@@ -356,7 +356,7 @@ local sets = {
         -- sird, spell interruption rate down
         Head = 'Nashira Turban', -- 10%
         -- Neck = 'Willpower Torque', -- 5%
-        -- Ear1 = 'Magnetic Earring', -- 8%
+        Ear1 = 'Magnetic Earring', -- 8%
         Body = 'Magus Jubbah +1', -- blue magic skill +15
         Hands = 'Swift Gages', -- 10%
         -- Back = 'Solitaire Cape', -- 8%
@@ -434,6 +434,24 @@ local sets = {
     },
     TH = {
         Head = 'Wh. Rarab Cap +1',
+    },
+    DefTusk = {
+        -- currently on CEXI, barrier tusk gives 50% PDT. So this set prioritizes def, vit, eva, and aquan intimidate
+        Main = 'Aquan Slayer', -- replace with killer kilij or the +1
+        Sub = 'Genbu\'s Shield',
+        Ammo = 'Bibiki Seashell',
+        Head = 'Mirage Keffiyeh +1',
+        Neck = 'Oneiros Torque',
+        Ear1 = 'Genmei Earring',
+        Ear2 = 'Soil Earring',
+        Body = 'Enkidu\'s Harness',
+        Hands = 'Denali Wristbands',
+        Ring1 = 'Sattva Ring',
+        Ring2 = 'Titanium Band',
+        Back = 'Shadow Mantle',
+        Waist = 'Warwolf Belt +1',
+        Legs = 'Blood Cuisses',
+        Feet = 'Blood Greaves',
     },
 };
 profile.Sets = sets;
@@ -530,6 +548,12 @@ profile.HandleDefault = function()
         if player.MPP < 90 then
             -- might as well get some MP back
             gFunc.EquipSet(sets.Ethereal);
+        end
+        if
+            cleave and
+            gData.GetBuffCount('Physical Shield') > 0
+        then
+            gFunc.EquipSet(sets.DefTusk);
         end
     end
 

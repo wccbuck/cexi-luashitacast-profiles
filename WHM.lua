@@ -178,22 +178,7 @@ local sets = {
         Hands = 'Oracle\'s Gloves',
         Ring1 = 'Star Ring',
         Ring2 = 'Star Ring',
-        Back = {
-            Name = 'Blue Cape',
-            Augment = {
-                [1] = 'Lightning resistance+5',
-                [2] = 'Water resistance+5',
-                [3] = 'Wind resistance+5',
-                [4] = 'Fire resistance+5',
-                [5] = 'Ice resistance+5',
-                [6] = 'MP recovered while healing +2',
-                [7] = 'Earth resistance+5',
-                [8] = 'Dark resistance+5',
-                [9] = 'Light resistance+5',
-                [10] = 'HP recovered while healing +2',
-                [11] = 'HP+30'
-            }
-        },
+        Back = 'Blue Cape', -- augmented, hMP +2
         Waist = 'Cleric\'s Belt',
         Legs = 'Yigit Seraweels',
         Feet = 'Goliard Clogs',
@@ -201,7 +186,7 @@ local sets = {
     Barspell = {
         -- also general enhancing
         -- Head = 'Hlr. Cap +1',
-        Head = 'Seer\'s Crown', -- augment: conserve MP +2
+        Head = 'Cobra Cloche', -- conserve MP +4
         Neck = 'Fylgja Torque +1',
         Ear1 = 'Brachyura Earring',
         Ear2 = 'Aqua Earring',

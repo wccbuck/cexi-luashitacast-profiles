@@ -11,7 +11,7 @@ local instruments = {
     Lullaby = 'Terpander',
     Madrigal = 'Traversiere +1',
     Mazurka = 'Harlequin\'s Horn',
-    March = 'Ryl.Spr. Horn', -- replace with faerie piccolo (quest)
+    March = 'Faerie Piccolo',
     Requiem = 'Requiem Flute',
     Elegy = 'Horn +1',
     Threnody = 'Piccolo +1',
@@ -35,10 +35,14 @@ local sets = {
         Feet = 'Suzaku\'s Sune-Ate',
     },
     Sing_Weapons = {
-        -- chanter's staff if youve got it
-        Main = 'Silktone',
-        Sub = 'Genbu\'s Shield',
+        Main = 'Chanter\'s Staff',
+        Sub = 'Reflexive Grip',
     },
+    -- if you don't have chanter's staff:
+    -- Sing_Weapons = {
+    --     Main = 'Silktone',
+    --     Sub = 'Genbu\'s Shield',
+    -- },
     TPGain = {
         -- TODO
         -- Range = 'Hellish Bugle',
@@ -69,10 +73,9 @@ local sets = {
     Precast = {
         Head = 'Windfall Hat',
         Ear2 = 'Loquac. Earring',
-        Body = 'Marduk\'s Jubbah',
+        Body = 'Marduk\'s Jubbah', -- or dalmatica
         Ring1 = 'Hibernal Ring', -- 2% fast cast
-        Back = 'Veela Cape',
-        -- Feet = 'Suzaku\'s Sune-Ate', -- fast cast
+        Back = 'Veela Cape', -- or swith +1
         Feet = 'Rostrum Pumps',
     },
     PrecastHeal = {
@@ -91,10 +94,9 @@ local sets = {
         -- Hands = 'Patrician\'s Cuffs', -- if we need to get to a multiple of 30 for healing magic
         Hands = 'Dusk Gloves', -- haste
         Ring1 = 'Hibernal Ring', -- 2% fast cast
-        Back = 'Veela Cape', -- fast cast
+        Back = 'Veela Cape', -- or swith +1. fast cast
         Waist = 'Ninurta\'s Sash', -- haste
         Legs = 'Byakko\'s Haidate', -- haste
-        -- Feet = 'Suzaku\'s Sune-Ate', -- haste, fast cast
         Feet = 'Rostrum Pumps', -- fast cast
     },
     Wind = {
@@ -103,11 +105,11 @@ local sets = {
         Ear1 = 'Musical Earring', -- wind, string +5
         Body = 'Chl. Jstcorps +1',
         Hands = 'Chl. Cuffs +1', -- sing+10
-        Ring1 = 'Trumpet Ring', -- wind+2
-        Ring2 = 'Trumpet Ring', -- wind+2
-        Back = 'Echo Cape', -- wind+3
-        Waist = 'Ninurta\'s Sash', -- haste. swap for marching belt, dyna tav 1.0 boss drop
-        Legs = 'Marduk\'s Shalwar', -- wind+5
+        Ring1 = 'Nereid Ring', -- wind+3
+        Ring2 = 'Trumpet Ring', -- wind+2... get another Nereid
+        Back = 'Astute Cape', -- sing+5
+        Waist = 'Marching Belt', -- wind+3
+        Legs = 'Chl. Cannions +1', -- wind+8
         Feet = 'Oracle\'s Pigaches', -- wind+5
     },
     String = {
@@ -116,20 +118,21 @@ local sets = {
         Ear1 = 'Musical Earring', -- wind, string +5
         Body = 'Chl. Jstcorps +1', -- string +6
         Hands = 'Chl. Cuffs +1', -- sing+10
+        Back = 'Astute Cape', --sing+5
         Waist = 'Ninurta\'s Sash', -- haste
         Feet = 'Bard\'s Slippers', -- string+3
     },
     Lullaby = {
-        Head = 'Bard\'s Roundlet',
+        Head = 'Brd. Roundlet +1',
         Neck = 'Incanter\'s Torque',
         Ear1 = 'Musical Earring',
         Ear2 = 'Beastly Earring',
         Body = 'Chl. Jstcorps +1',
         Hands = 'Chl. Cuffs +1',
-        Ring1 = 'Omega Ring',
+        Ring1 = 'Light Ring', -- or omega ring
         Ring2 = 'Light Ring',
         Back = 'Bard\'s Cape',
-        Waist = 'Corsette +1',
+        Waist = 'Gleeman\'s Belt',
         Legs = 'Marduk\'s Shalwar',
         Feet = 'Goliard Clogs',
     },
@@ -139,6 +142,7 @@ local sets = {
         Sub = 'Light Grip',
     },
     Enhancing = {
+        -- todo: MND, enhancing magic +
         Back = 'Grapevine Cape',
     },
     Stoneskin = {
@@ -156,22 +160,7 @@ local sets = {
         Hands = 'Oracle\'s Gloves',
         Ring1 = 'Star Ring',
         Ring2 = 'Star Ring',
-        Back = {
-            Name = 'Blue Cape',
-            Augment = {
-                [1] = 'Lightning resistance+5',
-                [2] = 'Water resistance+5',
-                [3] = 'Wind resistance+5',
-                [4] = 'Fire resistance+5',
-                [5] = 'Ice resistance+5',
-                [6] = 'MP recovered while healing +2',
-                [7] = 'Earth resistance+5',
-                [8] = 'Dark resistance+5',
-                [9] = 'Light resistance+5',
-                [10] = 'HP recovered while healing +2',
-                [11] = 'HP+30'
-            }
-        },
+        Back = 'Blue Cape', -- augmented, hMP +2
         Waist = 'Qiqirn Sash',
         Legs = 'Yigit Seraweels',
         Feet = 'Goliard Clogs',
@@ -183,14 +172,17 @@ local sets = {
     Weapons_Default = {
         Main = 'Silktone',
         Sub = 'Genbu\'s Shield',
-        Range = 'Ryl.Spr. Horn',
+        Range = 'Terpander',
     },
     PDT = {
         -- TODO
         Head = 'Genbu\'s Kabuto',
+        Neck = 'Oneiros Torque',
         Hands = 'Melaco Mittens',
+        -- defending ring if you got it
         -- Back = 'Umbra Cape',
         Back = 'Shadow Mantle',
+        Waist = 'Oneiros Belt',
         Legs = 'Goliard Trews',
     },
     MDT = {

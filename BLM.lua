@@ -21,7 +21,7 @@ local sets = {
     Weapons_Default = {
         Main = 'Kaladanda',
         Sub = 'Norn\'s Grip',
-        Ammo = 'Phtm. Tathlum'
+        Ammo = 'Rimestone'
     },
     TPGain = {}, -- TODO: scythe set
     WS_Default = {}, -- TODO
@@ -37,22 +37,7 @@ local sets = {
         Hands = 'Oracle\'s Gloves',
         Ring1 = 'Star Ring',
         Ring2 = 'Star Ring',
-        Back = {
-            Name = 'Blue Cape',
-            Augment = {
-                [1] = 'Lightning resistance+5',
-                [2] = 'Water resistance+5',
-                [3] = 'Wind resistance+5',
-                [4] = 'Fire resistance+5',
-                [5] = 'Ice resistance+5',
-                [6] = 'MP recovered while healing +2',
-                [7] = 'Earth resistance+5',
-                [8] = 'Dark resistance+5',
-                [9] = 'Light resistance+5',
-                [10] = 'HP recovered while healing +2',
-                [11] = 'HP+30'
-            }
-        },
+        Back = 'Blue Cape', -- augmented, hMP +2
         Waist = 'Qiqirn Sash',
         Legs = 'Yigit Seraweels',
         Feet = 'Goliard Clogs',
@@ -63,12 +48,14 @@ local sets = {
     Precast = {
         Head = 'Windfall Hat',
         Ear2 = 'Loquac. Earring',
-        Body = 'Src. Coat +1', -- fast cast
+        Body = 'Src. Coat +1', -- 4% fast cast
         Ring1 = 'Hibernal Ring', -- 2% fast cast
-        Ring2 = 'Dark Ring', -- fast cast
-        -- Body = dalmatica
-        Back = 'Swith Cape +1',
+        Ring2 = 'Dark Ring', -- augmented, fast cast
+        Back = 'Veela Cape',
         Feet = 'Rostrum Pumps',
+    },
+    Dalmatica = {
+        Body = 'Dalmatica +1',
     },
     Nuke = {
         Head = 'Src. Petasos +1',
@@ -104,7 +91,7 @@ local sets = {
     },
     Dark = {
         -- mostly dark magic skill+, also magic accuracy, int (for magic accuracy)
-        Ammo = 'Phtm. Tathlum',
+        Ammo = 'Rimestone',
         Head = 'Windfall Hat', -- just for recast. could swap for zenith crown with dark augment
         Neck = 'Incanter\'s Torque',
         Ear1 = 'Aqua Earring', -- swap with dark earring
@@ -115,7 +102,7 @@ local sets = {
         Ring2 = 'Tamas Ring',
         Back = 'Voluspa Mantle',
         Waist = 'Charmer\'s Sash',
-        Legs = 'Wizard\'s Tonban',
+        Legs = 'Wizard\'s Tonban', -- upgrade this
         Feet = 'Src. Sabots +1', -- swap with Igqira Huaraches (esp augmented)
     },
     PDT = { -- TODO
@@ -176,9 +163,21 @@ end
 profile.HandleItem = function()
 end
 
+local slowSpells = T{
+    'Freeze',  'Freeze II', 'Tornado', 'Tornado II', 'Quake',      'Quake II',
+    'Burst',   'Burst II',  'Flood',   'Flood II',   'Flare',      'Flare II',
+    'Stone V', 'Water V',   'Aero V',  'Fire V',     'Blizzard V', 'Thunder V'
+}
+
 profile.HandlePrecast = function()
-    gFunc.EquipSet(sets.Precast);
-    utilities.CheckCancels();
+    gFunc.EquipSet(sets.Precast)
+    local spell = gData.GetAction()
+    -- the idea here is: The first big nuke you magic burst with, you want to know exactly how long it'll take to cast.
+    -- subsequent spells you can use the Dalmatica's "occasionally quickens spellcasting" to maybe get more spells in the MB window.
+    if (not slowSpells:contains(spell.Name)) then
+        gFunc.EquipSet(sets.Dalmatica)
+    end
+    utilities.CheckCancels()
 end
 
 profile.HandleMidcast = function()
