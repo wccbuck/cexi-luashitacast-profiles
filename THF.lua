@@ -9,7 +9,7 @@ local sets = {
         Head = 'Dampening Tam',
         Neck = 'Love Torque',
         Ear1 = 'Brutal Earring +1',
-        Ear2 = 'Suppanomimi',
+        Ear2 = 'Luminous Earring',
         Body = 'Skadi\'s Cuirie',
         Hands = 'Swift Gages',
         Ring1 = 'Mars\'s Ring',
@@ -28,7 +28,7 @@ local sets = {
         Back = 'Cuchulain\'s Mantle',
     },
     Idle = { -- gets applied on top of TPGain
-        Head = 'Dragon Cap +1',
+        -- Head = 'Dragon Cap +1',
         Hands = 'Rog. Armlets +1',
     },
     WS_Default = {
@@ -91,9 +91,12 @@ local sets = {
         Feet = 'Adsilio Boots +1',
     },
     TH = {
+        -- With TH+2 from prestige and a cap of TH6,
+        -- I don't need to TP-gain in Dragon Cap +1 anymore.
+
         -- Sub = 'Thief\'s Knife',
         -- Head = 'Wh. Rarab Cap +1',
-        Head = 'Dragon Cap +1',
+        -- Head = 'Dragon Cap +1',
         -- Hands = 'Assassin\'s Armlets',
         Hands = 'Rog. Armlets +1',
     },
@@ -179,7 +182,7 @@ local sets = {
         -- Sub = 'Thief\'s Knife',
         Main = 'Vajra',
         Sub = 'Sandung',
-        Ammo = 'Yetshila',
+        Ammo = 'Yetshila +1',
         -- Range = 'Staurobow',
         -- Ammo = 'Crossbow Bolt',
     },

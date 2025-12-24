@@ -1,7 +1,7 @@
 # cexi-luashitacast-profiles
 A set of lua files to be used with Luashitacast on the [CatsEye XI](https://www.catseyexi.com) private server for the game Final Fantasy XI.
 
-These scripts are works-in-progress that I use for my own character in-game (Ziphion). I'm posting these publicly as a way to offer more examples for people to reference as they craft their own lua scripts. Only a few jobs are represented here (SAM, THF, WHM, BLU, BRD, BLM, SMN, and RNG); as I start using other jobs more, I will add luas for them here.
+These scripts are works-in-progress that I use for my own character in-game (Ziphion). I'm posting these publicly as a way to offer more examples for people to reference as they craft their own lua scripts. Only a few jobs are represented here (SAM, THF, WHM, BLU, BRD, BLM, SMN, RNG, GEO); as I start using other jobs more, I will add luas for them here.
 
 ## Features
 
@@ -37,6 +37,9 @@ These profiles add the following helpful commands to the game. If you want to us
 	* `thtier`: Use this command to set your preferred level of treasure hunter you'd like to reach before swapping your TH gear to standard melee gear. By default it's set to 6, so if you tagged the mob with TH5 gear equipped, it'll swap after your first proc. `/thtier 1` or just `/thtier` will set it to swap off of your TH gear after the first proc. [More info on Treasure Hunter and the proc system](https://www.bg-wiki.com/ffxi/Treasure_Hunter)
 * BLU
 	* `learning`: Use this command to toggle Magus Bazubands on or off.
+	* `cleave`: Enable/disable a set used for cleaving with elemental AoE spells.
+* BLM
+	* `freenuke`: Disabled by default, enable this to deprioritize magic burst damage+ gear.
 * BRD
 	* `quicksing`: Use this on a self-target song to use Pianissimo, start casting the song, then cancel Pianissimo before the song finishes casting. This allows you to take advantage of Pianissimo's shortened casting time without making the spell single target. This command does not attempt this "Pianissimo trick" if you currently have Pianissimo or Nightingale active when you use the command. You could also do this with an in-game macro, but I made this command so that I could save macro slots.
 		> This command requires the Upcast addon (https://github.com/dewiniaid/ffxi-ashita-upcast). If you don't have it / don't want to use it, replace `/up` with `/ma` in your BRD.lua within profile.HandleCommand.

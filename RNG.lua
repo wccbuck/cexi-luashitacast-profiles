@@ -17,9 +17,12 @@ local sets = {
         Feet = 'Hachiryu Sune-Ate',
     },
     Weapons_Default = {
-        Main = 'Thunder Staff',
-        Sub = 'Claymore Grip',
-        Range = 'Ajjub Bow', -- replace with yoichi
+        -- Main = 'Thunder Staff',
+        -- Sub = 'Claymore Grip',
+        Main = 'Kriegsbeil',
+        Sub = 'Archer\'s Shield',
+        -- Range = 'Ajjub Bow',
+        Range = 'Kennan\'s Longbow',
     },
     Ammo_Default = {
         Ammo = 'Demon Arrow', 
@@ -33,7 +36,7 @@ local sets = {
         Hands = 'Seiryu\'s Kote',
         Ring1 = 'Ydalir Ring',
         Ring2 = 'Ydalir Ring',
-        Back = 'Fowler\'s Mantle +1',
+        Back = 'Aife\'s Mantle', -- agi+ and storeTP+
         Waist = 'Scout\'s Belt',
         Legs = 'Skadi\'s Chausses',
         Feet = 'Hachiryu Sune-Ate',

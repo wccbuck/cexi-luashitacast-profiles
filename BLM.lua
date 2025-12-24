@@ -2,6 +2,8 @@ utilities = gFunc.LoadFile('utilities.lua');
 
 local profile = {};
 
+local freenuke = false;
+
 local sets = {
     Idle = {
         Head = 'Wzd. Petasos +1',
@@ -10,8 +12,8 @@ local sets = {
         Ear2 = 'Soil Earring', -- -pdt
         Body = 'Src. Coat +1', -- refresh
         Hands = 'Wzd. Gloves +1',
-        Ring1 = 'Galdr Ring',
-        Ring2 = 'Tamas Ring',
+        Ring1 = 'Hibernal Ring',
+        Ring2 = 'Galdr Ring',
         -- Back = 'Umbra Cape', -- -pdt
         Back = 'Shadow Mantle',
         Waist = 'Sorcerer\'s Belt',
@@ -50,31 +52,56 @@ local sets = {
         Ear2 = 'Loquac. Earring',
         Body = 'Src. Coat +1', -- 4% fast cast
         Ring1 = 'Hibernal Ring', -- 2% fast cast
-        Ring2 = 'Dark Ring', -- augmented, fast cast
-        Back = 'Veela Cape',
+        Ring2 = 'Dark Ring',
+        Back = 'Swith Cape +1',
         Feet = 'Rostrum Pumps',
     },
     Dalmatica = {
         Body = 'Dalmatica +1',
     },
-    Nuke = {
+    FreeNuke = {
         Head = 'Src. Petasos +1',
         Neck = 'Lmg. Medallion +1',
         Ear1 = 'Novio Earring',
-        Ear2 = 'Moldavite Earring',
+        Ear2 = 'Adept\'s Earring',
         Body = 'Src. Coat +1',
         -- Hands = 'Zenith Mitts +1',
-        Hands = 'Wzd. Gloves +1', -- with the elemental magic damage bonus, this is BiS
-        Ring1 = 'Galdr Ring',
-        Ring2 = 'Tamas Ring',
+        Hands = 'Wzd. Gloves +1',
+        Ring1 = 'Hibernal Ring',
+        Ring2 = 'Galdr Ring',
         Back = 'Voluspa Mantle',
         Waist = 'Sorcerer\'s Belt',
         Legs = 'Shadow Trews',
         Feet = 'Src. Sabots +1',
     },
+    MBNuke = {
+        Head = 'Src. Petasos +1',
+        Neck = 'Lmg. Medallion +1',
+        Ear1 = 'Novio Earring',
+        Ear2 = 'Static Earring',
+        Body = 'Src. Coat +1',
+        -- Hands = 'Zenith Mitts +1',
+        -- Hands = 'Wzd. Gloves +1',
+        Hands = 'Src. Gloves +1',
+        Ring1 = 'Hibernal Ring',
+        Ring2 = 'Galdr Ring',
+        Back = 'Voluspa Mantle',
+        Waist = 'Sorcerer\'s Belt',
+        Legs = 'Shadow Trews',
+        Feet = 'Src. Sabots +1',
+    },
+    MatchingDay = {
+        Waist = 'Hachirin-no-Obi',
+        Legs = 'Src. Tonban +1',
+    },
+    MatchingWeather = {
+        Waist = 'Hachirin-no-Obi',
+    },
     Stoneskin = { -- if sub whm or rdm
+        -- TODO: more MND / enhancing+
         Neck = 'Stone Gorget',
         Back = 'Grapevine Cape',
+        Feet = 'Igqira Huaraches',
     },
     Enfeeble = {
         Head = 'Src. Petasos +1',
@@ -86,7 +113,7 @@ local sets = {
         Ring2 = 'Tamas Ring',
         Back = 'Voluspa Mantle',
         Waist = 'Sorcerer\'s Belt',
-        Legs = 'Errant Slops',
+        Legs = 'Errant Slops', -- swap with igqira with augs
         Feet = 'Goliard Clogs',
     },
     Dark = {
@@ -97,13 +124,13 @@ local sets = {
         Ear1 = 'Aqua Earring', -- swap with dark earring
         Ear2 = 'Abyssal Earring',
         Body = 'Nashira Manteel',
-        Hands = 'Sorcerer\'s Gloves', -- upgrade, augment
-        Ring1 = 'Galdr Ring',
-        Ring2 = 'Tamas Ring',
+        Hands = 'Src. Gloves +1',
+        Ring1 = 'Hibernal Ring',
+        Ring2 = 'Galdr Ring',
         Back = 'Voluspa Mantle',
         Waist = 'Charmer\'s Sash',
         Legs = 'Wizard\'s Tonban', -- upgrade this
-        Feet = 'Src. Sabots +1', -- swap with Igqira Huaraches (esp augmented)
+        Feet = 'Igqira Huaraches', -- swap with genie and finish 3/3 aug
     },
     PDT = { -- TODO
         Back = 'Shadow Mantle',
@@ -128,6 +155,10 @@ profile.OnUnload = function()
 end
 
 profile.HandleCommand = function(args)
+    if args[1] == 'freenuke' then
+        freenuke = not freenuke;
+        gFunc.Echo(255,  'FreeNuke [' .. (learning and 'ON' or 'OFF') .. ']');
+    end
     utilities.HandleCommands(args);
 end
 
@@ -181,19 +212,41 @@ profile.HandlePrecast = function()
 end
 
 profile.HandleMidcast = function()
-    local spell = gData.GetAction();
+    local spell = gData.GetAction()
     if (spell.Name == 'Stoneskin' or spell.Name == 'Blink') then
         -- TODO make an enhancing magic + set
-        gFunc.EquipSet(sets.Stoneskin);
+        gFunc.EquipSet(sets.Stoneskin)
     elseif (spell.Skill == 'Elemental Magic') then
         -- if you have uggalepih pendant you can add it here if MPP < 51,
         -- however my nuke set has enough MAB that int+ actually helps my
         -- damage more than 8 MAB would anyway
-        gFunc.EquipSet(sets.Nuke);
+        if freenuke then
+            gFunc.EquipSet(sets.FreeNuke)
+        else
+            gFunc.EquipSet(sets.MBNuke)
+        end
+
+        local environment = gData.GetEnvironment()
+        local dayElement = environment.DayElement
+        local weatherElement = environment.WeatherElement
+        if
+            not T{"None, Unknown"}:contains(weatherElement) and
+            spell.Element == weatherElement
+        then
+            gFunc.EquipSet(sets.MatchingWeather)
+        end
+
+        if
+            not T{"None, Unknown"}:contains(dayElement) and
+            spell.Element == dayElement
+        then
+            gFunc.EquipSet(sets.MatchingDay)
+        end
+
     elseif (spell.Skill == 'Enfeebling Magic') then
-        gFunc.EquipSet(sets.Enfeeble);
+        gFunc.EquipSet(sets.Enfeeble)
     elseif (spell.Skill == 'Dark Magic') then
-        gFunc.EquipSet(sets.Dark);
+        gFunc.EquipSet(sets.Dark)
     end
 end
 
