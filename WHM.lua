@@ -1,19 +1,22 @@
-utilities = gFunc.LoadFile('utilities.lua');
-naSpell = gFunc.LoadFile('naSpell.lua');
+utilities = gFunc.LoadFile('utilities.lua')
+naSpell = gFunc.LoadFile('naSpell.lua')
+-- This file doesn't use brachyura.lua because it's handled in midcast.
 
-local profile = {};
+local profile = {}
+local melee = false
 
 local sets = {
     Heal = {
         Ammo = 'Hedgehog Bomb',
         Head = 'Hlr. Cap +1', -- mnd +7
-        Neck = 'Fylgja Torque +1', -- cure pot +3
+        -- Neck = 'Fylgja Torque +1', -- cure pot +3
+        Neck = 'Incanter\'s Torque', -- Healing +8, MP not depleted 1%
         Ear1 = 'Light Earring', -- cure pot +2
         Ear2 = 'Roundel Earring', -- cure pot +5
         Body = 'Aristocrat\'s Coat', -- cure pot +12
         Hands = 'Hlr. Mitts +1', -- mnd +7, cure pot 3, conserve mp 5, healing mag skill 15
         Ring1 = 'Karka Ring', -- mnd +6
-        Ring2 = 'Tamas Ring', -- mnd +5
+        Ring2 = 'Tamas Ring', -- mnd +5, MP+30
         Back = 'Dew Silk Cape +1', -- cure pot +3, mnd +6
         Waist = 'Cleric\'s Belt', -- cure pot +5, mnd +6
         Legs = 'Clr. Pantaln. +1', -- cure pot +6, healing magic +15
@@ -22,11 +25,11 @@ local sets = {
     Cure_Weapons = {
         -- Main = 'Tamaxchi', -- I'm over the cure potency cap with this
         Main = 'Sindri', -- mnd +6, convert 1% of cure amt to MP
-        Sub = 'Genbu\'s Shield', -- cure pot +5
+        Sub = 'Genmei Shield', -- cure pot +8
     },
     Status_Weapons = {
         Main = 'Yagrush',
-        Sub = 'Genbu\'s Shield',
+        Sub = 'Genmei Shield',
     },
     DW_Weapons = {
         Main = 'Yagrush',
@@ -66,8 +69,7 @@ local sets = {
     WS_Default = {
         -- realmrazer: mnd 85%
         Ammo = 'Tiphia Sting',
-        Head = 'Hlr. Cap +1',
-        -- Head = 'Maat\'s Cap',
+        Head = 'Maat\'s Cap',
         -- Neck = 'Fotia Gorget',
         Neck = 'Chivalrous Chain',
         Ear1 = 'Brutal Earring',
@@ -80,7 +82,7 @@ local sets = {
         Back = 'Cuchulain\'s Mantle',
         Waist = 'Visionary Obi',
         Legs = 'Blessed Trousers',
-        Feet = 'Goliard Clogs', -- dex+4 mnd+4. swap for marduk's (mnd+10)
+        Feet = 'Clr. Duckbills +1',
     },
     WS_Mystic_Boon = {
         -- note that Mystic Boon has no SC properties and therefore doesn't get a bonus from Fotia
@@ -112,7 +114,7 @@ local sets = {
         Ear2 = 'Loquac. Earring',
         Body = 'Nashira Manteel',
         Hands = 'Hlr. Mitts +1',
-        Ring1 = 'Dark Ring', -- fast cast
+        Ring1 = { Name = 'Dark Ring', Augment = { [1] = '"Fast Cast"+1', [2] = '"Conserve MP"+3' } },
         Back = 'Swith Cape +1',
         Waist = 'Ninurta\'s Sash',
         Legs = 'Clr. Pantaln. +1',
@@ -122,7 +124,7 @@ local sets = {
         Head = 'Windfall Hat',
         Ear2 = 'Loquac. Earring',
         Hands = 'Blessed Mitts', -- fast cast aug
-        Ring1 = 'Dark Ring', -- fast cast
+        Ring1 = { Name = 'Dark Ring', Augment = { [1] = '"Fast Cast"+1', [2] = '"Conserve MP"+3' } },
         Body = 'Marduk\'s Jubbah',
         Back = 'Swith Cape +1',
         Waist = 'Ninurta\'s Sash',
@@ -130,6 +132,9 @@ local sets = {
     },
     PrecastHeal = {
         Feet = 'Zenith Pumps +1', -- cure clogs?
+    },
+    PrecastHeal_Campaign = {
+        Waist = 'Capricornian Rope',
     },
     Regen = {
         Head = 'Goliard Chapeau',
@@ -149,18 +154,18 @@ local sets = {
     },
     Divine = {
         Ammo = 'Mana Ampulla',
-        Head = 'Marduk\'s Tiara',
-        Neck = 'Jokushu Chain', -- 10 divine
-        -- Ear1 = 'Knight\'s Earring',
-        Ear2 = 'Aqua Earring',
-        Body = 'Marduk\'s Jubbah',
-        Hands = 'Blessed Mitts',
-        Ring1 = 'Karka Ring',
-        Ring2 = 'Tamas Ring',
-        Back = 'Dew Silk Cape +1',
-        Waist = 'Salire Belt',
-        Legs = 'Healer\'s Pantaln.',
-        Feet = 'Clr. Duckbills +1',
+        Head = 'Marduk\'s Tiara', -- divine 7
+        Neck = 'Jokushu Chain', -- divine 10
+        Ear1 = 'Knight\'s Earring', -- divine 5
+        Ear2 = 'Aqua Earring', -- magic acc and MND. eventually spire, divine earring is fine though
+        Body = 'Marduk\'s Jubbah', -- MND 12
+        Hands = 'Blessed Mitts', -- MND 7
+        Ring1 = 'Karka Ring', -- MND 6
+        Ring2 = 'Tamas Ring', -- MND 5; eventually hieratic ring
+        Back = 'Dew Silk Cape +1', -- MND 6
+        Waist = 'Salire Belt', -- MND 5, m.acc 4, MAB 4
+        Legs = 'Hlr. Pantaln. +1', -- divine 15
+        Feet = 'Clr. Duckbills +1', -- MND 11
     },
     Divine_Weapons = {
         Main = 'Chatoyant Staff',
@@ -172,7 +177,7 @@ local sets = {
         Ammo = 'Mana Ampulla',
         Head = 'Hlr. Cap +1',
         Neck = 'Gnole Torque',
-        Ear1 = 'Antivenom Earring',
+        Ear1 = 'Darkness Earring',
         Ear2 = 'Darkness Earring',
         Body = 'Oracle\'s Robe',
         Hands = 'Oracle\'s Gloves',
@@ -189,7 +194,7 @@ local sets = {
         Head = 'Cobra Cloche', -- conserve MP +4
         Neck = 'Fylgja Torque +1',
         Ear1 = 'Brachyura Earring',
-        Ear2 = 'Aqua Earring',
+        Ear2 = 'Augment. Earring',
         Body = 'Blessed Bliaut',
         Hands = 'Blessed Mitts',
         Ring1 = 'Karka Ring',
@@ -199,13 +204,17 @@ local sets = {
         Legs = 'Clr. Pantaln. +1',
         Feet = 'Clr. Duckbills +1',
     },
+    Enh_Weapons = {
+        Main = 'Kirin\'s Pole', -- enhancing magic skill +5, mnd+10
+        Sub = 'Staff Strap',
+    },
     Enfeeble = {
         Ammo = 'Mana Ampulla',
         Head = 'Hlr. Cap +1',
         Neck = 'Incanter\'s Torque',
         Ear2 = 'Aqua Earring',
         Body = 'Marduk\'s Jubbah',
-        Hands = 'Cleric\'s Mitts',
+        Hands = 'Clr. Mitts +1',
         Ring1 = 'Karka Ring',
         Ring2 = 'Tamas Ring',
         Back = 'Dew Silk Cape +1',
@@ -221,12 +230,14 @@ local sets = {
     Weapons_Default = {
         Main = 'Yagrush',
         -- Main = 'Tamaxchi',
-        Sub = 'Genbu\'s Shield',
+        Sub = 'Genmei Shield',
         -- Sub = 'Sindri',
         Ammo = 'Hedgehog Bomb',
     },
     PDT = {
         -- TODO
+        Ear1 = 'Soil Earring',
+        Ear2 = 'Soil Earring',
         Body = 'Clr. Bliaut +1',
         -- Back = 'Umbra Cape',
         Back = 'Umbra Cape',
@@ -238,20 +249,19 @@ local sets = {
     },
     BDT = {},
     Showoff = {},
-};
-profile.Sets = sets;
+}
+profile.Sets = sets
 
-profile.Packer = {
-};
+profile.Packer = {}
 
 profile.OnLoad = function()
     gSettings.AllowAddSet = true;
     utilities.Initialize();
 
-    (function () AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 17') end):once(3);
-    -- TODO: set these based on subjob
-    -- AshitaCore:GetChatManager():QueueCommand(1, '/macro book 2');
-    -- AshitaCore:GetChatManager():QueueCommand(1, '/macro set 1');
+    (function ()
+        AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 17');
+        -- gFunc.ForceEquipSet(sets.Weapons_Default);
+    end):once(3);
 end
 
 profile.OnUnload = function()
@@ -259,103 +269,115 @@ end
 
 profile.HandleCommand = function(args)
     if args[1] == 'naspell' then
-        naSpell.Cast();
+        naSpell.Cast()
     elseif args[1] == 'naspellprio' then
         -- comma-delimited list of player names
-        naSpell.SetPlayerPriority(args);
+        naSpell.SetPlayerPriority(args)
+    elseif args[1] == 'melee' then
+        melee = not melee;
+        gFunc.Echo(255,  'Melee [' .. (melee and 'ON' or 'OFF') .. ']');
     end
-    utilities.HandleCommands(args);
+    utilities.HandleCommands(args)
 end
 
 profile.HandleDefault = function()
-    local player = gData.GetPlayer();
+    local player = gData.GetPlayer()
 
     if (player.Status == 'Engaged') then
-        gFunc.EquipSet(sets.TPGain);
+        gFunc.EquipSet(sets.TPGain)
         -- if all three weapon slots are empty during combat,
         -- equip the default weapon set (useful against merrows)
-        utilities.ResetDefaultWeapons(sets.Weapons_Default);
+        utilities.ResetDefaultWeapons(sets.Weapons_Default)
     elseif (player.Status == 'Resting') then
-        gFunc.EquipSet(sets.Rest);
+        gFunc.EquipSet(sets.Rest)
     elseif (player.IsMoving) then
-		gFunc.EquipSet(sets.Fast);
+		gFunc.EquipSet(sets.Fast)
     else
-        gFunc.EquipSet(sets.Idle);
+        gFunc.EquipSet(sets.Idle)
         -- TODO make the next line configurable
-        gFunc.EquipSet(sets.Weapons_Default);
+        -- e.g. when subjob is nin, thf, or dnc, use dual wield weaps
+        if not melee then
+            gFunc.EquipSet(sets.Weapons_Default)
+        end
     end
 
     if (T{'PDT', 'MDT', 'BDT'}:contains(utilities.OverrideSet)) then
         -- damage-taken sets take precedence over everything
-        gFunc.EquipSet(utilities.OverrideSet);
+        gFunc.EquipSet(utilities.OverrideSet)
     end
 
-    utilities.CheckDefaults();
+    utilities.CheckDefaults()
 end
 
 profile.HandleAbility = function()
-    utilities.CheckCancels();
+    utilities.CheckCancels()
 end
 
 profile.HandleItem = function()
 end
 
 profile.HandlePrecast = function()
-    local spell = gData.GetAction();
-    gFunc.EquipSet(sets.Precast);
+    local spell = gData.GetAction()
+    gFunc.EquipSet(sets.Precast)
     if (spell.Skill == 'Healing Magic') then
-        gFunc.EquipSet(sets.PrecastHeal);
+        gFunc.EquipSet(sets.PrecastHeal)
+        if gData.GetBuffCount('Allied Tags') > 0 then
+            gFunc.EquipSet(sets.PrecastHeal_Campaign);
+        end
     end
-    utilities.CheckCancels();
+    utilities.CheckCancels()
 end
 
 profile.HandleMidcast = function()
-    local spell = gData.GetAction();
-    local player = gData.GetPlayer();
+    local spell = gData.GetAction()
+    local player = gData.GetPlayer()
 
-    -- local target = gData.GetActionTarget();
-    -- local me = AshitaCore:GetMemoryManager():GetParty():GetMemberName(0);
+    -- local target = gData.GetActionTarget()
+    -- local me = AshitaCore:GetMemoryManager():GetParty():GetMemberName(0)
     if (T{'Haste', 'Erase', 'Esuna'}:contains(spell.Name)) then
         -- lower recast
-        gFunc.EquipSet(sets.Haste);
-        if (spell.Name == 'Erase') and (player.Status ~= 'Engaged') then
-            gFunc.EquipSet(sets.Status_Weapons);
+        gFunc.EquipSet(sets.Haste)
+        if (spell.Name == 'Erase') and (player.Status ~= 'Engaged') and not melee then
+            gFunc.EquipSet(sets.Status_Weapons)
         end
     elseif (spell.Skill == 'Enhancing Magic') then
         if (string.contains(spell.Name, 'Regen')) then
-            gFunc.EquipSet(sets.Regen);
+            gFunc.EquipSet(sets.Regen)
         elseif (string.match(spell.Name, '^Bar')) then
-            gFunc.EquipSet(sets.Barspell);
+            gFunc.EquipSet(sets.Barspell)
         else
-            --gFunc.EquipSet(sets.Enhancing); --TODO
+            --gFunc.EquipSet(sets.Enhancing) --TODO
             gFunc.EquipSet(sets.Barspell)
         end
         if (spell.Name == 'Stoneskin') then
-            gFunc.EquipSet(sets.Stoneskin);
+            gFunc.EquipSet(sets.Stoneskin)
+        end
+        if (player.Status ~= 'Engaged') and not melee and not string.contains(spell.Name, 'Teleport') then
+            gFunc.EquipSet(sets.Enh_Weapons)
         end
     elseif (spell.Skill == 'Healing Magic') then
         if (spell.Name == 'Cursna') then
             -- healing magic+, haste, fast cast
-            gFunc.EquipSet(sets.Cursna);
+            gFunc.EquipSet(sets.Cursna)
         else
-            gFunc.EquipSet(sets.Heal);
+            gFunc.EquipSet(sets.Heal)
         end
-        if (player.Status ~= 'Engaged') then
+        if (player.Status ~= 'Engaged') and not melee then
             if (spell.Name:match('^Cure')) or (spell.Name:match('^Cura')) then
-                gFunc.EquipSet(sets.Cure_Weapons);
+                gFunc.EquipSet(sets.Cure_Weapons)
             else
-                gFunc.EquipSet(sets.Status_Weapons);
+                gFunc.EquipSet(sets.Status_Weapons)
             end
         end
     elseif (spell.Skill == 'Enfeebling Magic') then
-        gFunc.EquipSet(sets.Enfeeble);
-        if (player.Status ~= 'Engaged') then
-            gFunc.EquipSet(sets.Status_Weapons); -- yagrush has m.acc+
+        gFunc.EquipSet(sets.Enfeeble)
+        if (player.Status ~= 'Engaged') and not melee then
+            gFunc.EquipSet(sets.Status_Weapons) -- yagrush has m.acc+
         end
     elseif (spell.Skill == 'Divine Magic') then
-        gFunc.EquipSet(sets.Divine);
-        if (player.Status ~= 'Engaged' and spell.Name ~= 'Enlight') then
-            gFunc.EquipSet(sets.Divine_Weapons);
+        gFunc.EquipSet(sets.Divine)
+        if (player.Status ~= 'Engaged' and not melee and spell.Name ~= 'Enlight') then
+            gFunc.EquipSet(sets.Divine_Weapons)
         end
     end
 
@@ -376,11 +398,11 @@ profile.HandleWeaponskill = function()
     --     return;
     -- end
     --
-    gFunc.EquipSet(sets.WS_Default);
-    local ws = gData.GetAction();
+    gFunc.EquipSet(sets.WS_Default)
+    local ws = gData.GetAction()
     if (ws.Name == 'Mystic Boon') then
-        gFunc.EquipSet(sets.WS_Mystic_Boon);
+        gFunc.EquipSet(sets.WS_Mystic_Boon)
     end
 end
 
-return profile;
+return profile

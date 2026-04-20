@@ -1,5 +1,6 @@
 utilities = gFunc.LoadFile('utilities.lua');
 isTargetTagged = gFunc.LoadFile('isTargetTagged');
+equipBrachyura = gFunc.LoadFile('brachyura.lua')
 
 local profile = {};
 local thtier = 8; -- the treasure hunter tier at which we should switch to TP gain set
@@ -7,6 +8,7 @@ local thtier = 8; -- the treasure hunter tier at which we should switch to TP ga
 local sets = {
     TPGain = {
         Head = 'Dampening Tam',
+        -- Head = 'Homam Zucchetto',
         Neck = 'Love Torque',
         Ear1 = 'Brutal Earring +1',
         Ear2 = 'Luminous Earring',
@@ -47,7 +49,7 @@ local sets = {
     },
     WS_Exent = {
         Head = 'Dragon Cap +1',
-        Neck = 'Fotia Gorget',
+        Neck = 'Love Torque',
         Ear1 = 'Wilhelm\'s Earring',
         Ear2 = 'Altdorf\'s Earring',
         Body = 'Dragon Harness +1',
@@ -86,7 +88,7 @@ local sets = {
         Ring1 = 'Blobnag Ring',
         Ring2 = 'Garrulous Ring',
         Back = 'Amemet Mantle',
-        Waist = 'Buccaneer\'s Belt',
+        Waist = 'Subtle Sash',
         Legs = 'Acrobat\'s Breeches',
         Feet = 'Adsilio Boots +1',
     },
@@ -146,10 +148,11 @@ local sets = {
     },
     PDT = {
         -- TODO
-        -- Body = 'Scorpion Harness +1' -- see grand trials. -3%
+        Body = 'Scorpion Harness +1', -- -3% aug
         Ear2 = 'Soil Earring',
         Neck = 'Oneiros Torque',
-        Hands = 'Denali Wristbands',
+        -- Hands = 'Denali Wristbands',
+        Hands = 'Homam Manopolas',
         Ring1 = 'Sattva Ring',
         Ring2 = 'Titanium Band',
         Neck = 'Oneiros Belt',
@@ -178,13 +181,18 @@ local sets = {
     Showoff = {},
     Weapons_Default = {
         -- Main = 'X\'s Knife',
-        -- Main = 'Sandung',
         -- Sub = 'Thief\'s Knife',
         Main = 'Vajra',
-        Sub = 'Sandung',
+        -- Sub = 'Sandung',
+        -- Sub = 'Mercurial Kris',
+        Sub = 'Taming Sari',
         Ammo = 'Yetshila +1',
         -- Range = 'Staurobow',
         -- Ammo = 'Crossbow Bolt',
+    },
+    Weapons_Acc = {
+        Main = 'Vajra',
+        Sub = 'Sandung',
     },
     Weapons_DD = {
         Main = 'Vajra',
@@ -200,12 +208,15 @@ local sets = {
         Ring1 = 'Blobnag Ring',
         Ring2 = 'Merman\'s Ring',
         Back = 'Aife\'s Mantle', -- agi+ and storeTP+
-        Waist = 'Buccaneer\'s Belt',
+        Waist = 'Subtle Sash',
         Legs = 'Skadi\'s Chausses',
         Feet = 'Homam Gambieras',
     },
     Sleep = {
         Neck = 'Opo-opo Necklace',
+    },
+    Brachyura = {
+        Ear1 = 'Brachyura Earring',
     },
 };
 profile.Sets = sets;
@@ -288,6 +299,10 @@ profile.HandleDefault = function()
         gFunc.EquipSet(utilities.OverrideSet);
     end
 
+    if equipBrachyura() then
+        gFunc.EquipSet(sets.Brachyura)
+    end
+
     utilities.CheckDefaults();
 end
 
@@ -334,7 +349,7 @@ end
 
 profile.HandleMidshot = function()
     gFunc.EquipSet(sets.Ranged);
-    if (not isTargetTagged(thTier)) then
+    if (not isTargetTagged(thtier)) then
         gFunc.EquipSet(sets.TH);
     end
 end

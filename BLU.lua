@@ -2,6 +2,7 @@ utilities = gFunc.LoadFile('utilities.lua');
 bluMag = gFunc.LoadFile('bluMag.lua');
 isTargetTargetingMe = gFunc.LoadFile('isTargetTargetingMe');
 isTargetTagged = gFunc.LoadFile('isTargetTagged');
+equipBrachyura = gFunc.LoadFile('brachyura.lua')
 
 local profile = {};
 
@@ -25,7 +26,8 @@ local sets = {
     },
     TPGain = {
         -- Head = 'Dampening Tam',
-        Head = 'Mirage Keffiyeh +1',
+        -- Head = 'Mirage Keffiyeh +1',
+        Head = 'Morrigan\'s Coron.',
         Neck = 'Fortitude Torque',
         -- Neck = 'Tiercel Necklace',
         Ear1 = 'Brutal Earring +1',
@@ -59,7 +61,7 @@ local sets = {
         Ammo = 'Tiphia Sting',
         Head = 'Maat\'s Cap',
         Neck = 'Fotia Gorget',
-        Ear1 = 'Brutal Earring +1',
+        Ear1 = 'Suppanomimi', -- or brutal +1
         Ear2 = 'Emberpearl Earring',
         Body = 'Morrigan\'s Robe',
         Hands = 'Enkidu\'s Mittens',
@@ -72,14 +74,18 @@ local sets = {
     },
     WS_Requiescat = {
         -- 5 hits, MND 85%
+        Neck = 'Fortitude Torque',
         Hands = 'Mrg. Bazubands +1',
-        Ring1 = 'Aqua Ring', -- swap with Tjukurrpa Annulet
+        Body = 'Blood Scale Mail', -- augs: MND+5, Acc+6
+        Ring1 = 'Tjukurrpa Annulet',
+        Ring2 = 'Karka Ring',
         Back = 'Stormlord Shawl +1',
         Waist = 'Visionary Obi',
         Feet = 'Morrigan\'s Pgch.',
     },
     WS_Expiacion = {
         -- 2 hits, STR 95%, INT 95%
+        -- TODO
         Waist = 'Warwolf Belt +1',
     },
     WS_SavageBlade = {
@@ -100,17 +106,17 @@ local sets = {
         Hands = 'Mag. Bazubands +1',
     },
     Precast = {
+        Head = 'Nashira Turban',
         Ear1 = 'Loquac. Earring',
-        Head = 'Entrancing Ribbon',
         Body = 'Mirage Jubbah +1',
-        Ring2 = 'Dark Ring', -- fast cast
+        Ring1 = { Name = 'Dark Ring', Augment = { [1] = '"Fast Cast"+1', [2] = '"Conserve MP"+3' } },
         Back = 'Swith Cape +1',
         Legs = 'Homam Cosciales', -- better than blood cuisses +1
     },
     Ethereal = {
         Ear2 = 'Ethereal Earring',
     },
-    Cure = { -- 1 pt MND = 3 pts VIT = 5 pts healing magic skill. Also cure potency+
+    Cure = { -- 1 pt MND = 3 pts VIT = 5 pts healing magic skill. Also cure potency+ and conserve MP
         Ammo = 'Bibiki Seashell',
         Head = 'Yigit Turban',
         Neck = 'Gnole Torque',
@@ -132,7 +138,7 @@ local sets = {
         Main = 'Chatoyant Staff',
         Head = 'Yigit Turban',
         Neck = 'Gnole Torque',
-        Ear1 = 'Antivenom Earring',
+        Ear1 = 'Magnetic Earring',
         Ear2 = 'Darkness Earring',
         Body = 'Errant Hpl.',
         Ring1 = 'Star Ring',
@@ -181,6 +187,7 @@ local sets = {
         Head = 'Mirage Keffiyeh +1',
         Neck = 'Incanter\'s Torque',
         Ear1 = 'Aqua Earring',
+        Ear2 = 'Spire Earring',
         Body = 'Magus Jubbah +1',
         Hands = 'Nashira Gages',
         Ring1 = 'Antica Ring',
@@ -197,7 +204,7 @@ local sets = {
         Head = 'Mirage Keffiyeh +1',
         Neck = 'Chivalrous Chain',
         Ear1 = 'Pixie Earring',
-        Ear2 = 'Suppanomimi',
+        Ear2 = 'Spire Earring',
         Body = 'Magus Jubbah +1',
         Hands = 'Mrg. Bazubands +1',
         Ring1 = 'Strigoi Ring',
@@ -205,7 +212,7 @@ local sets = {
         Back = 'Cuchulain\'s Mantle',
         Waist = 'Visionary Obi',
         Legs = 'Mirage Shalwar +1',
-        Feet = 'Blood Greaves', -- or denali gamashes if you don't have acc+5 blu mag+5
+        Feet = 'Blood Greaves', -- or denali gamashes if you don't have acc+5 blu mag+6
     },
     Phys_Spell_High_Eva = {
         Neck = 'Peacock Charm',
@@ -230,7 +237,7 @@ local sets = {
         Ammo = 'Hedgehog Bomb',
         Head = 'Maat\'s Cap',
         Neck = 'Incanter\'s Torque',
-        Ear1 = 'Moldavite Earring',
+        Ear1 = 'Adept\'s Earring',
         Ear2 = 'Novio Earring',
         Body = 'Mirage Jubbah +1',
         Hands = 'Yigit Gages',
@@ -245,7 +252,7 @@ local sets = {
         Ammo = 'Phtm. Tathlum',
         Head = 'Maat\'s Cap',
         Neck = 'Incanter\'s Torque',
-        Ear1 = 'Moldavite Earring',
+        Ear1 = 'Adept\'s Earring',
         Ear2 = 'Novio Earring',
         Body = 'Morrigan\'s Robe',
         Hands = 'Yigit Gages',
@@ -262,7 +269,7 @@ local sets = {
         Ammo = 'Hedgehog Bomb',
         Head = 'Maat\'s Cap',
         Neck = 'Incanter\'s Torque',
-        Ear1 = 'Moldavite Earring',
+        Ear1 = 'Adept\'s Earring',
         Ear2 = 'Novio Earring',
         Body = 'Morrigan\'s Robe',
         Hands = 'Yigit Gages',
@@ -411,17 +418,27 @@ local sets = {
         Main = 'Kam\'lanaut\'s Sword',
         Sub = 'Save the Queen II',
     },
-    Weapons_Mag = {
+    Weapons_Mag_Precast = {
         Main = 'Chatoyant Staff',
         Sub = 'Vivid Strap',
     },
+    Weapons_Mag = {
+        Main = 'Chatoyant Staff',
+        Sub = 'Omni Grip',
+    },
     Terras_Staff = {
         Main = 'Terra\'s Staff',
-        Sub = 'Vivid Strap',
+        Sub = 'Omni Grip',
         Ammo = 'Bibiki Seashell',
     },
     Buff = {
+        -- enhancing duration and conserve MP, prioritize slots that don't have blu skill items
+        Ear1 = 'Magnetic Earring',
+        Ear2 = 'Spire Earring',
+        Ring2 = { Name = 'Dark Ring', Augment = { [1] = '"Fast Cast"+1', [2] = '"Conserve MP"+3' } },
+        -- Body = 'Nashira Manteel', -- TODO: determine when to cycle this in instead of blue magic +15
         Back = 'Grapevine Cape',
+        Waist = 'Pythia Sash +1',
         Legs = 'Homam Cosciales', -- enhancing duration
         Feet = 'Mirage Charuqs +1', -- https://discord.com/channels/696847769444548700/855508485122555914/1276165277578428538
     },
@@ -452,6 +469,9 @@ local sets = {
         Waist = 'Warwolf Belt +1',
         Legs = 'Blood Cuisses',
         Feet = 'Blood Greaves',
+    },
+    Brachyura = {
+        Ear1 = 'Brachyura Earring',
     },
 };
 profile.Sets = sets;
@@ -561,6 +581,10 @@ profile.HandleDefault = function()
         gFunc.EquipSet(sets.Learning);
     end
 
+    if equipBrachyura() then
+        gFunc.EquipSet(sets.Brachyura)
+    end
+
     utilities.CheckDefaults();
 end
 
@@ -572,6 +596,9 @@ profile.HandleItem = function()
 end
 
 profile.HandlePrecast = function()
+    if cleave then
+        gFunc.EquipSet(sets.Weapons_Mag_Precast);
+    end
     gFunc.EquipSet(sets.Precast);
     utilities.CheckCancels();
 end

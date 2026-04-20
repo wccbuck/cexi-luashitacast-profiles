@@ -1,4 +1,5 @@
 utilities = gFunc.LoadFile('utilities.lua');
+equipBrachyura = gFunc.LoadFile('brachyura.lua')
 
 local profile = {};
 
@@ -8,8 +9,8 @@ local sets = {
     Idle = {
         Head = 'Wzd. Petasos +1',
         Neck = 'Lmg. Medallion +1',
-        Ear1 = 'Novio Earring',
-        Ear2 = 'Soil Earring', -- -pdt
+        Ear1 = 'Soil Earring', -- -pdt
+        Ear2 = 'Spire Earring',
         Body = 'Src. Coat +1', -- refresh
         Hands = 'Wzd. Gloves +1',
         Ring1 = 'Hibernal Ring',
@@ -33,7 +34,7 @@ local sets = {
         Ammo = 'Mana Ampulla',
         Head = 'Goliard Chapeau',
         Neck = 'Gnole Torque',
-        Ear1 = 'Antivenom Earring',
+        Ear1 = 'Magnetic Earring',
         Ear2 = 'Darkness Earring',
         Body = 'Oracle\'s Robe',
         Hands = 'Oracle\'s Gloves',
@@ -52,7 +53,7 @@ local sets = {
         Ear2 = 'Loquac. Earring',
         Body = 'Src. Coat +1', -- 4% fast cast
         Ring1 = 'Hibernal Ring', -- 2% fast cast
-        Ring2 = 'Dark Ring',
+        Ring1 = { Name = 'Dark Ring', Augment = { [1] = '"Fast Cast"+1', [2] = '"Conserve MP"+3' } },
         Back = 'Swith Cape +1',
         Feet = 'Rostrum Pumps',
     },
@@ -100,6 +101,8 @@ local sets = {
     Stoneskin = { -- if sub whm or rdm
         -- TODO: more MND / enhancing+
         Neck = 'Stone Gorget',
+        Ear1 = 'Augment. Earring',
+        Ear2 = 'Spire Earring',
         Back = 'Grapevine Cape',
         Feet = 'Igqira Huaraches',
     },
@@ -107,6 +110,7 @@ local sets = {
         Head = 'Src. Petasos +1',
         Neck = 'Incanter\'s Torque',
         Ear1 = 'Aqua Earring',
+        Ear2 = 'Spire Earring',
         Body = 'Wizard\'s Coat',
         Hands = 'Oracle\'s Gloves',
         Ring1 = 'Omega Ring',
@@ -121,8 +125,8 @@ local sets = {
         Ammo = 'Rimestone',
         Head = 'Windfall Hat', -- just for recast. could swap for zenith crown with dark augment
         Neck = 'Incanter\'s Torque',
-        Ear1 = 'Aqua Earring', -- swap with dark earring
-        Ear2 = 'Abyssal Earring',
+        Ear1 = 'Abyssal Earring',
+        Ear2 = 'Spire Earring',
         Body = 'Nashira Manteel',
         Hands = 'Src. Gloves +1',
         Ring1 = 'Hibernal Ring',
@@ -137,12 +141,14 @@ local sets = {
     },
     MDT = {},
     BDT = {},
-
-};
-profile.Sets = sets;
+    Brachyura = {
+        Ear1 = 'Brachyura Earring',
+    },
+}
+profile.Sets = sets
 
 profile.Packer = {
-};
+}
 
 profile.OnLoad = function()
     gSettings.AllowAddSet = true;
@@ -157,7 +163,7 @@ end
 profile.HandleCommand = function(args)
     if args[1] == 'freenuke' then
         freenuke = not freenuke;
-        gFunc.Echo(255,  'FreeNuke [' .. (learning and 'ON' or 'OFF') .. ']');
+        gFunc.Echo(255,  'FreeNuke [' .. (freenuke and 'ON' or 'OFF') .. ']');
     end
     utilities.HandleCommands(args);
 end
@@ -182,6 +188,10 @@ profile.HandleDefault = function()
     if (T{'PDT', 'MDT', 'BDT'}:contains(utilities.OverrideSet)) then
         -- damage-taken sets take precedence over everything
         gFunc.EquipSet(utilities.OverrideSet);
+    end
+
+    if equipBrachyura() then
+        gFunc.EquipSet(sets.Brachyura)
     end
 
     utilities.CheckDefaults();
@@ -257,7 +267,7 @@ profile.HandleMidshot = function()
 end
 
 profile.HandleWeaponskill = function()
-    gFunc.EquipSet(sets.WS_Default);
+    gFunc.EquipSet(sets.WS_Default)
 end
 
-return profile;
+return profile

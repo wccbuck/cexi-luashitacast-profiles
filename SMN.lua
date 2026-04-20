@@ -1,10 +1,11 @@
-utilities = gFunc.LoadFile('utilities.lua');
-naSpell = gFunc.LoadFile('naSpell.lua');
+utilities = gFunc.LoadFile('utilities.lua')
+naSpell = gFunc.LoadFile('naSpell.lua')
+equipBrachyura = gFunc.LoadFile('brachyura.lua')
 
-local profile = {};
+local profile = {}
 
-local pupinparty = false;
-local bstinparty = false;
+local pupinparty = false
+local bstinparty = false
 
 local sets = {
     Idle = {
@@ -13,7 +14,7 @@ local sets = {
         Head = 'Evk. Horn +1', -- refresh
         Neck = 'Incanter\'s Torque',
         Ear1 = 'Loquac. Earring',
-        Ear2 = 'Antivenom Earring',
+        Ear2 = 'Magnetic Earring',
         Body = 'Yinyang Robe',
         Hands = 'Marduk\'s Dastanas',
         Ring1 = 'Evoker\'s Ring',
@@ -35,7 +36,7 @@ local sets = {
         Head = 'Evk. Horn +1', -- refresh
         Neck = 'Incanter\'s Torque',
         Ear1 = 'Loquac. Earring',
-        Ear2 = 'Antivenom Earring',
+        Ear2 = 'Magnetic Earring',
         Body = 'Yinyang Robe',
         Hands = 'Nashira Gages',
         Ring1 = 'Evoker\'s Ring',
@@ -50,7 +51,7 @@ local sets = {
         Head = 'Evk. Horn +1', -- refresh
         Neck = 'Incanter\'s Torque',
         Ear1 = 'Loquac. Earring',
-        Ear2 = 'Antivenom Earring',
+        Ear2 = 'Magnetic Earring',
         Body = 'Yinyang Robe',
         Hands = 'Smn. Bracers +1',
         Ring1 = 'Evoker\'s Ring',
@@ -86,7 +87,7 @@ local sets = {
         Ammo = 'Mana Ampulla',
         Head = 'Evk. Horn +1', -- refresh
         Neck = 'Gnole Torque',
-        Ear1 = 'Antivenom Earring',
+        Ear1 = 'Magnetic Earring',
         Ear2 = 'Darkness Earring',
         Body = 'Oracle\'s Robe',
         Hands = 'Oracle\'s Gloves',
@@ -103,9 +104,9 @@ local sets = {
     Precast = {
         Head = 'Windfall Hat',
         Ear1 = 'Loquac. Earring',
-        Ear2 = 'Antivenom Earring',
+        Ear2 = 'Magnetic Earring',
         Body = 'Marduk\'s Jubbah',
-        Ring1 = 'Dark Ring', -- fast cast
+        Ring1 = { Name = 'Dark Ring', Augment = { [1] = '"Fast Cast"+1', [2] = '"Conserve MP"+3' } },
         Back = 'Swith Cape +1',
         Feet = 'Rostrum Pumps',
     },
@@ -120,8 +121,8 @@ local sets = {
         -- I thought blood boon helped here but it doesnt
         Head = 'Summoner\'s Horn', -- delay -3
         Body = 'Yinyang Robe', -- delay -5
-        -- Hands = 'Nashira Gages', -- delay II -1 (can go up to -3)
-        Hands = 'Smn. Bracers +1', -- delay -2 (only temporary, swap for nashira when nash is -2 and smn cape is -2)
+        Hands = 'Nashira Gages', -- delay II -3
+        Ring2 = 'Eidolon Ring', -- delay II -5
         Back = 'Summoner\'s Cape', -- delay -1 (eventually -2)
         Legs = 'Smn. Spats +1', -- delay -2
         Feet = 'Smn. Pigaches +1', -- delay -2
@@ -130,10 +131,12 @@ local sets = {
         -- bp damage, physical pet bonuses, smn skill
         Head = 'Marduk\'s Tiara',
         Neck = 'Incanter\'s Torque',
+        Ear1 = 'Smn. Earring',
+        Ear2 = 'Spire Earring',
         Body = 'Smn. Doublet +1', -- bp dmg +4
         Hands = 'Smn. Bracers +1', -- bp dmg +3
         Ring1 = 'Evoker\'s Ring',
-        Ring2 = 'Tamas Ring',
+        Ring2 = 'Eidolon Ring',
         Back = 'Aife\'s Mantle', -- pet attack +10
         Waist = 'Mujin Obi',
         Legs = 'Evk. Spats +1', -- pet acc +10, atk+3 DA +3%
@@ -148,9 +151,11 @@ local sets = {
         -- for bp ward, summon spirits, siphon
         Head = 'Marduk\'s Tiara',
         Neck = 'Incanter\'s Torque',
+        Ear1 = 'Smn. Earring',
+        Ear2 = 'Spire Earring',
         Hands = 'Smn. Bracers +1',
         Ring1 = 'Evoker\'s Ring',
-        Ring2 = 'Tamas Ring',
+        Ring2 = 'Eidolon Ring', -- +8
         Back = 'Summoner\'s Cape',
         Waist = 'Mujin Obi',
         -- Legs = 'Marduk\'s Shalwar',
@@ -188,15 +193,18 @@ local sets = {
         -- fast cast, healing magic+
         Head = 'Windfall Hat', -- fast cast
         Neck = 'Incanter\'s Torque', -- healing magic
-        Ear2 = 'Loquac. Earring', -- fast cast
+        Ear1 = 'Loquac. Earring', -- fast cast
+        Ear2 = 'Spire Earring',
         Body = 'Goliard Saio', -- haste
-        Ring1 = 'Dark Ring', -- fast cast
+        Ring1 = { Name = 'Dark Ring', Augment = { [1] = '"Fast Cast"+1', [2] = '"Conserve MP"+3' } },
         Back = 'Swith Cape +1', -- fast cast
         Waist = 'Ninurta\'s Sash', -- haste
         Legs = 'Marduk\'s Shalwar', -- healing magic
         Feet = 'Rostrum Pumps',
     },
-    Enhancing = {
+    Enhancing = { -- TODO
+        Ear1 = 'Augment. Earring',
+        Ear2 = 'Spire Earring',
         Back = 'Grapevine Cape',
     },
     Stoneskin = {
@@ -214,53 +222,56 @@ local sets = {
         -- TODO: pet defense+, pet -dt
         -- head: smn horn +1, pet damage taken -4%
         -- hands: evoker's bracers +1, pet damage taken -5%
-        -- waist: beastly girdle (yasuo drop), pet damage taken -5%, augments give acc+, regen
+        Waist = 'Beastly Girdle', -- augment this
         Legs = 'Goliard Trews', -- pet def +10
         Feet = 'Koschei Crackows', -- avatar def +5
         -- Legs = 'Enticer\'s Pants' -- pet damage taken -2%
         -- (or, smn spats +1: pet magic damage taken -4%)
     },
-};
-profile.Sets = sets;
+    Brachyura = {
+        Ear1 = 'Brachyura Earring',
+    },
+}
+profile.Sets = sets
 
 profile.Packer = {
-};
+}
 
 local buff_BPs = T{
     'Shining Ruby','Glittering Ruby','Crimson Howl','Inferno Howl','Frost Armor','Crystal Blessing','Aerial Armor','Hastega II',
     'Fleet Wind','Hastega','Earthen Ward','Earthen Armor','Rolling Thunder','Lightning Armor','Soothing Current','Ecliptic Growl',
     'Heavenward Howl','Ecliptic Howl','Noctoshield','Dream Shroud','Altana\'s Favor','Reraise','Reraise II','Reraise III','Raise',
     'Raise II','Raise III','Wind\'s Blessing'
-};
+}
 
 local mag_BPs = T{
     'Searing Light','Meteorite','Holy Mist','Inferno','Fire II','Fire IV','Meteor Strike','Conflag Strike','Diamond Dust',
     'Blizzard II','Blizzard IV','Heavenly Strike','Aerial Blast','Aero II','Aero IV','Wind Blade','Earthen Fury','Stone II',
     'Stone IV','Geocrush','Judgement Bolt','Thunder II','Thunder IV','Thunderstorm','Thunderspark','Tidal Wave','Water II',
     'Water IV','Grand Fall','Howling Moon','Lunar Bay','Ruinous Omen','Somnolence','Nether Blast','Night Terror','Level ? Holy'
-};
+}
 
-local heal_BPs = T{'Healing Ruby','Healing Ruby II','Whispering Wind','Spring Water'};
+local heal_BPs = T{'Healing Ruby','Healing Ruby II','Whispering Wind','Spring Water'}
 
 local enfeeb_BPs = T{
     'Diamond Storm','Sleepga','Shock Squall','Slowga','Tidal Roar','Pavor Nocturnus','Ultimate Terror','Nightmare',
     'Mewing Lullaby','Eerie Eye'
-};
+}
 
 local function HandlePetAction(petAction)
 	if (buff_BPs:contains(petAction.Name) or heal_BPs:contains(petAction.Name) or enfeeb_BPs:contains(petAction.Name)) then
-        gFunc.EquipSet(sets.Smn_Mag_Skill);
+        gFunc.EquipSet(sets.Smn_Mag_Skill)
 	elseif (mag_BPs:contains(petAction.Name)) then
-        gFunc.EquipSet(sets.Smn_Mag_Skill);
+        gFunc.EquipSet(sets.Smn_Mag_Skill)
         -- gFunc.EquipSet(sets.BP_Mag);
     else
         gFunc.EquipSet(sets.BP_Phys);
         if (pupinparty) and (bstinparty) then
-            gFunc.EquipSet(sets.AffinityFidelity);
+            gFunc.EquipSet(sets.AffinityFidelity)
         elseif pupinparty then
-            gFunc.EquipSet(sets.Affinity);
+            gFunc.EquipSet(sets.Affinity)
         elseif bstinparty then
-            gFunc.EquipSet(sets.Fidelity);
+            gFunc.EquipSet(sets.Fidelity)
         end
     end
 
@@ -341,44 +352,49 @@ profile.HandleDefault = function()
         gFunc.EquipSet(sets.TPGain);
         -- if all three weapon slots are empty during combat,
         -- equip the default weapon set (useful against merrows)
-        utilities.ResetDefaultWeapons(sets.Weapons_Default);
+        utilities.ResetDefaultWeapons(sets.Weapons_Default)
     elseif (player.Status == 'Resting') then
-        gFunc.EquipSet(sets.Rest);
+        gFunc.EquipSet(sets.Rest)
     elseif (player.IsMoving) then
-		gFunc.EquipSet(sets.Fast);        
+		gFunc.EquipSet(sets.Fast)
     elseif (pet ~= nil) then
-        gFunc.EquipSet(sets.Pet_Idle);
+        gFunc.EquipSet(sets.Pet_Idle)
+        gFunc.EquipSet(sets.Weapons_Default)
         if (pet.Status == 'Engaged') then
-            gFunc.EquipSet(sets.Pet_TPGain);
+            gFunc.EquipSet(sets.Pet_TPGain)
             if (pupinparty) and (bstinparty) then
-                gFunc.EquipSet(sets.AffinityFidelity);
+                gFunc.EquipSet(sets.AffinityFidelity)
             elseif pupinparty then
-                gFunc.EquipSet(sets.Affinity);
+                gFunc.EquipSet(sets.Affinity)
             elseif bstinparty then
-                gFunc.EquipSet(sets.Fidelity);
+                gFunc.EquipSet(sets.Fidelity)
             end
         end
         if (pet.Name == 'Carbuncle') then
-            gFunc.EquipSet(sets.Carb_Mitts);
+            gFunc.EquipSet(sets.Carb_Mitts)
         end
     else
         gFunc.EquipSet(sets.Idle);
-        gFunc.EquipSet(sets.Weapons_Default);
+        gFunc.EquipSet(sets.Weapons_Default)
     end
 
     if (T{'PDT', 'MDT', 'BDT'}:contains(utilities.OverrideSet)) then
         -- damage-taken sets take precedence over everything (except pet actions)
-        gFunc.EquipSet(utilities.OverrideSet);
+        gFunc.EquipSet(utilities.OverrideSet)
         if (pet ~= nil) then
             -- TODO: equip pet -dt set here as well
         end
     end
 
-    utilities.CheckDefaults();
+    if equipBrachyura() then
+        gFunc.EquipSet(sets.Brachyura)
+    end
+
+    utilities.CheckDefaults()
 end
 
 profile.HandleAbility = function()
-    local ability = gData.GetAction();
+    local ability = gData.GetAction()
     if (ability.Name == 'Elemental Siphon') then
         gFunc.EquipSet(sets.Smn_Mag_Skill)
         gFunc.EquipSet(sets.Siphon)
@@ -392,31 +408,31 @@ profile.HandleItem = function()
 end
 
 profile.HandlePrecast = function()
-    local spell = gData.GetAction();
-    gFunc.EquipSet(sets.Precast);
+    local spell = gData.GetAction()
+    gFunc.EquipSet(sets.Precast)
     if (spell.Skill == 'Healing Magic') then
-        gFunc.EquipSet(sets.Precast_Heal);
+        gFunc.EquipSet(sets.Precast_Heal)
     elseif (spell.Skill == 'Summoning Magic') then
-        gFunc.EquipSet(sets.Precast_Summon);
+        gFunc.EquipSet(sets.Precast_Summon)
     end
-    utilities.CheckCancels();
+    utilities.CheckCancels()
 end
 
 profile.HandleMidcast = function()
-    local spell = gData.GetAction();
+    local spell = gData.GetAction()
     if (T{'Cursna', 'Erase'}:contains(spell.Name)) then
         -- lower recast
-        gFunc.EquipSet(sets.Cursna);
+        gFunc.EquipSet(sets.Cursna)
     elseif (spell.Skill == 'Enhancing Magic') then
         gFunc.EquipSet(sets.Enhancing)
         if (spell.Name == 'Stoneskin') then
             gFunc.EquipSet(sets.Stoneskin);
         end
     elseif (spell.Skill == 'Healing Magic') then
-        gFunc.EquipSet(sets.Heal);
+        gFunc.EquipSet(sets.Heal)
         local player = gData.GetPlayer();
         if (player.Status ~= 'Engaged') then
-            gFunc.EquipSet(sets.Heal_Weapons);
+            gFunc.EquipSet(sets.Heal_Weapons)
         end
     end
 end
@@ -428,7 +444,7 @@ profile.HandleMidshot = function()
 end
 
 profile.HandleWeaponskill = function()
-    gFunc.EquipSet(sets.WS_Default);
+    gFunc.EquipSet(sets.WS_Default)
 end
 
-return profile;
+return profile

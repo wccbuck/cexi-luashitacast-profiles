@@ -1,4 +1,6 @@
 utilities = gFunc.LoadFile('utilities.lua');
+equipBrachyura = gFunc.LoadFile('brachyura.lua')
+
 local profile = {};
 local sets = {
 
@@ -17,18 +19,16 @@ local sets = {
         Feet = 'Hachiryu Sune-Ate',
     },
     Weapons_Default = {
-        -- Main = 'Thunder Staff',
-        -- Sub = 'Claymore Grip',
-        Main = 'Kriegsbeil',
+        Main = 'Hawker\'s Knife +1', -- swap for turbulence
         Sub = 'Archer\'s Shield',
         -- Range = 'Ajjub Bow',
         Range = 'Kennan\'s Longbow',
     },
     Ammo_Default = {
-        Ammo = 'Demon Arrow', 
+        Ammo = 'Kabura Arrow',
     },
     TPGain = {
-        Head = 'Htr. Beret +1',
+        Head = 'Sct. Beret +1',
         Neck = 'Hope Torque',
         Ear1 = 'Brutal Earring +1',
         Ear2 = 'Auster\'s Earring',
@@ -40,6 +40,9 @@ local sets = {
         Waist = 'Scout\'s Belt',
         Legs = 'Skadi\'s Chausses',
         Feet = 'Hachiryu Sune-Ate',
+    },
+    Barrage = {
+        Hands = 'Htr. Bracers +1',
     },
     WS_Default = {
         Head = 'Maat\'s Cap',
@@ -60,7 +63,10 @@ local sets = {
     },
     Preshot = {
         Head = 'Htr. Beret +1',
+        Neck = 'Loxo Scarf',
         Body = 'Scout\'s Jerkin',
+        Hands = 'Blood Fng. Gnt.',
+        -- TODO relic legs + feet
     },
     Fast = {
         Feet = 'Skadi\'s Jambeaux',
@@ -83,6 +89,9 @@ local sets = {
     MDT = {
         Ring1 = 'Merman\'s Ring',
         Ring2 = 'Merman\'s Ring',
+    },
+    Brachyura = {
+        Ear1 = 'Brachyura Earring',
     },
 };
 profile.Sets = sets;
@@ -123,6 +132,11 @@ profile.HandleDefault = function()
     else
         gFunc.EquipSet(sets.Ammo_Default)
     end
+
+    if equipBrachyura() then
+        gFunc.EquipSet(sets.Brachyura)
+    end
+
     utilities.CheckDefaults()
 end
 
@@ -158,6 +172,9 @@ profile.HandleMidshot = function()
         gFunc.EquipSet(sets.Unlimited)
     else
         gFunc.EquipSet(sets.Ammo_Default)
+    end
+    if (gData.GetBuffCount('Barrage') > 0) then
+        gFunc.EquipSet(sets.Barrage)
     end
 end
 

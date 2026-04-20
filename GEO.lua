@@ -1,5 +1,6 @@
 utilities = gFunc.LoadFile('utilities.lua')
 naSpell = gFunc.LoadFile('naSpell.lua')
+equipBrachyura = gFunc.LoadFile('brachyura.lua')
 
 local petdef = false
 
@@ -8,8 +9,8 @@ local sets = {
     Idle = {
         Head = 'Geomancy Galero',
         Neck = 'Incanter\'s Torque',
-        Ear1 = 'Loquac. Earring',
-        Ear2 = 'Soil Earring',
+        Ear1 = 'Soil Earring',
+        Ear2 = 'Spire Earring',
         Body = 'Morrigan\'s Robe',
         Hands = 'Bagua Mitaines +1',
         Ring1 = 'Tamas Ring',
@@ -21,18 +22,18 @@ local sets = {
     },
     Weapons_Default = {
         Main = 'Idris',
-        Sub = 'Genbu\'s Shield',
+        Sub = 'Genbu\'s Shield', -- genmei
         Range = 'Dunna',
     },
     Heal_Weapons = {
         Main = 'Tamaxchi',
-        Sub = 'Genbu\'s Shield',
+        Sub = 'Genbu\'s Shield', -- genmei
     },
     Geoskill = {
         Head = 'Geomancy Galero',
         Neck = 'Incanter\'s Torque',
-        Ear1 = 'Loquac. Earring',
-        Ear2 = 'Magnetic Earring',
+        Ear1 = 'Magnetic Earring',
+        Ear2 = 'Spire Earring',
         Body = 'Bagua Tunic +1',
         Hands = 'Geomancy Mitaines',
         Ring1 = 'Tamas Ring',
@@ -75,7 +76,7 @@ local sets = {
         Ear1 = 'Loquac. Earring',
         Body = 'Dalmatica +1',
         Hands = 'Bagua Mitaines +1',
-        Ring1 = 'Dark Ring',
+        Ring1 = { Name = 'Dark Ring', Augment = { [1] = '"Fast Cast"+1', [2] = '"Conserve MP"+3' } },
         Ring2 = 'Hibernal Ring',
         Back = 'Swith Cape +1',
         Legs = 'Geomancy Pants',
@@ -85,10 +86,11 @@ local sets = {
         Feet = 'Zenith Pumps +1', -- cure clogs?
     },
     Nuke = {
+        -- TODO: magic burst set
         Head = 'Geomancy Galero',
         Neck = 'Lmg. Medallion +1',
         Ear1 = 'Novio Earring',
-        Ear2 = 'Moldavite Earring',
+        Ear2 = 'Adept\'s Earring',
         Body = 'Morrigan\'s Robe',
         Hands = 'Zenith Mitts +1',
         Ring1 = 'Tamas Ring',
@@ -96,7 +98,8 @@ local sets = {
         Back = 'Voluspa Mantle',
         Waist = 'Charmer\'s Sash',
         Legs = 'Shadow Trews',
-        Feet = 'Bagua Sandals +1',
+        -- Feet = 'Bagua Sandals +1',
+        Feet = 'Nashira Crackows',
     },
     Heal = {
         Head = 'Maat\'s Cap',
@@ -119,7 +122,7 @@ local sets = {
         Ear2 = 'Magnetic Earring',
         Body = 'Dalmatica +1',
         Hands = 'Bagua Mitaines +1',
-        Ring1 = 'Dark Ring',
+        Ring1 = { Name = 'Dark Ring', Augment = { [1] = '"Fast Cast"+1', [2] = '"Conserve MP"+3' } },
         Ring2 = 'Hibernal Ring',
         Back = 'Swith Cape +1',
         Waist = 'Ninurta\'s Sash',
@@ -143,12 +146,14 @@ local sets = {
     Stoneskin = {
         Neck = 'Stone Gorget',
     },
-    Enfeebling = {}, -- TODO
+    Enfeebling = { -- TODO
+        Ear2 = 'Spire Earring',
+    },
     Dark = {
         Head = 'Bagua Galero',
         Neck = 'Incanter\'s Torque',
-        Ear1 = 'Novio Earring',
-        Ear2 = 'Abyssal Earring',
+        Ear1 = 'Abyssal Earring',
+        Ear2 = 'Spire Earring',
         Body = 'Geomancy Tunic',
         Hands = 'Zenith Mitts +1',
         Ring1 = 'Tamas Ring',
@@ -181,12 +186,15 @@ local sets = {
         Ear2 = 'Emberpearl Earring',
         Body = 'Morrigan\'s Robe',
         Hands = 'Yigit Gages',
-        Ring1 = 'Rajas Ring',
+        Ring1 = 'Rajas Ring', -- Tjukurrpa Annulet? MND 5, club skill 3
         Ring2 = 'Tamas Ring',
         Back = 'Stormlord Shawl +1',
         Waist = 'Visionary Obi',
         Legs = 'Bagua Pants +1',
         Feet = 'Bagua Sandals +1',
+    },
+    Brachyura = {
+        Ear1 = 'Brachyura Earring',
     },
 }
 profile.Sets = sets
@@ -246,6 +254,10 @@ profile.HandleDefault = function()
 
     if petdef then
         gFunc.EquipSet(sets.Pet_Def)
+    end
+
+    if equipBrachyura() then
+        gFunc.EquipSet(sets.Brachyura)
     end
 
     utilities.CheckDefaults()

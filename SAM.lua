@@ -1,4 +1,5 @@
 utilities = gFunc.LoadFile('utilities.lua');
+equipBrachyura = gFunc.LoadFile('brachyura.lua')
 
 local profile = {};
 
@@ -56,7 +57,8 @@ local sets = {
         Ring2 = 'Moepapa Annulet',
         Back = 'Cuchulain\'s Mantle',
         Waist = 'Warwolf Belt +1',
-        Legs = 'Hachiryu Haidate',
+        -- Legs = 'Hachiryu Haidate', -- if you don't have +5 shura haidate
+        Legs = 'Shura Haidate +1',
         Feet = 'Ruthless Greaves',
     },
     WS_Low_Eva = {
@@ -67,7 +69,9 @@ local sets = {
     },
     WS_High_Eva = {
         Waist = 'Potent Belt',
-        Legs = 'Shura Haidate +1', -- +2 strength aug after *hundreds* of dryadic tatters... +5 would obv be better
+    },
+    WS_Campaign = {
+        Neck = 'Bull Necklace', -- +25 str (!!)
     },
     GKT_Skill = {
         Head = 'Sao. Kabuto +1',
@@ -85,7 +89,7 @@ local sets = {
         Ring1 = 'Merman\'s Ring',
         Ring2 = 'Blobnag Ring',
         Back = 'Aife\'s Mantle',
-        Waist = 'Buccaneer\'s Belt',
+        Waist = 'Subtle Sash',
         Legs = 'Myn. Haidate +1',
         Feet = 'Hmn. Sune-Ate +1',
     },
@@ -97,7 +101,7 @@ local sets = {
         Ring1 = 'Garrulous Ring',
         Ring2 = 'Blobnag Ring',
         Back = 'Fowler\'s Mantle',
-        Waist = 'Buccaneer\'s Belt',
+        Waist = 'Subtle Sash',
         Feet = 'Hmn. Sune-Ate +1',
     },
     PDT = {
@@ -152,6 +156,9 @@ local sets = {
     },
     Berserker = {
         Neck = 'Berserker\'s Torque',
+    },
+    Brachyura = {
+        Ear1 = 'Brachyura Earring',
     },
 };
 profile.Sets = sets;
@@ -209,23 +216,31 @@ profile.HandleDefault = function()
 
     else
         if (player.IsMoving == true) then
-            gFunc.EquipSet(sets.Fast);
+            gFunc.EquipSet(sets.Fast)
         else
-            gFunc.EquipSet(sets.TPGain);
-            gFunc.EquipSet(sets.Idle);
+            gFunc.EquipSet(sets.TPGain)
+            gFunc.EquipSet(sets.Idle)
             if (utilities.OverrideSet == 'SHOWOFF') then
-                gFunc.EquipSet(sets.Showoff);
+                gFunc.EquipSet(sets.Showoff)
             end
         end
 
         if (gData.GetBuffCount('Sleep') > 0) then
-            gFunc.EquipSet(sets.Sleep);
+            if (player.HP > 200) then
+                gFunc.EquipSet(sets.Berserker)
+            else
+                gFunc.EquipSet(sets.Sleep)
+            end
         end
     end
 
     if (T{'PDT', 'MDT', 'BDT'}:contains(utilities.OverrideSet)) then
         -- damage-taken sets take precedence over everything
-        gFunc.EquipSet(utilities.OverrideSet);
+        gFunc.EquipSet(utilities.OverrideSet)
+    end
+
+    if equipBrachyura() then
+        gFunc.EquipSet(sets.Brachyura)
     end
 
     utilities.CheckDefaults()
@@ -283,6 +298,10 @@ profile.HandleWeaponskill = function()
         gFunc.EquipSet(sets.GKT_Skill);
     elseif (ws.Name == 'Tachi: Rana') then
         gFunc.EquipSet(sets.WS_Rana);
+    end
+
+    if gData.GetBuffCount('Allied Tags') > 0 then
+        gFunc.EquipSet(sets.WS_Campaign);
     end
 end
 
