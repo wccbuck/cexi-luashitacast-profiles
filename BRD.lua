@@ -1,57 +1,37 @@
-utilities = gFunc.LoadFile('utilities.lua');
-naSpell = gFunc.LoadFile('naSpell.lua');
+local utilities = gFunc.LoadFile('utilities.lua');
+local naSpell = gFunc.LoadFile('naSpell.lua');
+local equipBrachyura = gFunc.LoadFile('brachyura.lua')
 
 local profile = {};
-
--- this instruments table is only used if you don't have gjallarhorn.
-local instruments = {
-    Minuet = 'Cornette +1',
-    Mambo = 'Hellish Bugle',
-    Ballad = 'Terpander',
-    Lullaby = 'Terpander',
-    Madrigal = 'Traversiere +1',
-    Mazurka = 'Harlequin\'s Horn',
-    March = 'Faerie Piccolo',
-    Requiem = 'Requiem Flute',
-    Elegy = 'Horn +1',
-    Threnody = 'Piccolo +1',
-    Carol = 'Crumhorn',
-};
 
 local sets = {
     Idle = {
         Head = 'Chl. Roundlet +1',
-        Neck = 'Oneiros Torque',
+        -- Neck = 'Oneiros Torque',
+        Neck = 'Cloud Hairpin',
         Ear1 = 'Musical Earring',
         Ear2 = 'Soil Earring',
         Body = 'Marduk\'s Jubbah',
         Hands = 'Brd. Cuffs +1',
         Ring1 = 'Defending Ring',
-        Ring2 = 'Tamas Ring',
+        Ring2 = { Name = 'Dark Ring', Augment = { [1] = 'Magic dmg. taken -5%' } },
         Back = 'Umbra Cape',
         Waist = 'Oneiros Belt',
         Legs = 'Brd. Cannions +1',
         Feet = 'Suzaku\'s Sune-Ate',
     },
     Idle_Weapons = {
-        Main = 'Terra\'s Staff',
+        Main = 'Elegy\'s Respite',
         Sub = 'Staff Strap',
+        Range = 'Gjallarhorn',
     },
     Sing_Weapons = {
         Main = 'Chanter\'s Staff',
         -- Sub = 'Staff Strap',
         Sub = 'Reflexive Grip',
     },
-    -- if you don't have chanter's staff:
-    -- Sing_Weapons = {
-    --     Main = 'Silktone',
-    --     Sub = 'Genbu\'s Shield',
-    -- },
-
     TPGain = {
         -- TODO
-        -- Range = 'Hellish Bugle',
-        -- Hands = 'Swift Gages',
     },
     WS_Default = {
         -- TODO
@@ -63,7 +43,7 @@ local sets = {
         Ear1 = 'Light Earring',
         Ear2 = 'Light Earring',
         Body = 'Errant Hpl.',
-        Hands = 'Yigit Gages',
+        Hands = 'Augur\'s Gloves',
         Ring1 = 'Karka Ring',
         Ring2 = 'Tamas Ring',
         Back = 'Dew Silk Cape +1',
@@ -73,11 +53,12 @@ local sets = {
     },
     Heal_Weapons = {
         Main = 'Tamaxchi',
-        Sub = 'Genbu\'s Shield',
+        Sub = 'Genmei Shield',
     },
     Precast = {
         Head = 'Windfall Hat',
         Ear2 = 'Loquac. Earring',
+        Neck = 'Jeweled Collar',
         Body = 'Dalmatica',
         Hands = 'Brd. Cuffs +1',
         Ring1 = { Name = 'Dark Ring', Augment = { [1] = '"Fast Cast"+1', [2] = '"Conserve MP"+3' } },
@@ -100,7 +81,7 @@ local sets = {
         Body = 'Goliard Saio', -- haste
         Hands = 'Dusk Gloves', -- haste
         Ring1 = { Name = 'Dark Ring', Augment = { [1] = '"Fast Cast"+1', [2] = '"Conserve MP"+3' } },
-        Ring2 = 'Hibernal Ring', -- 2% fast cast
+        Ring2 = 'Hibernal Ring',
         Back = 'Swith Cape +1', -- fast cast
         Waist = 'Ninurta\'s Sash', -- haste
         Legs = 'Byakko\'s Haidate', -- haste
@@ -110,14 +91,15 @@ local sets = {
         Head = 'Brd. Roundlet +1', -- wind +7
         Neck = 'Incanter\'s Torque',
         Ear1 = 'Musical Earring', -- wind, string +5
-        Ear2 = 'Singing Earring', -- spire earring
+        Ear2 = 'Spire Earring',
         Body = 'Chl. Jstcorps +1', -- wind +6, sing +5
         Hands = 'Chl. Cuffs +1', -- sing +10
         Ring1 = 'Nereid Ring', -- wind+3
         Ring2 = 'Trumpet Ring', -- wind+2... get another Nereid
         -- Back = 'Echo Cape', -- wind+3
-        Back = 'Astute Cape', -- sing+5
-        Waist = 'Marching Belt', -- wind+3
+        Back = 'Astute Cape',
+        -- Waist = 'Marching Belt',
+        Waist = 'Kobo Obi',
         Legs = 'Chl. Cannions +1', -- wind+8
         Feet = 'Oracle\'s Pigaches', -- wind+5
     },
@@ -125,11 +107,11 @@ local sets = {
         Head = 'Marduk\'s Tiara', -- sing+7
         Neck = 'Incanter\'s Torque',
         Ear1 = 'Musical Earring', -- wind, string +5
-        Ear2 = 'Singing Earring', -- spire earring
+        Ear2 = 'Spire Earring',
         Body = 'Chl. Jstcorps +1',  -- string +6, sing +5
         Hands = 'Chl. Cuffs +1', -- sing+10
-        Back = 'Astute Cape', -- sing +5
-        Waist = 'Ninurta\'s Sash', -- haste
+        Back = 'Astute Cape',
+        Waist = 'Kobo Obi', -- sing+5
         Feet = 'Bard\'s Slippers', -- string+3
     },
     Lullaby = {
@@ -144,13 +126,14 @@ local sets = {
         Back = 'Bard\'s Cape',
         Waist = 'Gleeman\'s Belt',
         Legs = 'Marduk\'s Shalwar',
-        Feet = 'Goliard Clogs',
+        Feet = 'Shadow Clogs',
     },
     Elegy = {
         -- Note: Marduk's Shalwar augmented seems better overall than AF+1 pants.
         -- CHR, and song duration, but slightly lower m.acc and wind skill.
         -- Legs = 'Chl. Cannions +1', -- wind+8, earth m.acc +5
     },
+    -- todo: finale set with song recast down
     Duration = {
         -- for songs where sing skill doesn't really matter: ballad, dirge, mazurka
         Body = 'Brd. Jstcorps +1',
@@ -162,7 +145,7 @@ local sets = {
     },
     Enhancing = {
         -- todo: MND, enhancing magic +
-        -- spire earring
+        Ear2 = 'Spire Earring',
         Back = 'Grapevine Cape',
     },
     Stoneskin = {
@@ -189,11 +172,6 @@ local sets = {
         Body = 'Kupo Suit',
         Legs = 'displaced',
     },
-    Weapons_Default = {
-        Main = 'Chanter\'s Staff',
-        Sub = 'Staff Strap',
-        Range = 'Gjallarhorn',
-    },
     PDT = {
         -- TODO
         Head = 'Genbu\'s Kabuto',
@@ -207,6 +185,8 @@ local sets = {
     MDT = {
         -- TODO
         Hands = 'Brd. Cuffs +1',
+        Ring1 = 'Defending Ring',
+        Ring2 = { Name = 'Dark Ring', Augment = { [1] = 'Magic dmg. taken -5%' } },
     },
     BDT = {},
     Showoff = {},
@@ -265,7 +245,7 @@ profile.HandleDefault = function()
         gFunc.EquipSet(sets.Idle);
         -- if all three weapon slots are empty during combat,
         -- equip the default weapon set (useful against merrows)
-        utilities.ResetDefaultWeapons(sets.Weapons_Default);
+        utilities.ResetDefaultWeapons(sets.Idle_Weapons);
     elseif (player.Status == 'Resting') then
         gFunc.EquipSet(sets.Rest);
     elseif (player.IsMoving) then
@@ -342,7 +322,7 @@ profile.HandleMidcast = function()
                 if spell.Name:match('Lullaby') then
                     gFunc.EquipSet(sets.Lullaby_Weapons);
                 else
-                    gFunc.EquipSet(sets.Weapons_Default);
+                    gFunc.EquipSet(sets.Sing_Weapons);
                 end
             end
         elseif spell.Name:match('Elegy') then

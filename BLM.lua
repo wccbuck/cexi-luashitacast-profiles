@@ -1,9 +1,9 @@
-utilities = gFunc.LoadFile('utilities.lua');
-equipBrachyura = gFunc.LoadFile('brachyura.lua')
+local utilities = gFunc.LoadFile('utilities.lua')
+local equipBrachyura = gFunc.LoadFile('brachyura.lua')
 
-local profile = {};
+local profile = {}
 
-local freenuke = false;
+local freenuke = false
 
 local sets = {
     Idle = {
@@ -51,9 +51,10 @@ local sets = {
     Precast = {
         Head = 'Windfall Hat',
         Ear2 = 'Loquac. Earring',
+        Neck = 'Jeweled Collar',
         Body = 'Src. Coat +1', -- 4% fast cast
         Ring1 = 'Hibernal Ring', -- 2% fast cast
-        Ring1 = { Name = 'Dark Ring', Augment = { [1] = '"Fast Cast"+1', [2] = '"Conserve MP"+3' } },
+        Ring2 = { Name = 'Dark Ring', Augment = { [1] = '"Fast Cast"+1', [2] = '"Conserve MP"+3' } },
         Back = 'Swith Cape +1',
         Feet = 'Rostrum Pumps',
     },
@@ -70,10 +71,11 @@ local sets = {
         Hands = 'Wzd. Gloves +1',
         Ring1 = 'Hibernal Ring',
         Ring2 = 'Galdr Ring',
-        Back = 'Voluspa Mantle',
+        Back = 'Ixion Cape', -- voluspa +1 is very slightly better
         Waist = 'Sorcerer\'s Belt',
-        Legs = 'Shadow Trews',
-        Feet = 'Src. Sabots +1',
+        Legs = 'Valkyrie\'s Trews',
+        -- Feet = 'Src. Sabots +1',
+        Feet = 'Nashira Crackows', -- better than src sabots for free nuke
     },
     MBNuke = {
         Head = 'Src. Petasos +1',
@@ -81,14 +83,14 @@ local sets = {
         Ear1 = 'Novio Earring',
         Ear2 = 'Static Earring',
         Body = 'Src. Coat +1',
-        -- Hands = 'Zenith Mitts +1',
+        -- Hands = 'Zenith Mitts +1', -- MAB+5 random aug
         -- Hands = 'Wzd. Gloves +1',
         Hands = 'Src. Gloves +1',
         Ring1 = 'Hibernal Ring',
         Ring2 = 'Galdr Ring',
-        Back = 'Voluspa Mantle',
+        Back = 'Ixion Cape', -- voluspa +1 is very slightly better
         Waist = 'Sorcerer\'s Belt',
-        Legs = 'Shadow Trews',
+        Legs = 'Valkyrie\'s Trews',
         Feet = 'Src. Sabots +1',
     },
     MatchingDay = {
@@ -120,14 +122,32 @@ local sets = {
         Legs = 'Errant Slops', -- swap with igqira with augs
         Feet = 'Goliard Clogs',
     },
+    EleDebuff = {
+        -- ele skill, m.acc, int, "elemental debuff potency"
+        Ammo = 'Rimestone',
+        Head = 'displaced',
+        Neck = 'Lmg. Medallion +1',
+        Ear1 = 'Abyssal Earring',
+        Ear2 = 'Spire Earring',
+        Body = 'Shaman\'s Cloak', -- ele debuff potency +4
+        Hands = 'Wzd. Gloves +1',
+        Ring1 = 'Omega Ring',
+        Ring2 = 'Tamas Ring',
+        Back = 'Voluspa Mantle',
+        Waist = 'Sorcerer\'s Belt',
+        Legs = 'Src. Tonban +1',
+        Feet = 'Nashira Crackows',
+    },
     Dark = {
         -- mostly dark magic skill+, also magic accuracy, int (for magic accuracy)
         Ammo = 'Rimestone',
-        Head = 'Windfall Hat', -- just for recast. could swap for zenith crown with dark augment
+        -- Head = 'Windfall Hat', -- just for recast. could swap for zenith crown with dark augment
+        Head = 'displaced',
         Neck = 'Incanter\'s Torque',
         Ear1 = 'Abyssal Earring',
         Ear2 = 'Spire Earring',
-        Body = 'Nashira Manteel',
+        -- Body = 'Nashira Manteel',
+        Body = 'Demon\'s Cloak', -- augmented
         Hands = 'Src. Gloves +1',
         Ring1 = 'Hibernal Ring',
         Ring2 = 'Galdr Ring',
@@ -151,7 +171,7 @@ profile.Packer = {
 }
 
 profile.OnLoad = function()
-    gSettings.AllowAddSet = true;
+    gSettings.AllowAddSet = true
     utilities.Initialize();
 
     (function () AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 14') end):once(3);
@@ -162,43 +182,43 @@ end
 
 profile.HandleCommand = function(args)
     if args[1] == 'freenuke' then
-        freenuke = not freenuke;
-        gFunc.Echo(255,  'FreeNuke [' .. (freenuke and 'ON' or 'OFF') .. ']');
+        freenuke = not freenuke
+        gFunc.Echo(255,  'FreeNuke [' .. (freenuke and 'ON' or 'OFF') .. ']')
     end
-    utilities.HandleCommands(args);
+    utilities.HandleCommands(args)
 end
 
 profile.HandleDefault = function()
-    local player = gData.GetPlayer();
+    local player = gData.GetPlayer()
 
     if (player.Status == 'Engaged') then
-        gFunc.EquipSet(sets.TPGain);
+        gFunc.EquipSet(sets.TPGain)
         -- if all three weapon slots are empty during combat,
         -- equip the default weapon set (useful against merrows)
-        utilities.ResetDefaultWeapons(sets.Weapons_Default);
+        utilities.ResetDefaultWeapons(sets.Weapons_Default)
     elseif (player.Status == 'Resting') then
-        gFunc.EquipSet(sets.Rest);
+        gFunc.EquipSet(sets.Rest)
     elseif (player.IsMoving) then
-		gFunc.EquipSet(sets.Fast);
+		gFunc.EquipSet(sets.Fast)
     else
-        gFunc.EquipSet(sets.Idle);
-        gFunc.EquipSet(sets.Weapons_Default);
+        gFunc.EquipSet(sets.Idle)
+        gFunc.EquipSet(sets.Weapons_Default)
     end
 
     if (T{'PDT', 'MDT', 'BDT'}:contains(utilities.OverrideSet)) then
         -- damage-taken sets take precedence over everything
-        gFunc.EquipSet(utilities.OverrideSet);
+        gFunc.EquipSet(utilities.OverrideSet)
     end
 
     if equipBrachyura() then
         gFunc.EquipSet(sets.Brachyura)
     end
 
-    utilities.CheckDefaults();
+    utilities.CheckDefaults()
 end
 
 profile.HandleAbility = function()
-    utilities.CheckCancels();
+    utilities.CheckCancels()
 end
 
 profile.HandleItem = function()
@@ -221,6 +241,10 @@ profile.HandlePrecast = function()
     utilities.CheckCancels()
 end
 
+local eleDebuffs = T{
+    'Rasp', 'Drown', 'Frost', 'Shock', 'Burn', 'Choke'
+}
+
 profile.HandleMidcast = function()
     local spell = gData.GetAction()
     if (spell.Name == 'Stoneskin' or spell.Name == 'Blink') then
@@ -230,24 +254,28 @@ profile.HandleMidcast = function()
         -- if you have uggalepih pendant you can add it here if MPP < 51,
         -- however my nuke set has enough MAB that int+ actually helps my
         -- damage more than 8 MAB would anyway
-        if freenuke then
-            gFunc.EquipSet(sets.FreeNuke)
+        if eleDebuffs:contains(spell.Name) then
+            gFunc.EquipSet(sets.EleDebuff)
         else
-            gFunc.EquipSet(sets.MBNuke)
+            if freenuke then
+                gFunc.EquipSet(sets.FreeNuke)
+            else
+                gFunc.EquipSet(sets.MBNuke)
+            end
         end
 
         local environment = gData.GetEnvironment()
         local dayElement = environment.DayElement
         local weatherElement = environment.WeatherElement
         if
-            not T{"None, Unknown"}:contains(weatherElement) and
+            not T{"None", "Unknown"}:contains(weatherElement) and
             spell.Element == weatherElement
         then
             gFunc.EquipSet(sets.MatchingWeather)
         end
 
         if
-            not T{"None, Unknown"}:contains(dayElement) and
+            not T{"None", "Unknown"}:contains(dayElement) and
             spell.Element == dayElement
         then
             gFunc.EquipSet(sets.MatchingDay)

@@ -1,14 +1,14 @@
-utilities = gFunc.LoadFile('utilities.lua');
-bluMag = gFunc.LoadFile('bluMag.lua');
-isTargetTargetingMe = gFunc.LoadFile('isTargetTargetingMe');
-isTargetTagged = gFunc.LoadFile('isTargetTagged');
-equipBrachyura = gFunc.LoadFile('brachyura.lua')
+local utilities = gFunc.LoadFile('utilities.lua')
+local bluMag = gFunc.LoadFile('bluMag.lua')
+local isTargetTargetingMe = gFunc.LoadFile('isTargetTargetingMe')
+local isTargetTagged = gFunc.LoadFile('isTargetTagged')
+local equipBrachyura = gFunc.LoadFile('brachyura.lua')
 
-local profile = {};
+local profile = {}
 
-local learning = false;
-local sird = false;
-local cleave = false;
+local learning = false
+local sird = false
+local cleave = false
 
 local sets = {
     Idle = {
@@ -17,33 +17,38 @@ local sets = {
         Ear2 = 'Soil Earring',
         Neck = 'Oneiros Torque',
         Body = 'Morrigan\'s Robe',
-        Hands = 'Denali Wristbands',
-        Ring1 = 'Sattva Ring',
+        Hands = 'Homam Manopolas',
+        Ring1 = { Name = 'Dark Ring', Augment = { [1] = 'Phys. dmg. taken -6%', [2] = 'Enemy crit. hit rate -1' } },
         Ring2 = 'Titanium Band',
         Back = 'Shadow Mantle',
         Waist = 'Oneiros Belt',
         Legs = 'Magus Shalwar +1',
     },
+    IdleRefresh = {
+        Head = 'Wivre Hairpin',
+    },
     TPGain = {
         -- Head = 'Dampening Tam',
         -- Head = 'Mirage Keffiyeh +1',
         Head = 'Morrigan\'s Coron.',
-        Neck = 'Fortitude Torque',
+        Neck = 'Combatant\'s Torque',
         -- Neck = 'Tiercel Necklace',
         Ear1 = 'Brutal Earring +1',
         Ear2 = 'Suppanomimi',
-        Body = 'Samnuha Coat',
+        -- Body = 'Samnuha Coat',
+        Body = 'Homam Corazza',
         -- Body = 'Blood Scale Mail',
         -- Body = 'Morrigan\'s Robe',
-        -- Hands = 'Mrg. Bazubands +1',
-        Hands = 'Swift Gages',
+        Hands = 'Mrg. Bazubands +1',
+        -- Hands = 'Swift Gages',
         -- Ring1 = 'Toreador\'s Ring',
-        Ring1 = 'Mars\'s Ring',
+        Ring1 = 'Ares\'s Ring',
         Ring2 = 'Rajas Ring',
         Back = 'Mirage Mantle', -- acc, store TP
         Waist = 'Ninurta\'s Sash',
         Legs = 'Acrobat\'s Breeches',
-        Feet = 'Homam Gambieras',
+        -- Feet = 'Homam Gambieras',
+        Feet = 'Cobra Leggings', -- acc 4, store tp 4, haste 2
     },
     TPGain_Ammo = {
         -- Ammo = 'White Tathlum',
@@ -52,55 +57,63 @@ local sets = {
     },
     TPGain_High_Eva = {
         Body = 'Homam Corazza',
-        Neck = 'Chivalrous Chain',
+        Waist = 'Oneiros Cest',
     },
     TPGain_Low_Eva = {
-        Ring1 = 'Strigoi Ring',
+        -- Ring1 = 'Strigoi Ring',
     },
     WS_Default = {
         Ammo = 'Tiphia Sting',
         Head = 'Maat\'s Cap',
-        Neck = 'Fotia Gorget',
-        Ear1 = 'Suppanomimi', -- or brutal +1
+        Neck = 'Combatant\'s Torque',
+        Ear1 = 'Suppanomimi', -- or brutal +1, it's a toss-up
         Ear2 = 'Emberpearl Earring',
         Body = 'Morrigan\'s Robe',
-        Hands = 'Enkidu\'s Mittens',
+        Hands = 'Mrg. Bazubands +1',
         Ring1 = 'Strigoi Ring',
         Ring2 = 'Rajas Ring',
-        Back = 'Cuchulain\'s Mantle',
+        Back = 'Stormlord Shawl +1',
         Waist = 'Warwolf Belt +1',
         Legs = 'Mirage Shalwar +1',
-        Feet = 'Morrigan\'s Pgch.', -- replace with Setanta's when you get it
+        Feet = 'Morrigan\'s Pgch.',
     },
     WS_Requiescat = {
         -- 5 hits, MND 85%
-        Neck = 'Fortitude Torque',
-        Hands = 'Mrg. Bazubands +1',
+        Ammo = 'Sapphire Tathlum',
+        Head = 'Morrigan\'s Coron.', -- or maat's... very very close
         Body = 'Blood Scale Mail', -- augs: MND+5, Acc+6
         Ring1 = 'Tjukurrpa Annulet',
         Ring2 = 'Karka Ring',
-        Back = 'Stormlord Shawl +1',
-        Waist = 'Visionary Obi',
-        Feet = 'Morrigan\'s Pgch.',
+        Waist = 'Visionary Obi +1',
+        -- Legs  = 'Morrigan\'s Slops',
     },
     WS_Expiacion = {
         -- 2 hits, STR 95%, INT 95%
         -- TODO
-        Waist = 'Warwolf Belt +1',
+        Ammo = 'Phtm. Tathlum',
+        -- Ring2 flame ring? str5 int2
+        Legs  = 'Morrigan\'s Slops',
     },
     WS_SavageBlade = {
         -- 2 hits, STR 80%, MND 80%
-        Hands = 'Mrg. Bazubands +1',
-        Back = 'Stormlord Shawl +1',
-        Waist = 'Visionary Obi',
-        Feet = 'Morrigan\'s Pgch.',
+        Ammo = 'Sapphire Tathlum',
+        Waist = 'Visionary Obi +1',
     },
-    WS_High_Eva = {
-        -- this overrides anything set in specific WS sets
-        Hands = 'Enkidu\'s Mittens',
-        -- Ring1 = 'Mars\'s Ring', -- strigoi might still be better in most cases
-    },
-    WS_Low_Eva = {
+    WS_SanguineBlade = {
+        -- magic WS, MND 50% STR 30%
+        Ammo = 'Sapphire Tathlum', -- if you don't have this then phantom tathlum
+        Head = 'Maat\'s Cap', -- better: blood mask with MACC+6, MND+6, MATT+5 random aug
+        Neck  = 'Combatant\'s Torque',
+        Ear1 = 'Adept\'s Earring',
+        Ear2 = 'Novio Earring',
+        Body = 'Morrigan\'s Robe',
+        Hands = 'Morrigan\'s Cuffs',
+        Ring1 = 'Tamas Ring',
+        Ring2 = 'Galdr Ring',
+        Back = 'Voluspa Mantle',
+        Waist = 'Salire Belt',
+        Legs  = 'Morrigan\'s Slops',
+        Feet  = 'Magus Charuqs +1',
     },
     Learning = {
         Hands = 'Mag. Bazubands +1',
@@ -108,18 +121,21 @@ local sets = {
     Precast = {
         Head = 'Nashira Turban',
         Ear1 = 'Loquac. Earring',
+        Neck = 'Jeweled Collar', -- FC 2, get 3 eventually
         Body = 'Mirage Jubbah +1',
+        Hands = 'Teal Cuffs',
         Ring1 = { Name = 'Dark Ring', Augment = { [1] = '"Fast Cast"+1', [2] = '"Conserve MP"+3' } },
         Back = 'Swith Cape +1',
         Legs = 'Homam Cosciales', -- better than blood cuisses +1
+        Feet = 'Teal Pigaches',
     },
     Ethereal = {
         Ear2 = 'Ethereal Earring',
     },
     Cure = { -- 1 pt MND = 3 pts VIT = 5 pts healing magic skill. Also cure potency+ and conserve MP
-        Ammo = 'Bibiki Seashell',
-        Head = 'Yigit Turban',
-        Neck = 'Gnole Torque',
+        Ammo = 'Sapphire Tathlum',
+        Head = 'Maat\'s Cap',
+        Neck = 'Combatant\'s Torque', -- mnd5 vit5
         Ear1 = 'Light Earring',
         Ear2 = 'Aqua Earring',
         Body = 'Blood Scale Mail',
@@ -127,59 +143,46 @@ local sets = {
         Ring1 = 'Tamas Ring',
         Ring2 = 'Karka Ring',
         Back = 'Dew Silk Cape +1',
-        Waist = 'Salire Belt',
+        Waist = 'Pythia Sash +1',
         Legs = 'Morrigan\'s Slops',
-        Feet = 'Errant Pigaches',
+        Feet = 'Medium\'s Sabots',
     },
     Fast = {
         Legs = 'Blood Cuisses',
     },
     Rest = {
-        Main = 'Chatoyant Staff',
+        -- Main = 'Chatoyant Staff',
         Head = 'Yigit Turban',
         Neck = 'Gnole Torque',
         Ear1 = 'Magnetic Earring',
         Ear2 = 'Darkness Earring',
-        Body = 'Errant Hpl.',
+        Body = 'Yigit Gomlek',
+        Hands = 'Yigit Gages', -- for yigit refresh set bonus
         Ring1 = 'Star Ring',
         Ring2 = 'Star Ring',
         Back = 'Invigorating Cape',
         Waist = 'Hierarch Belt',
         Legs = 'Yigit Seraweels',
+        -- Feet = 'Numerist Pumps',
+        Feet = 'Yigit Crackows', -- for yigit refresh set bonus
     },
-    -- Headbutt = {
-    --     -- blue mag skill, acc, magic acc, int, str
-    --     -- Str affects damage the most, but if I'm using head butt,
-    --     -- I don't really care about the damage; I want the stun to stick
-    --     Ammo = 'Phtm. Tathlum',
-    --     Head = 'Mirage Keffiyeh +1',
-    --     Neck = 'Lieut. Gorget',
-    --     Ear1 = 'Aqua Earring',
-    --     Ear2 = 'Suppanomimi',
-	-- 	Body = 'Magus Jubbah +1',
-    --     Hands = 'Mag. Bazubands +1',
-    --     Ring1 = 'Antica Ring',
-    --     Ring2 = 'Balrahn\'s Ring',
-    --     Back = 'Mirage Mantle',
-    --     Waist = 'Potent Belt',
-    --     Legs = 'Mirage Shalwar +1',
-    --     Feet = 'Blood Greaves',
-    -- },
     Headbutt = {
-        -- all accuracy.
+        -- blue mag skill, acc, magic acc, int, str
+        -- Str affects damage the most, but if I'm using head butt,
+        -- I don't really care about the damage; I want the stun to stick
         Ammo = 'Oneiros Pebble',
-        Head = 'Optical Hat',
-        Neck = 'Peacock Charm',
+        Head = 'Morrigan\'s Coron.',
+        Neck = 'Combatant\'s Torque',
         Ear1 = 'Hollow Earring',
-        Ear2 = 'Suppanomimi',
-        Body = 'Homam Corazza',
-        Hands = 'Mrg. Bazubands +1',
-        Ring1 = 'Mars\'s Ring',
-        Ring2 = 'Rajas Ring',
+        Ear2 = 'Luminous Earring', -- both acc and macc
+		Body = 'Magus Jubbah +1',
+        Hands = 'Mag. Bazubands +1',
+        Ring1 = 'Ares\'s Ring',
+        Ring2 = 'Zilant Ring',
         Back = 'Mirage Mantle',
-        Waist = 'Potent Belt',
-        Legs = 'Prince\'s Slops', -- acc/att augments
-        Feet = 'Homam Gambieras',
+        Waist = 'Oneiros Cest',
+        Legs = 'Cobra Subligar', -- acc+9
+        Feet = 'Blood Greaves',
     },
     BluMagSkill = {
         -- blue mag skill and magic accuracy only
@@ -202,27 +205,29 @@ local sets = {
         Ammo = 'Oneiros Pebble',
         -- Head = 'Dampening Tam',
         Head = 'Mirage Keffiyeh +1',
-        Neck = 'Chivalrous Chain',
-        Ear1 = 'Pixie Earring',
+        Neck = 'Combatant\'s Torque',
+        Ear1 = 'Luminous Earring',
         Ear2 = 'Spire Earring',
         Body = 'Magus Jubbah +1',
         Hands = 'Mrg. Bazubands +1',
         Ring1 = 'Strigoi Ring',
         Ring2 = 'Rajas Ring',
-        Back = 'Cuchulain\'s Mantle',
-        Waist = 'Visionary Obi',
+        Back = 'Mirage Mantle',
+        Waist = 'Visionary Obi +1',
         Legs = 'Mirage Shalwar +1',
-        Feet = 'Blood Greaves', -- or denali gamashes if you don't have acc+5 blu mag+6
+        Feet = 'Blood Greaves', -- acc+5 blu mag+6. alternatives: setanta's, homam, magus charuqs, denali, cobra leggings
     },
     Phys_Spell_High_Eva = {
-        Neck = 'Peacock Charm',
-        Ring1 = 'Mars\'s Ring',
+        -- Neck = 'Peacock Charm',
+        Ring1 = 'Ares\'s Ring',
     },
     Phys_Spell_Low_Eva = {
         Ear1 = 'Bushinomimi',
         Waist = 'Warwolf Belt +1',
     },
     Phys_Spell_Dex = { -- e.g. disseverment, frenetic rip, hysteric barrage
+        -- Head = 'Assailant\'s Visor',
+        Ear1 = 'Hollow Earring',
         Feet = 'Blood Greaves',
     },
     Phys_Spell_Agi = { -- e.g. jet stream
@@ -230,8 +235,8 @@ local sets = {
         Feet = 'Blood Greaves',
     },
     Phys_Spell_Vit = { -- e.g. quad continuum
-        Head = 'Maat\'s Cap',
-        -- Neck = 'Fortitude Torque',
+        -- Head = 'Maat\'s Cap',
+        -- Neck = 'Combatant\'s Torque',
     },
     Mag_Spell_Charisma = { -- eyes on me
         Ammo = 'Hedgehog Bomb',
@@ -243,7 +248,7 @@ local sets = {
         Hands = 'Yigit Gages',
         Ring1 = 'Omega Ring',
         Ring2 = 'Light Ring',
-        Back = 'Jester\'s Cape',
+        Back = 'Mirage Mantle',
         Waist = 'Charmer\'s Sash',
         Legs = 'Errant Slops', -- nimue's tights, byakko 2.0
         Feet = 'Magus Charuqs +1',
@@ -255,7 +260,7 @@ local sets = {
         Ear1 = 'Adept\'s Earring',
         Ear2 = 'Novio Earring',
         Body = 'Morrigan\'s Robe',
-        Hands = 'Yigit Gages',
+        Hands = 'Morrigan\'s Cuffs',
         Ring1 = 'Tamas Ring',
         Ring2 = 'Galdr Ring',
         -- Back = 'Voluspa Mantle',
@@ -272,10 +277,10 @@ local sets = {
         Ear1 = 'Adept\'s Earring',
         Ear2 = 'Novio Earring',
         Body = 'Morrigan\'s Robe',
-        Hands = 'Yigit Gages',
+        Hands = 'Morrigan\'s Cuffs',
         Ring1 = 'Tamas Ring',
         Ring2 = 'Karka Ring',
-        Back = 'Dew Silk Cape +1',
+        Back = 'Mirage Mantle',
         Waist = 'Salire Belt',
         Legs = 'Morrigan\'s Slops',
         -- Feet = 'Denali Gamashes',
@@ -288,32 +293,27 @@ local sets = {
     },
     Entomb_Floe = {
         -- prioritize blue magic skill and magic acc over MAB
-        Head = 'Mirage Keffiyeh +1',
-        Neck = 'Incanter\'s Torque',
-        Ear1 = 'Aqua Earring',
+        Head = 'Morrigan\'s Coron.',
+        Ear1 = 'Novio Earring',
+        Ear2 = 'Spire Earring',
         -- best earring combo: Cassandra/Helenus set. MAB+5 M.Acc+5
-        -- or two HQ aqua earrings. $$$
         -- Body = 'Magus Jubbah +1',
-        Hands = 'Nashira Gages',
-        Ring1 = 'Tamas Ring',
+        Ring1 = 'Omega Ring',
         Ring2 = 'Galdr Ring',
-        Back = 'Voluspa Mantle',
         Waist = 'Salire Belt',
-        Legs = 'Morrigan\'s Slops',
-        Feet = 'Magus Charuqs +1',
     },
     Cannonball = {
         -- def, vit, acc, str
         Ammo = 'Oneiros Pebble',
-        Head = 'Maat\'s Cap',
-        Neck = 'Fortitude Torque',
+        Head = 'Maat\'s Cap', -- cocoon band? haste-5% though
+        Neck = 'Combatant\'s Torque',
         Ear1 = 'Hollow Earring',
         Ear2 = 'Suppanomimi',
         Body = 'Enkidu\'s Harness',
         Hands = 'Mrg. Bazubands +1',
         Ring1 = 'Unyielding Ring',
         Ring2 = 'Rajas Ring',
-        Back = 'Cuchulain\'s Mantle',
+        Back = 'Mirage Mantle',
         Waist = 'Warwolf Belt +1',
         Legs = 'Mirage Shalwar +1',
         Feet = 'Blood Greaves',
@@ -327,24 +327,28 @@ local sets = {
         Legs = 'Blood Cuisses',
     },
     BlazingBound = {
+        -- int, str, blu mag, MDB (not MAB!)
         Ammo = 'Phtm. Tathlum',
         Head = 'Maat\'s Cap',
-        Neck = 'Lmg. Medallion +1',
+        Neck = 'Incanter\'s Torque',
+        -- Ear1 = 'Static Earring', -- MDB 2. would int be better?
         Ear1 = 'Abyssal Earring',
-        Ear2 = 'Aqua Earring', -- swap for INT+
-        Body = 'Blood Scale Mail',
-        Hands = 'Yigit Gages',
+        Ear2 = 'Spire Earring',
+        -- Body = 'Morrigan\'s Robe',
+        Body = 'Magus Jubbah +1',
+        Hands = 'Morrigan\'s Cuffs',
         Ring1 = 'Tamas Ring',
         Ring2 = 'Galdr Ring',
-        Back = 'Lamia Mantle',
-        Waist = 'Salire Belt', -- swap for int+ like penitent belt
-        Legs = 'Errant Slops',
-        Feet = 'Denali Gamashes',
+        -- Back = 'Lamia Mantle',
+        Back = 'Mirage Mantle', -- blue magic skill and m.acc
+        Waist = 'Charmer\'s Sash', -- INT+5
+        Legs  = 'Morrigan\'s Slops', -- blood cuisses with mdef6 int5 might be better
+        Feet = 'Morrigan\'s Pgch.', -- int, str, and m.acc
     },
     HP = {
         -- use this set and heal to full (Magic Fruit) before using a breath spell
         Head = 'Saurian Helm',
-        -- Neck = 'Tempered Chain',
+        Neck = 'Tempered Chain',
         Ear1 = 'Ethereal Earring',
         Ear2 = 'Pigeon Earring +1',
         Body = 'Blood Scale Mail',
@@ -382,8 +386,9 @@ local sets = {
         Ear2 = 'Soil Earring',
         Body = 'Blood Scale Mail',
         -- Body = 'Morrigan\'s Robe',
-        Hands = 'Denali Wristbands',
-        Ring1 = 'Sattva Ring',
+        -- Hands = 'Denali Wristbands',
+        Hands = 'Homam Manopolas',
+        Ring1 = { Name = 'Dark Ring', Augment = { [1] = 'Phys. dmg. taken -6%', [2] = 'Enemy crit. hit rate -1' } },
         Ring2 = 'Titanium Band',
         Back = 'Shadow Mantle',
         -- Back = 'Umbra Cape',
@@ -396,8 +401,8 @@ local sets = {
         Ear2 = 'Merman\'s Earring',
         Neck = 'Jeweled Collar',
         Hands = 'Denali Wristbands',
-        Ring1 = 'Merman\'s Ring',
-        Ring2 = 'Merman\'s Ring',
+        Ring1 = { Name = 'Dark Ring', Augment = { [1] = 'Magic dmg. taken -5%', [2] = 'DEF+3' } },
+        Ring2 = 'Shadow Ring',
         Back = 'Colossus\'s Mantle',
         Waist = 'Lieutenant\'s Sash',
         Legs = 'Coral Cuisses',
@@ -436,7 +441,7 @@ local sets = {
         Ear1 = 'Magnetic Earring',
         Ear2 = 'Spire Earring',
         Ring2 = { Name = 'Dark Ring', Augment = { [1] = '"Fast Cast"+1', [2] = '"Conserve MP"+3' } },
-        -- Body = 'Nashira Manteel', -- TODO: determine when to cycle this in instead of blue magic +15
+        -- Body = 'Nashira Manteel',  -- TODO: determine when to cycle this in instead of blue magic +15
         Back = 'Grapevine Cape',
         Waist = 'Pythia Sash +1',
         Legs = 'Homam Cosciales', -- enhancing duration
@@ -454,15 +459,16 @@ local sets = {
     },
     DefTusk = {
         -- currently on CEXI, barrier tusk gives 50% PDT. So this set prioritizes def, vit, eva, and aquan intimidate
-        Main = 'Aquan Slayer', -- replace with killer kilij or the +1
-        Sub = 'Genbu\'s Shield',
+        -- Main = 'Aquan Slayer',
+        Main = 'Eradicator\'s Kilij',
+        Sub = 'Genmei Shield',
         Ammo = 'Bibiki Seashell',
-        Head = 'Mirage Keffiyeh +1',
-        Neck = 'Oneiros Torque',
-        Ear1 = 'Genmei Earring',
+        Head = 'Mirage Keffiyeh +1', -- cocoon band?
+        Neck = 'Combatant\'s Torque', -- barrow pendant
+        Ear1 = 'Genmei Earring', -- swap for pagondas
         Ear2 = 'Soil Earring',
         Body = 'Enkidu\'s Harness',
-        Hands = 'Denali Wristbands',
+        Hands = 'Mrg. Bazubands +1',
         Ring1 = 'Sattva Ring',
         Ring2 = 'Titanium Band',
         Back = 'Shadow Mantle',
@@ -473,24 +479,24 @@ local sets = {
     Brachyura = {
         Ear1 = 'Brachyura Earring',
     },
-};
-profile.Sets = sets;
+}
+profile.Sets = sets
 
 profile.Packer = {
-};
+}
 
 profile.OnLoad = function()
-    gSettings.AllowAddSet = true;
+    gSettings.AllowAddSet = true
     utilities.Initialize();
     (function ()
         if cleave then
-            AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 56');
+            AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 56')
         else
-            AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 16');
+            AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 16')
         end
-        AshitaCore:GetChatManager():QueueCommand(1, '/macro book 4');
-        -- gFunc.ForceEquipSet(sets.Weapons_Default);
-    end):once(3);
+        AshitaCore:GetChatManager():QueueCommand(1, '/macro book 4')
+        -- gFunc.ForceEquipSet(sets.Weapons_Default)
+    end):once(3)
 
 end
 
@@ -499,97 +505,100 @@ end
 
 profile.HandleCommand = function(args)
     if args[1] == 'learning' then
-        learning = not learning;
-        gFunc.Echo(255,  'Learning [' .. (learning and 'ON' or 'OFF') .. ']');
+        learning = not learning
+        gFunc.Echo(255,  'Learning [' .. (learning and 'ON' or 'OFF') .. ']')
     elseif args[1] == 'sird' then
-        sird = not sird;
-        gFunc.Echo(255,  'Sp. Int. Rate Down [' .. (sird and 'ON' or 'OFF') .. ']');
+        sird = not sird
+        gFunc.Echo(255,  'Sp. Int. Rate Down [' .. (sird and 'ON' or 'OFF') .. ']')
     elseif args[1] == 'cleave' then
-        cleave = not cleave;
-        gFunc.Echo(255,  'Cleaving [' .. (cleave and 'ON' or 'OFF') .. ']');
-        (function ()
+        cleave = not cleave
+        gFunc.Echo(255,  'Cleaving [' .. (cleave and 'ON' or 'OFF') .. ']')
+        ;(function ()
             if cleave then
-                AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 56');
+                AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 56')
             else
-                AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 16');
+                AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 16')
             end
-        end):once(1);
+        end):once(1)
     end
-    utilities.HandleCommands(args);
+    utilities.HandleCommands(args)
 end
 
 profile.HandleDefault = function()
-    local player = gData.GetPlayer();
+    local player = gData.GetPlayer()
     if (player.Status == 'Engaged') then
-        gFunc.EquipSet(sets.TPGain);
-        gFunc.EquipSet(sets.TPGain_Ammo);
+        gFunc.EquipSet(sets.TPGain)
+        gFunc.EquipSet(sets.TPGain_Ammo)
         if utilities.TargetEva == 'low' then
-            gFunc.EquipSet(sets.TPGain_Low_Eva);
+            gFunc.EquipSet(sets.TPGain_Low_Eva)
         elseif utilities.TargetEva == 'high' then
-            gFunc.EquipSet(sets.TPGain_High_Eva);
+            gFunc.EquipSet(sets.TPGain_High_Eva)
         end
 
         if (utilities.OverrideSet == 'IDLE') then
             -- use this when unable to attack, e.g. a dragon is up in the air
-            gFunc.EquipSet(sets.Idle);
+            gFunc.EquipSet(sets.Idle)
         end
-        utilities.ResetDefaultWeapons(sets.Weapons_Default);
+        utilities.ResetDefaultWeapons(sets.Weapons_Default)
         -- if (isTargetTargetingMe() and player.MPP < 90) then
-        --     gFunc.EquipSet(sets.Ethereal);
+        --     gFunc.EquipSet(sets.Ethereal)
         -- end
         if ((player.SubJob == "THF") and (not isTargetTagged())) then
-            gFunc.EquipSet(sets.TH);
+            gFunc.EquipSet(sets.TH)
         end
     elseif (player.IsMoving) then
-        gFunc.EquipSet(sets.Fast);
+        gFunc.EquipSet(sets.Fast)
     elseif (player.Status == 'Resting') then
-        gFunc.EquipSet(sets.Rest);
+        gFunc.EquipSet(sets.Rest)
     else
-        gFunc.EquipSet(sets.TPGain);
-        gFunc.EquipSet(sets.Idle);
-        if cleave then
-            gFunc.EquipSet(sets.Terras_Staff);
-        else
-            gFunc.EquipSet(sets.Weapons_Default); -- TODO, solve this more elegantly
+        gFunc.EquipSet(sets.TPGain)
+        gFunc.EquipSet(sets.Idle)
+        if player.MPP < 100 then
+            gFunc.EquipSet(sets.IdleRefresh)
         end
-        -- gFunc.EquipSet(sets.Weapons_Mag);
+        if cleave then
+            gFunc.EquipSet(sets.Terras_Staff)
+        else
+            gFunc.EquipSet(sets.Weapons_Default) -- TODO, solve this more elegantly
+        end
+        -- gFunc.EquipSet(sets.Weapons_Mag)
         if (utilities.OverrideSet == 'SHOWOFF') then
-            gFunc.EquipSet(sets.Showoff);
+            gFunc.EquipSet(sets.Showoff)
         end
     end
 
     if (gData.GetBuffCount('Sleep') > 0) then
-        gFunc.EquipSet(sets.Sleep);
+        gFunc.EquipSet(sets.Sleep)
     end
 
     if (T{'PDT', 'MDT', 'BDT'}:contains(utilities.OverrideSet)) then
         -- damage-taken sets take precedence over (almost) everything
-        gFunc.EquipSet(utilities.OverrideSet);
+        gFunc.EquipSet(utilities.OverrideSet)
         if player.MPP < 90 then
             -- might as well get some MP back
-            gFunc.EquipSet(sets.Ethereal);
+            gFunc.EquipSet(sets.Ethereal)
         end
         if
             cleave and
             gData.GetBuffCount('Physical Shield') > 0
         then
-            gFunc.EquipSet(sets.DefTusk);
+            gFunc.EquipSet(sets.DefTusk)
         end
     end
 
     if learning then
-        gFunc.EquipSet(sets.Learning);
+        gFunc.EquipSet(sets.Learning)
     end
 
     if equipBrachyura() then
         gFunc.EquipSet(sets.Brachyura)
     end
 
-    utilities.CheckDefaults();
+    utilities.CheckDefaults()
 end
 
 profile.HandleAbility = function()
-    utilities.CheckCancels();
+    utilities.CheckCancels()
 end
 
 profile.HandleItem = function()
@@ -597,86 +606,86 @@ end
 
 profile.HandlePrecast = function()
     if cleave then
-        gFunc.EquipSet(sets.Weapons_Mag_Precast);
+        gFunc.EquipSet(sets.Weapons_Mag_Precast)
     end
-    gFunc.EquipSet(sets.Precast);
-    utilities.CheckCancels();
+    gFunc.EquipSet(sets.Precast)
+    utilities.CheckCancels()
 end
 
 local function isTargetAMob()
-    local targetManager = AshitaCore:GetMemoryManager():GetTarget();
-    local isSubTargetActive = targetManager:GetIsSubTargetActive();
-    local targetId = targetManager:GetServerId(isSubTargetActive == 1 and 1 or 0);
-    return bit.band(targetId, 0xFF000000) ~= 0;
+    local targetManager = AshitaCore:GetMemoryManager():GetTarget()
+    local isSubTargetActive = targetManager:GetIsSubTargetActive()
+    local targetId = targetManager:GetServerId(isSubTargetActive == 1 and 1 or 0)
+    return bit.band(targetId, 0xFF000000) ~= 0
 end
 
 profile.HandleMidcast = function()
-    local spell = gData.GetAction();
+    local spell = gData.GetAction()
     if cleave then
-        gFunc.EquipSet(sets.Weapons_Mag);
+        gFunc.EquipSet(sets.Weapons_Mag)
     end
 
     if (bluMag.Stun:contains(spell.Name)) then
-        gFunc.EquipSet(sets.Headbutt);
+        gFunc.EquipSet(sets.Headbutt)
     elseif (spell.Name == 'Cannonball') then
-        gFunc.EquipSet(sets.Cannonball);
-        local sa = gData.GetBuffCount('Sneak Attack');
+        gFunc.EquipSet(sets.Cannonball)
+        local sa = gData.GetBuffCount('Sneak Attack')
         if (sa > 0 or utilities.TargetEva == 'low') then
-            gFunc.EquipSet(sets.Cannonball_SA);
+            gFunc.EquipSet(sets.Cannonball_SA)
         end
     elseif (spell.Name == 'Blazing Bound') then
-        gFunc.EquipSet(sets.BlazingBound);
+        gFunc.EquipSet(sets.BlazingBound)
     elseif (spell.Name == 'Stoneskin') then
-        gFunc.EquipSet(sets.Stoneskin);
+        gFunc.EquipSet(sets.Stoneskin)
     elseif bluMag.Phys:contains(spell.Name) then
-        gFunc.EquipSet(sets.Phys_Spell);
+        gFunc.EquipSet(sets.Phys_Spell)
         if utilities.TargetEva == 'low' then
             -- could check sneak attack here too but many phys spells are multi-hit
             -- so SA wouldn't help as much
-            gFunc.EquipSet(sets.Phys_Spell_Low_Eva);
+            gFunc.EquipSet(sets.Phys_Spell_Low_Eva)
         elseif utilities.TargetEva == 'high' then
-            gFunc.EquipSet(sets.Phys_Spell_High_Eva);
+            gFunc.EquipSet(sets.Phys_Spell_High_Eva)
         end
         if bluMag.PhysAgi:contains(spell.Name) then
-            gFunc.EquipSet(sets.Phys_Spell_Agi);
+            gFunc.EquipSet(sets.Phys_Spell_Agi)
         elseif bluMag.PhysDex:contains(spell.Name) then
-            gFunc.EquipSet(sets.Phys_Spell_Dex);
+            gFunc.EquipSet(sets.Phys_Spell_Dex)
         elseif bluMag.PhysVit:contains(spell.Name) then
-            gFunc.EquipSet(sets.Phys_Spell_Vit);
+            gFunc.EquipSet(sets.Phys_Spell_Vit)
         end
     elseif bluMag.IntNuke:contains(spell.Name) then
-        gFunc.EquipSet(sets.Mag_Spell_Intelligence);
+        gFunc.EquipSet(sets.Mag_Spell_Intelligence)
         if (spell.Name == 'Searing Tempest') then
-            gFunc.EquipSet(sets.Searing_Tempest);
-        elseif (T{'Entomb', 'Spectral Floe'}:contains(spell.Name)) then
-            gFunc.EquipSet(sets.Entomb_Floe);
+            gFunc.EquipSet(sets.Searing_Tempest)
+        elseif (T{'Entomb', 'Spectral Floe', 'Anvil Lightning'}:contains(spell.Name)) then
+            gFunc.EquipSet(sets.Entomb_Floe)
         end
     elseif bluMag.MndNuke:contains(spell.Name) then
-        gFunc.EquipSet(sets.Mag_Spell_Mind);
+        gFunc.EquipSet(sets.Mag_Spell_Mind)
     elseif bluMag.ChrNuke:contains(spell.Name) then
-        gFunc.EquipSet(sets.Mag_Spell_Charisma);
+        gFunc.EquipSet(sets.Mag_Spell_Charisma)
     elseif (spell.Skill == 'Healing Magic') or (bluMag.Cure:contains(spell.Name)) then
-        gFunc.EquipSet(sets.Cure);
+        gFunc.EquipSet(sets.Cure)
     elseif bluMag.Breath:contains(spell.Name) then
-        gFunc.EquipSet(sets.Breath);
+        gFunc.EquipSet(sets.Breath)
     else
-        gFunc.EquipSet(sets.BluMagSkill);
+        gFunc.EquipSet(sets.BluMagSkill)
         if (spell.Skill == 'Enhancing Magic') or (bluMag.Buff:contains(spell.Name)) then
             -- https://www.bg-wiki.com/ffxi/CatsEyeXI_Systems/Jobs#Blue_Mage
             -- "Blue Magic affected by Diffusion gets the bonus from gear that
             -- increases Enhancing Magic Duration after the 8-22-2024 update."
-            gFunc.EquipSet(sets.Buff);
+            gFunc.EquipSet(sets.Buff)
         end
     end
     if sird then
-        gFunc.EquipSet(sets.SpIntDown);
+        gFunc.EquipSet(sets.SpIntDown)
     end
-    local player = gData.GetPlayer();
+    local player = gData.GetPlayer()
     if ((player.SubJob == "THF") and (not isTargetTagged()) and isTargetAMob()) then
-        gFunc.EquipSet(sets.TH);
+        gFunc.EquipSet(sets.TH)
     end
     if (T{'PDT', 'MDT', 'BDT'}:contains(utilities.OverrideSet)) and gData.GetBuffCount('Aquaveil') == 0 then
-        gFunc.EquipSet(sets.SpIntDown);
+        gFunc.EquipSet(sets.SpIntDown)
     end
 end
 
@@ -687,29 +696,31 @@ profile.HandleMidshot = function()
 end
 
 profile.HandleWeaponskill = function()
-    -- local target = gData.GetActionTarget();
+    -- local target = gData.GetActionTarget()
     -- if (tonumber(target.Distance) > 5) then
-    --     gFunc.Echo(255, "Get closer!");
-	-- 	gFunc.CancelAction();
-    --     return;
+    --     gFunc.Echo(255, "Get closer!")
+	-- 	gFunc.CancelAction()
+    --     return
     -- end
 
-    local ws = gData.GetAction();
-    gFunc.EquipSet(sets.WS_Default);
+    local ws = gData.GetAction()
+    gFunc.EquipSet(sets.WS_Default)
 
     if ws.Name == 'Requiescat' then
-        gFunc.EquipSet(sets.WS_Requiescat);
+        gFunc.EquipSet(sets.WS_Requiescat)
     elseif ws.Name == 'Expiacion' then
-        gFunc.EquipSet(sets.WS_Expiacion);
+        gFunc.EquipSet(sets.WS_Expiacion)
     elseif ws.Name == 'Savage Blade' then
-        gFunc.EquipSet(sets.WS_SavageBlade);
+        gFunc.EquipSet(sets.WS_SavageBlade)
+    elseif ws.Name == 'Sanguine Blade' then
+        gFunc.EquipSet(sets.WS_SanguineBlade)
     end
 
-    if utilities.TargetEva == 'low' then
-        gFunc.EquipSet(sets.WS_Low_Eva);
-    elseif utilities.TargetEva == 'high' then
-        gFunc.EquipSet(sets.WS_High_Eva);
-    end
+    -- if utilities.TargetEva == 'low' then
+    --     gFunc.EquipSet(sets.WS_Low_Eva)
+    -- elseif utilities.TargetEva == 'high' then
+    --     gFunc.EquipSet(sets.WS_High_Eva)
+    -- end
 end
 
-return profile;
+return profile

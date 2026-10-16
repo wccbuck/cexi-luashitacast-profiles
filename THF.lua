@@ -1,20 +1,21 @@
-utilities = gFunc.LoadFile('utilities.lua');
-isTargetTagged = gFunc.LoadFile('isTargetTagged');
-equipBrachyura = gFunc.LoadFile('brachyura.lua')
+local utilities = gFunc.LoadFile('utilities.lua')
+local isTargetTagged = gFunc.LoadFile('isTargetTagged')
+local equipBrachyura = gFunc.LoadFile('brachyura.lua')
 
-local profile = {};
-local thtier = 8; -- the treasure hunter tier at which we should switch to TP gain set
+local profile = {}
+local thtier = 8 -- the treasure hunter tier at which we should switch to TP gain set
 
 local sets = {
     TPGain = {
+        Ammo = 'Fire Bomblet',
         Head = 'Dampening Tam',
         -- Head = 'Homam Zucchetto',
-        Neck = 'Love Torque',
+        Neck = 'Combatant\'s Torque',
         Ear1 = 'Brutal Earring +1',
         Ear2 = 'Luminous Earring',
         Body = 'Skadi\'s Cuirie',
         Hands = 'Swift Gages',
-        Ring1 = 'Mars\'s Ring',
+        Ring1 = 'Ares\'s Ring',
         Ring2 = 'Rajas Ring',
         -- Back = 'Aesir Mantle',
         Back = 'Aife\'s Mantle',
@@ -22,11 +23,13 @@ local sets = {
         --Legs = 'Acrobat\'s Breeches',
         Legs = 'Skadi\'s Chausses',
         Feet = 'Homam Gambieras',
+        -- Feet  = 'Cobra Leggings', -- haste 2%, store tp 4, acc 4
     },
     TPGain_Low_Eva = {
         Body = 'Rapparee Harness',
     },
     TPGain_High_Eva = {
+        Waist = 'Oneiros Cest',
         Back = 'Cuchulain\'s Mantle',
     },
     Idle = { -- gets applied on top of TPGain
@@ -34,6 +37,7 @@ local sets = {
         Hands = 'Rog. Armlets +1',
     },
     WS_Default = {
+        Ammo = 'Yetshila +1',
         Head = 'Hecatomb Cap +1',
         Neck = 'Fotia Gorget',
         Ear1 = 'Brutal Earring +1',
@@ -45,11 +49,11 @@ local sets = {
         Back = 'Cuchulain\'s Mantle',
         Waist = 'Warwolf Belt +1',
         Legs = 'Hct. Subligar +1',
-        Feet = 'Adsilio Boots +1',
+        Feet = 'Hct. Leggings +1',
     },
     WS_Exent = {
         Head = 'Dragon Cap +1',
-        Neck = 'Love Torque',
+        Neck = 'Combatant\'s Torque',
         Ear1 = 'Wilhelm\'s Earring',
         Ear2 = 'Altdorf\'s Earring',
         Body = 'Dragon Harness +1',
@@ -71,23 +75,25 @@ local sets = {
         Hands = 'Hct. Mittens +1',
         Ring1 = 'Zilant Ring',
         Ring2 = 'Rajas Ring',
-        Back = 'Cuchulain\'s Mantle',
-        Waist = 'Cuchulain\'s Belt',
+        Back = 'Nifty Mantle',
+        -- Waist = 'Cuchulain\'s Belt',
+        Waist = 'Warwolf Belt +1',
         Legs = 'Hct. Subligar +1',
-        Feet = 'Adsilio Boots +1',
+        Feet = 'Hct. Leggings +1',
     },
     WS_Mercy = {}, -- STR
     WS_LastStand = {
-        Head = 'Maat\'s Cap',
+        -- Head = 'Maat\'s Cap',
+        Head = 'Dragon Cap +1',
         Neck = 'Fotia Gorget',
         Ear1 = 'Wilhelm\'s Earring',
         Ear2 = 'Altdorf\'s Earring',
         -- Body = 'Denali Jacket',
         Body = 'Skadi\'s Cuirie',
-        Hands = 'Enkidu\'s Mittens',
+        Hands = 'Swift Gages',
         Ring1 = 'Blobnag Ring',
         Ring2 = 'Garrulous Ring',
-        Back = 'Amemet Mantle',
+        Back = 'Fowler\'s Mantle +1',
         Waist = 'Subtle Sash',
         Legs = 'Acrobat\'s Breeches',
         Feet = 'Adsilio Boots +1',
@@ -102,14 +108,19 @@ local sets = {
         -- Hands = 'Assassin\'s Armlets',
         Hands = 'Rog. Armlets +1',
     },
+    SneakAttack = {
+        Ammo = 'Yetshila +1',
+        Back = 'Assassin\'s Cape', -- crit dmg +2%
+    },
     TrickAttack = {
         -- +agi, +enmity
+        Ammo = 'Yetshila +1',
         Head = 'Dragon Cap +1',
         Ear1 = 'Wilhelm\'s Earring',
         Ear2 = 'Altdorf\'s Earring',
         Hands = 'Rog. Armlets +1',
         Ring1 = 'Sattva Ring',
-        Back = 'Assassin\'s Cape',
+        Back = 'Assassin\'s Cape', -- crit dmg +2%
         Waist = 'Warwolf Belt +1',
     },
     Provoke = {
@@ -117,7 +128,7 @@ local sets = {
         Head = 'Dragon Cap +1',
         Ear1 = 'Eris\' Earring',
         -- Neck = harmonia's?
-        -- Body = 'Avalon Breastplate', -- Tiamat drop
+        Body = 'Avalon Breastplate',
         Hands = 'Homam Manopolas',
         Ring1 = 'Sattva Ring',
         Ring2 = 'Titanium Band',
@@ -131,6 +142,9 @@ local sets = {
         Hands = 'Rog. Armlets +1',
         Legs = 'Assassin\'s Culottes',
         Feet = 'Rogue\'s Poulaines',
+    },
+    Despoil = {
+        -- TODO: Stack MND for the debuff
     },
     Hide = {
         Body = 'Rogue\'s Vest',
@@ -153,21 +167,20 @@ local sets = {
         Neck = 'Oneiros Torque',
         -- Hands = 'Denali Wristbands',
         Hands = 'Homam Manopolas',
-        Ring1 = 'Sattva Ring',
+        Ring1 = { Name = 'Dark Ring', Augment = { [1] = 'Phys. dmg. taken -6%', [2] = 'Enemy crit. hit rate -1' } },
         Ring2 = 'Titanium Band',
-        Neck = 'Oneiros Belt',
+        Waist = 'Oneiros Belt',
         Back = 'Shadow Mantle',
     },
     MDT = {
-        -- TODO
         Head = 'Dampening Tam',
         Neck = 'Jeweled Collar',
         Ear1 = 'Merman\'s Earring',
         Ear2 = 'Merman\'s Earring',
-        -- Body = 'Avalon Breastplate', -- Tiamat drop
+        Body = 'Avalon Breastplate',
         Hands = 'Denali Wristbands',
-        Ring1 = 'Merman\'s Ring',
-        Ring2 = 'Merman\'s Ring',
+        Ring1 = { Name = 'Dark Ring', Augment = { [1] = 'Magic dmg. taken -5%', [2] = 'DEF+3' } },
+        Ring2 = 'Shadow Ring',
         Back = 'Colossus\'s Mantle',
         Waist = 'Lieutenant\'s Sash',
     },
@@ -186,7 +199,6 @@ local sets = {
         -- Sub = 'Sandung',
         -- Sub = 'Mercurial Kris',
         Sub = 'Taming Sari',
-        Ammo = 'Yetshila +1',
         -- Range = 'Staurobow',
         -- Ammo = 'Crossbow Bolt',
     },
@@ -200,13 +212,13 @@ local sets = {
     },
     Ranged = {
         Head = 'Optical Hat',
-        Neck = 'Peacock Charm',
-        Ear1 = 'Wilhelm\'s Earring',
-        Ear2 = 'Altdorf\'s Earring',
+        Neck = 'Loxo Scarf',
+        Ear1 = 'Brutal Earring +1',
+        Ear2 = 'Auster\'s Earring',
         Body = 'Skadi\'s Cuirie',
-        Hands = 'Barb. Moufles',
+        Hands = 'Swift Gages',
         Ring1 = 'Blobnag Ring',
-        Ring2 = 'Merman\'s Ring',
+        Ring2 = 'Merman\'s Ring', -- ydalir if not AV
         Back = 'Aife\'s Mantle', -- agi+ and storeTP+
         Waist = 'Subtle Sash',
         Legs = 'Skadi\'s Chausses',
@@ -218,22 +230,22 @@ local sets = {
     Brachyura = {
         Ear1 = 'Brachyura Earring',
     },
-};
-profile.Sets = sets;
+}
+profile.Sets = sets
 
 profile.Packer = {
-};
+}
 
 profile.OnLoad = function()
-    gSettings.AllowAddSet = true;
-    utilities.Initialize();
-    gFunc.Echo(2,  'TH Tier set to [' .. thtier .. ']');
+    gSettings.AllowAddSet = true
+    utilities.Initialize()
+    gFunc.Echo(2,  'TH Tier set to [' .. thtier .. ']')
 
-    (function ()
-        AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 20');
-        AshitaCore:GetChatManager():QueueCommand(1, '/macro book 1');
-        gFunc.ForceEquipSet(sets.Weapons_Default);
-    end):once(3);
+    ;(function ()
+        AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 20')
+        AshitaCore:GetChatManager():QueueCommand(1, '/macro book 1')
+        gFunc.ForceEquipSet(sets.Weapons_Default)
+    end):once(3)
 end
 
 profile.OnUnload = function()
@@ -247,30 +259,52 @@ profile.HandleCommand = function(args)
             thtier = tonumber(args[2])
             thtier = thtier == nil and 1 or thtier
         end
-        gFunc.Echo(2,  'TH Tier set to [' .. thtier .. ']');
+        gFunc.Echo(2,  'TH Tier set to [' .. thtier .. ']')
     end
-    utilities.HandleCommands(args);
+    utilities.HandleCommands(args)
 end
 
 profile.HandleDefault = function()
-    local player = gData.GetPlayer();
+    local player = gData.GetPlayer()
     if (player.Status == 'Engaged') then
-        gFunc.EquipSet(sets.TPGain);
+        gFunc.EquipSet(sets.TPGain)
         if utilities.TargetEva == 'low' then
-            gFunc.EquipSet(sets.TPGain_Low_Eva);
+            gFunc.EquipSet(sets.TPGain_Low_Eva)
         elseif utilities.TargetEva == 'high' then
-            gFunc.EquipSet(sets.TPGain_High_Eva);
+            gFunc.EquipSet(sets.TPGain_High_Eva)
         end
 
         if (utilities.OverrideSet == 'IDLE') then
-            gFunc.EquipSet(sets.Idle);
+            gFunc.EquipSet(sets.Idle)
         end
-        utilities.ResetDefaultWeapons(sets.Weapons_Default);
+        utilities.ResetDefaultWeapons(sets.Weapons_Default)
 
-        local ta = gData.GetBuffCount('Trick Attack');
+        local ta = gData.GetBuffCount('Trick Attack')
         if (ta > 0) then
-            gFunc.EquipSet(sets.TrickAttack);
+            gFunc.EquipSet(sets.TrickAttack)
         end
+    elseif (player.IsMoving == true) then
+        gFunc.EquipSet(sets.Fast)
+    else
+        gFunc.EquipSet(sets.TPGain)
+        gFunc.EquipSet(sets.Idle)
+        if (utilities.OverrideSet == 'SHOWOFF') then
+            gFunc.EquipSet(sets.Showoff)
+        end
+    end
+
+    if (gData.GetBuffCount('Sleep') > 0) then
+        gFunc.EquipSet(sets.Sleep)
+    end
+
+    if (T{'PDT', 'MDT', 'BDT'}:contains(utilities.OverrideSet)) then
+        -- damage-taken sets take precedence over everything (except TH)
+        gFunc.EquipSet(utilities.OverrideSet)
+    end
+
+    -- TH gear takes precedence over DT
+
+    if (player.Status == 'Engaged') then
         if (not isTargetTagged(thtier)) then
             -- 'isTargetTagged' is a function which determines whether you have added yourself
             -- to the target's enmity list, based on that target's server id. It does *not*
@@ -278,47 +312,30 @@ profile.HandleDefault = function()
             -- have performed a direct hostile action against it. If you weren't wearing TH
             -- gear when you tagged the mob, you will need to reapply TH manually, perhaps with
             -- a macro. For example: `/lac set TH 6.0` will set your TH gear for 6 seconds.
-            gFunc.EquipSet(sets.TH);
+            gFunc.EquipSet(sets.TH)
         end
-    elseif (player.IsMoving == true) then
-        gFunc.EquipSet(sets.Fast);
-    else
-        gFunc.EquipSet(sets.TPGain);
-        gFunc.EquipSet(sets.Idle);
-        if (utilities.OverrideSet == 'SHOWOFF') then
-            gFunc.EquipSet(sets.Showoff);
-        end
-    end
-
-    if (gData.GetBuffCount('Sleep') > 0) then
-        gFunc.EquipSet(sets.Sleep);
-    end
-
-    if (T{'PDT', 'MDT', 'BDT'}:contains(utilities.OverrideSet)) then
-        -- damage-taken sets take precedence over everything
-        gFunc.EquipSet(utilities.OverrideSet);
     end
 
     if equipBrachyura() then
         gFunc.EquipSet(sets.Brachyura)
     end
 
-    utilities.CheckDefaults();
+    utilities.CheckDefaults()
 end
 
 profile.HandleAbility = function()
-    local ability = gData.GetAction();
-    if (T{'Flee', 'Steal', 'Hide', 'Provoke'}:contains(ability.Name)) then
-        gFunc.EquipSet(sets[ability.Name]);
+    local ability = gData.GetAction()
+    if (T{'Flee', 'Steal', 'Hide', 'Provoke', 'Despoil'}:contains(ability.Name)) then
+        gFunc.EquipSet(sets[ability.Name])
     elseif (ability.Name == 'Trick Attack') then
         -- this is handled in HandleDefault as well, but sometimes the autoattack can happen
         -- before gData.GetBuffCount('Trick Attack') updates
-        gFunc.EquipSet(sets.TrickAttack);
+        gFunc.EquipSet(sets.TrickAttack)
     elseif (string.lower(ability.Name):match('step')) then
-        gFunc.EquipSet(sets.Step);
+        gFunc.EquipSet(sets.Step)
     end
 
-    utilities.CheckCancels();
+    utilities.CheckCancels()
 end
 
 profile.HandleItem = function()
@@ -326,64 +343,68 @@ end
 
 profile.HandlePrecast = function()
     -- TODO: fast cast
-    utilities.CheckCancels();
+    utilities.CheckCancels()
 end
 
 local function isTargetAMob()
-    local targetManager = AshitaCore:GetMemoryManager():GetTarget();
-    local isSubTargetActive = targetManager:GetIsSubTargetActive();
-    local targetId = targetManager:GetServerId(isSubTargetActive == 1 and 1 or 0);
-    return bit.band(targetId, 0xFF000000) ~= 0;
+    local targetManager = AshitaCore:GetMemoryManager():GetTarget()
+    local isSubTargetActive = targetManager:GetIsSubTargetActive()
+    local targetId = targetManager:GetServerId(isSubTargetActive == 1 and 1 or 0)
+    return bit.band(targetId, 0xFF000000) ~= 0
 end
 
 profile.HandleMidcast = function()
     -- TODO: fast cast, haste
     -- I don't think you can proc TH on spells, so I'm not passing in thtier.
     if ((not isTargetTagged()) and isTargetAMob()) then
-        gFunc.EquipSet(sets.TH);
+        gFunc.EquipSet(sets.TH)
     end
 end
 
 profile.HandlePreshot = function()
+    gFunc.EquipSet(sets.Ranged)
 end
 
 profile.HandleMidshot = function()
-    gFunc.EquipSet(sets.Ranged);
+    gFunc.EquipSet(sets.Ranged)
     if (not isTargetTagged(thtier)) then
-        gFunc.EquipSet(sets.TH);
+        gFunc.EquipSet(sets.TH)
     end
 end
 
 profile.HandleWeaponskill = function()
-    -- local target = gData.GetActionTarget();
+    -- local target = gData.GetActionTarget()
     -- if (tonumber(target.Distance) > 5) then
-    --     gFunc.Echo(255, "Get closer!");
-	-- 	gFunc.CancelAction();
-    --     return;
+    --     gFunc.Echo(255, "Get closer!")
+	-- 	gFunc.CancelAction()
+    --     return
     -- end
 
-    gFunc.EquipSet(sets.WS_Default);
+    gFunc.EquipSet(sets.WS_Default)
 
-    local ws = gData.GetAction();
+    local ws = gData.GetAction()
 
-    -- local sa = gData.GetBuffCount('Sneak Attack');
-    local ta = gData.GetBuffCount('Trick Attack');
+    local sa = gData.GetBuffCount('Sneak Attack')
+    local ta = gData.GetBuffCount('Trick Attack')
 
     -- all dagger WS sets assume you have either SA or TA up and therefore
     -- don't prioritize acc+ gear (especially Mandalic and Mercy which are 1-hit).
     if (ws.Name == 'Exenterator') then
-        gFunc.EquipSet(sets.WS_Exent);
+        gFunc.EquipSet(sets.WS_Exent)
     elseif (ws.Name == 'Mandalic Stab') then
-        gFunc.EquipSet(sets.WS_Mandalic);
+        gFunc.EquipSet(sets.WS_Mandalic)
     elseif (ws.Name == 'Mercy Stroke') then
-        gFunc.EquipSet(sets.WS_Mercy);
+        gFunc.EquipSet(sets.WS_Mercy)
     elseif (ws.Name == 'Last Stand') then
-        gFunc.EquipSet(sets.WS_LastStand);
+        gFunc.EquipSet(sets.WS_LastStand)
     end
 
     if (ta > 0) then
-        gFunc.EquipSet(sets.TrickAttack);
+        gFunc.EquipSet(sets.TrickAttack)
+    end
+    if (sa > 0) then
+        gFunc.EquipSet(sets.SneakAttack)
     end
 end
 
-return profile;
+return profile

@@ -1,15 +1,14 @@
-utilities = gFunc.LoadFile('utilities.lua');
+utilities = gFunc.LoadFile('utilities.lua')
 equipBrachyura = gFunc.LoadFile('brachyura.lua')
 
-local profile = {};
+local profile = {}
 local sets = {
-
     Idle = {
         Head = 'Genbu\'s Kabuto',
-        Neck = 'Hope Torque',
+        Neck = 'Combatant\'s Torque',
         Ear1 = 'Brutal Earring +1',
         Ear2 = 'Auster\'s Earring',
-        Body = 'Kirin\'s Osode',
+        Body = 'Kirin\'s Osode',  -- snapshot +3, r.atk+5, agi+5
         Hands = 'Seiryu\'s Kote',
         Ring1 = 'Titanium Band',
         Ring2 = 'Sattva Ring',
@@ -19,7 +18,7 @@ local sets = {
         Feet = 'Hachiryu Sune-Ate',
     },
     Weapons_Default = {
-        Main = 'Hawker\'s Knife +1', -- swap for turbulence
+        Main = 'Hawker\'s Knife +1',
         Sub = 'Archer\'s Shield',
         -- Range = 'Ajjub Bow',
         Range = 'Kennan\'s Longbow',
@@ -29,7 +28,7 @@ local sets = {
     },
     TPGain = {
         Head = 'Sct. Beret +1',
-        Neck = 'Hope Torque',
+        Neck = 'Combatant\'s Torque',
         Ear1 = 'Brutal Earring +1',
         Ear2 = 'Auster\'s Earring',
         Body = 'Htr. Jerkin +1',
@@ -46,10 +45,10 @@ local sets = {
     },
     WS_Default = {
         Head = 'Maat\'s Cap',
-        Neck = 'Fotia Gorget',
+        Neck = 'Combatant\'s Torque',
         Ear1 = 'Altdorf\'s Earring',
         Ear2 = 'Wilhelm\'s Earring',
-        Body = 'Kirin\'s Osode',
+        Body = 'Kirin\'s Osode', -- snapshot +3, r.atk+5, agi+5
         Hands = 'Seiryu\'s Kote',
         Ring1 = 'Blobnag Ring',
         Ring2 = 'Breeze Ring',
@@ -93,28 +92,28 @@ local sets = {
     Brachyura = {
         Ear1 = 'Brachyura Earring',
     },
-};
-profile.Sets = sets;
+}
+profile.Sets = sets
 
 profile.Packer = {
-};
+}
 
 profile.OnLoad = function()
-    gSettings.AllowAddSet = true;
-    utilities.Initialize();
+    gSettings.AllowAddSet = true
+    utilities.Initialize()
 
-    (function ()
-        AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 12');
-        AshitaCore:GetChatManager():QueueCommand(1, '/macro book 1');
-        gFunc.ForceEquipSet(sets.Weapons_Default);
-    end):once(3);
+    ;(function ()
+        AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 12')
+        AshitaCore:GetChatManager():QueueCommand(1, '/macro book 1')
+        gFunc.ForceEquipSet(sets.Weapons_Default)
+    end):once(3)
 end
 
 profile.OnUnload = function()
 end
 
 profile.HandleCommand = function(args)
-    utilities.HandleCommands(args);
+    utilities.HandleCommands(args)
 end
 
 profile.HandleDefault = function()
@@ -141,32 +140,32 @@ profile.HandleDefault = function()
 end
 
 profile.HandleAbility = function()
-    local ability = gData.GetAction();
+    local ability = gData.GetAction()
     if (T{'Scavenge', 'Camouflage', 'Sharpshot'}:contains(ability.Name)) then
-        gFunc.EquipSet(sets[ability.Name]);
+        gFunc.EquipSet(sets[ability.Name])
 	end
 
-    utilities.CheckCancels();
+    utilities.CheckCancels()
 end
 
 profile.HandleItem = function()
 end
 
 profile.HandlePrecast = function()
-    utilities.CheckCancels();
+    utilities.CheckCancels()
 end
 
 profile.HandleMidcast = function()
 end
 
 profile.HandlePreshot = function()
-    gFunc.EquipSet(sets.Preshot);
+    gFunc.EquipSet(sets.Preshot)
 end
 
 profile.HandleMidshot = function()
-    gFunc.EquipSet(sets.TPGain);
+    gFunc.EquipSet(sets.TPGain)
     if (utilities.OverrideSet == 'MDT') then
-        gFunc.EquipSet(sets.MDT); -- mermans
+        gFunc.EquipSet(sets.MDT) -- mermans
     end
     if (gData.GetBuffCount('Unlimited Shot') > 0) then
         gFunc.EquipSet(sets.Unlimited)
@@ -179,10 +178,10 @@ profile.HandleMidshot = function()
 end
 
 profile.HandleWeaponskill = function()
-    gFunc.EquipSet(sets.WS_Default);
-    local ws = gData.GetAction();
+    gFunc.EquipSet(sets.WS_Default)
+    local ws = gData.GetAction()
     if (ws.Name == 'Empyreal Arrow') then
-        gFunc.EquipSet(sets.WS_StrAgi);
+        gFunc.EquipSet(sets.WS_StrAgi)
     end
     -- TODO: Namas arrow set when I get Yoichi
     if (gData.GetBuffCount('Unlimited Shot') > 0) then
@@ -192,4 +191,4 @@ profile.HandleWeaponskill = function()
     end
 end
 
-return profile;
+return profile

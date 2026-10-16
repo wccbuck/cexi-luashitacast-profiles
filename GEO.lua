@@ -22,12 +22,12 @@ local sets = {
     },
     Weapons_Default = {
         Main = 'Idris',
-        Sub = 'Genbu\'s Shield', -- genmei
+        Sub = 'Genmei Shield',
         Range = 'Dunna',
     },
     Heal_Weapons = {
         Main = 'Tamaxchi',
-        Sub = 'Genbu\'s Shield', -- genmei
+        Sub = 'Genmei Shield',
     },
     Geoskill = {
         Head = 'Geomancy Galero',
@@ -39,7 +39,7 @@ local sets = {
         Ring1 = 'Tamas Ring',
         Ring2 = 'Bagua Ring',
         Back = 'Shadow Mantle',
-        Waist = 'Bagua Sash',
+        Waist = 'Kobo Obi',
         Legs = 'Bagua Pants +1',
         Feet = 'Medium\'s Sabots',
     },
@@ -74,6 +74,7 @@ local sets = {
     Precast = {
         Head = 'Windfall Hat',
         Ear1 = 'Loquac. Earring',
+        Neck = 'Jeweled Collar',
         Body = 'Dalmatica +1',
         Hands = 'Bagua Mitaines +1',
         Ring1 = { Name = 'Dark Ring', Augment = { [1] = '"Fast Cast"+1', [2] = '"Conserve MP"+3' } },
@@ -86,7 +87,6 @@ local sets = {
         Feet = 'Zenith Pumps +1', -- cure clogs?
     },
     Nuke = {
-        -- TODO: magic burst set
         Head = 'Geomancy Galero',
         Neck = 'Lmg. Medallion +1',
         Ear1 = 'Novio Earring',
@@ -97,7 +97,7 @@ local sets = {
         Ring2 = 'Galdr Ring',
         Back = 'Voluspa Mantle',
         Waist = 'Charmer\'s Sash',
-        Legs = 'Shadow Trews',
+        Legs = 'Valkyrie\'s Trews',
         -- Feet = 'Bagua Sandals +1',
         Feet = 'Nashira Crackows',
     },
@@ -165,37 +165,41 @@ local sets = {
     },
     TPGain = {
         -- normal stuff like haste, acc, store TP... but also pet regen. Probably will still have a luopan out while meleeing.
-        Head = 'Windfall Hat',
-        Neck = 'Prudence Torque',
+        -- Head = 'Windfall Hat',
+        Head = 'Optical Hat',
+        Neck = 'Combatant\'s Torque',
         Ear1 = 'Brutal Earring +1',
         Ear2 = 'Hollow Earring',
-        Body = 'Goliard Saio',
-        Hands = 'Ornate Gloves',
+        Body = 'Goliard Saio', -- tempest jacket +1
+        Hands = 'Ornate Gloves', -- tempest wrists +1
         Ring1 = 'Rajas Ring',
-        Ring2 = 'Bagua Ring',
+        Ring2 = 'Ares\'s Ring',
         Back = 'Aife\'s Mantle',
-        Waist = 'Bagua Sash',
-        Legs = 'Enticer\'s Pants',
-        Feet = 'Bagua Sandals +1', -- just for the luopan regen
+        -- Waist = 'Bagua Sash',
+        Waist = 'Ninurta\'s Sash', -- manaflow sash is better
+        Legs = 'Enticer\'s Pants', -- tempest kecks+1 or apogee tonban w/acc, haste, DW
+        Feet = 'Bagua Sandals +1', -- tempest gamashes +1, apogee sabots (store tp, doubleatk), battle boots
     },
     WS_Default = {
-         -- Exudiation is INT and MND
+         -- Exudation is INT and MND
         Head = 'Maat\'s Cap',
-        Neck = 'Fotia Gorget',
+        Neck = 'Combatant\'s Torque',
         Ear1 = 'Brutal Earring +1',
         Ear2 = 'Emberpearl Earring',
         Body = 'Morrigan\'s Robe',
-        Hands = 'Yigit Gages',
-        Ring1 = 'Rajas Ring', -- Tjukurrpa Annulet? MND 5, club skill 3
+        Hands = 'Ornate Gloves', -- tempest wrists +1 is better esp if not dual-wielding
+        Ring1 = 'Tjukurrpa Annulet',
         Ring2 = 'Tamas Ring',
         Back = 'Stormlord Shawl +1',
-        Waist = 'Visionary Obi',
-        Legs = 'Bagua Pants +1',
-        Feet = 'Bagua Sandals +1',
+        Waist = 'Visionary Obi +1',
+        -- Legs = 'Bagua Pants +1',
+        Legs  = 'Morrigan\'s Slops',
+        Feet = 'Bagua Sandals +1', -- temp. gamashes+1 slightly better
     },
     Brachyura = {
         Ear1 = 'Brachyura Earring',
     },
+    PDT = {}, MDT = {}, BDT = {},
 }
 profile.Sets = sets
 
@@ -204,11 +208,11 @@ profile.Packer = {
 
 profile.OnLoad = function()
     gSettings.AllowAddSet = true
-    utilities.Initialize();
+    utilities.Initialize()
 
-    (function ()
+    ;(function ()
         AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 13')
-        AshitaCore:GetChatManager():QueueCommand(1, '/macro book 1')
+        AshitaCore:GetChatManager():QueueCommand(1, '/macro book 6')
         gFunc.ForceEquipSet(sets.Weapons_Default)
     end):once(3)
 end
@@ -264,9 +268,9 @@ profile.HandleDefault = function()
 end
 
 profile.HandleAbility = function()
-    local ability = gData.GetAction();
+    local ability = gData.GetAction()
     if (ability.Name == 'Life Cycle') then
-		gFunc.EquipSet(sets.LifeCycle);
+		gFunc.EquipSet(sets.LifeCycle)
 	end
 
     utilities.CheckCancels()
@@ -290,21 +294,21 @@ profile.HandleMidcast = function()
 
     if (T{'Haste', 'Erase', 'Esuna'}:contains(spell.Name)) then
         -- lower recast
-        gFunc.EquipSet(sets.Haste);
+        gFunc.EquipSet(sets.Haste)
     elseif (spell.Skill == 'Enhancing Magic') then
         gFunc.EquipSet(sets.Enhancing)
         if (spell.Name == 'Stoneskin') then
-            gFunc.EquipSet(sets.Stoneskin);
+            gFunc.EquipSet(sets.Stoneskin)
         end
     elseif (spell.Skill == 'Healing Magic') then
         if (spell.Name == 'Cursna') then
             -- healing magic+, haste, fast cast
-            gFunc.EquipSet(sets.Haste);
+            gFunc.EquipSet(sets.Haste)
         else
-            gFunc.EquipSet(sets.Heal);
+            gFunc.EquipSet(sets.Heal)
         end
         if (player.Status ~= 'Engaged') then
-            gFunc.EquipSet(sets.Heal_Weapons);
+            gFunc.EquipSet(sets.Heal_Weapons)
         end
     elseif (spell.Skill == 'Geomancy') then
         gFunc.EquipSet(sets.Geoskill)

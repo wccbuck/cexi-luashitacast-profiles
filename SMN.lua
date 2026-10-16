@@ -1,6 +1,6 @@
-utilities = gFunc.LoadFile('utilities.lua')
-naSpell = gFunc.LoadFile('naSpell.lua')
-equipBrachyura = gFunc.LoadFile('brachyura.lua')
+local utilities = gFunc.LoadFile('utilities.lua')
+local naSpell = gFunc.LoadFile('naSpell.lua')
+local equipBrachyura = gFunc.LoadFile('brachyura.lua')
 
 local profile = {}
 
@@ -29,7 +29,7 @@ local sets = {
         -- Main = 'Chatoyant Staff',
         Main = 'Baqil Staff',
         Sub = 'Norn\'s Grip',
-        Ammo = 'Hedgehog Bomb', -- replace with soothing sachet, arfarvegr drop (pashhow DKP)
+        Ammo = 'Soothing Sachet',
     },
     Pet_Idle = {
         -- similar to Idle, except add avatar perpetuation cost
@@ -58,7 +58,7 @@ local sets = {
         Ring2 = 'Tamas Ring',
         Back = 'Summoner\'s Cape',
         Waist = 'Mujin Obi',
-        Legs = 'Goliard Trews',
+        Legs = 'Enticer\'s Pants',
         Feet = 'Evk. Pigaches +1',
     },
     Affinity = {
@@ -105,8 +105,8 @@ local sets = {
         Head = 'Windfall Hat',
         Ear1 = 'Loquac. Earring',
         Ear2 = 'Magnetic Earring',
-        Body = 'Marduk\'s Jubbah',
-        Ring1 = { Name = 'Dark Ring', Augment = { [1] = '"Fast Cast"+1', [2] = '"Conserve MP"+3' } },
+        Body = 'Dalmatica +1',
+        Ring2 = { Name = 'Dark Ring', Augment = { [1] = '"Fast Cast"+1', [2] = '"Conserve MP"+3' } },
         Back = 'Swith Cape +1',
         Feet = 'Rostrum Pumps',
     },
@@ -119,6 +119,7 @@ local sets = {
     BP_Delay = {
         -- blood pact delay
         -- I thought blood boon helped here but it doesnt
+        Ammo = 'Soothing Sachet',
         Head = 'Summoner\'s Horn', -- delay -3
         Body = 'Yinyang Robe', -- delay -5
         Hands = 'Nashira Gages', -- delay II -3
@@ -129,6 +130,7 @@ local sets = {
     },
     BP_Phys = {
         -- bp damage, physical pet bonuses, smn skill
+        Ammo = 'Soothing Sachet',
         Head = 'Marduk\'s Tiara',
         Neck = 'Incanter\'s Torque',
         Ear1 = 'Smn. Earring',
@@ -146,6 +148,9 @@ local sets = {
         -- bp damage, pet MAB+, smn skill
         -- TODO (for now just use summoning skill set)
         -- Main = 'Conjurer\'s Crook', -- pet MAB+15
+        -- Head = 'Valkyrie\'s Hat', -- pet MAB+4 MACC+6
+        Body = 'Smn. Doublet +1', -- bp dmg +4. Augur jaseran maybe better
+        Hands = 'Smn. Bracers +1', -- bp dmg +3
     },
     Smn_Mag_Skill = {
         -- for bp ward, summon spirits, siphon
@@ -153,14 +158,15 @@ local sets = {
         Neck = 'Incanter\'s Torque',
         Ear1 = 'Smn. Earring',
         Ear2 = 'Spire Earring',
+        -- Body = 'Augur\'s Jaseran', -- +8
         Hands = 'Smn. Bracers +1',
         Ring1 = 'Evoker\'s Ring',
         Ring2 = 'Eidolon Ring', -- +8
         Back = 'Summoner\'s Cape',
-        Waist = 'Mujin Obi',
+        Waist = 'Kobo Obi',
         -- Legs = 'Marduk\'s Shalwar',
         Legs = 'Smn. Spats +1', -- augmented gives +10
-        Feet = 'Nashira Crackows',
+        Feet = 'Nashira Crackows', -- +5; zenith pumps +1 can give +6
     },
     Siphon =
     {
@@ -183,7 +189,7 @@ local sets = {
     },
     Heal_Weapons = {
         Main = 'Tamaxchi',
-        Sub = 'Genbu\'s Shield',
+        Sub = 'Genmei Shield',
     },
     Stoneskin = { -- if sub whm or rdm
         Neck = 'Stone Gorget',
@@ -196,7 +202,7 @@ local sets = {
         Ear1 = 'Loquac. Earring', -- fast cast
         Ear2 = 'Spire Earring',
         Body = 'Goliard Saio', -- haste
-        Ring1 = { Name = 'Dark Ring', Augment = { [1] = '"Fast Cast"+1', [2] = '"Conserve MP"+3' } },
+        Ring2 = { Name = 'Dark Ring', Augment = { [1] = '"Fast Cast"+1', [2] = '"Conserve MP"+3' } },
         Back = 'Swith Cape +1', -- fast cast
         Waist = 'Ninurta\'s Sash', -- haste
         Legs = 'Marduk\'s Shalwar', -- healing magic
@@ -206,9 +212,6 @@ local sets = {
         Ear1 = 'Augment. Earring',
         Ear2 = 'Spire Earring',
         Back = 'Grapevine Cape',
-    },
-    Stoneskin = {
-        Neck = 'Stone Gorget',
     },
     PDT = {
         Hands = 'Smn. Bracers +1',
@@ -225,7 +228,7 @@ local sets = {
         Waist = 'Beastly Girdle', -- augment this
         Legs = 'Goliard Trews', -- pet def +10
         Feet = 'Koschei Crackows', -- avatar def +5
-        -- Legs = 'Enticer\'s Pants' -- pet damage taken -2%
+        Legs = 'Enticer\'s Pants' -- pet damage taken -2%
         -- (or, smn spats +1: pet magic damage taken -4%)
     },
     Brachyura = {
@@ -263,9 +266,9 @@ local function HandlePetAction(petAction)
         gFunc.EquipSet(sets.Smn_Mag_Skill)
 	elseif (mag_BPs:contains(petAction.Name)) then
         gFunc.EquipSet(sets.Smn_Mag_Skill)
-        -- gFunc.EquipSet(sets.BP_Mag);
+        gFunc.EquipSet(sets.BP_Mag)
     else
-        gFunc.EquipSet(sets.BP_Phys);
+        gFunc.EquipSet(sets.BP_Phys)
         if (pupinparty) and (bstinparty) then
             gFunc.EquipSet(sets.AffinityFidelity)
         elseif pupinparty then
@@ -279,14 +282,14 @@ local function HandlePetAction(petAction)
 end
 
 profile.OnLoad = function()
-    gSettings.AllowAddSet = true;
-    utilities.Initialize();
+    gSettings.AllowAddSet = true
+    utilities.Initialize()
 
-    (function () 
-        AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 37');
-        AshitaCore:GetChatManager():QueueCommand(1, '/macro book 5');
-        AshitaCore:GetChatManager():QueueCommand(1, '/macro set 1');
-    end):once(3);
+    ;(function () 
+        AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 37')
+        AshitaCore:GetChatManager():QueueCommand(1, '/macro book 5')
+        AshitaCore:GetChatManager():QueueCommand(1, '/macro set 1')
+    end):once(3)
 end
 
 profile.OnUnload = function()
@@ -294,62 +297,62 @@ end
 
 profile.HandleCommand = function(args)
     if args[1] == 'spirit' then
-        local environment = gData.GetEnvironment();
-        local weatherElement = environment.WeatherElement;
+        local environment = gData.GetEnvironment()
+        local weatherElement = environment.WeatherElement
         -- Add whichever spirits you don't have yet to the {"None", "Unknown"} table.
         -- e.g. {"None", "Unknown", "Thunder"}. If it's lightning day, you'll summon dark spirit instead.
-        local spiritElement = "Dark";
+        local spiritElement = "Dark"
         if (T{"None", "Unknown"}:contains(weatherElement)) then
-            local dayElement = environment.DayElement;
+            local dayElement = environment.DayElement
             if (not T{"None", "Unknown"}:contains(dayElement)) then
-                spiritElement = dayElement;
+                spiritElement = dayElement
             end
         else
-            spiritElement = weatherElement;
+            spiritElement = weatherElement
         end
 
-        if spiritElement == "Wind" then spiritElement = "Air" end;
+        if spiritElement == "Wind" then spiritElement = "Air" end
 
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "' .. spiritElement .. ' Spirit" <me>');
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "' .. spiritElement .. ' Spirit" <me>')
     elseif args[1] == 'naspell' then
-        naSpell.Cast();
+        naSpell.Cast()
     elseif args[1] == 'naspellprio' then
         -- comma-delimited list of player names
-        naSpell.SetPlayerPriority(args);
+        naSpell.SetPlayerPriority(args)
     elseif args[1] == 'pupinparty' then
-        pupinparty = not pupinparty;
-        gFunc.Echo(255,  'Affinity Earring [' .. (pupinparty and 'ON' or 'OFF') .. ']');
+        pupinparty = not pupinparty
+        gFunc.Echo(255,  'Affinity Earring [' .. (pupinparty and 'ON' or 'OFF') .. ']')
     elseif args[1] == 'bstinparty' then
-        bstinparty = not bstinparty;
-        gFunc.Echo(255,  'Fidelity Earring [' .. (bstinparty and 'ON' or 'OFF') .. ']');
+        bstinparty = not bstinparty
+        gFunc.Echo(255,  'Fidelity Earring [' .. (bstinparty and 'ON' or 'OFF') .. ']')
     end
-    utilities.HandleCommands(args);
+    utilities.HandleCommands(args)
 end
 
 -- "hadPet" keeps track of whether you had a pet in the last handledefault pass.
 -- When it flips from true to false, reset the macro sheet to the "hub" set.
-local hadPet = false;
+local hadPet = false
 
 profile.HandleDefault = function()
-    local petAction = gData.GetPetAction();
+    local petAction = gData.GetPetAction()
     if (petAction ~= nil) then
         -- pause other gear swaps while the pet is doing something
-        HandlePetAction(petAction);
-        return;
+        HandlePetAction(petAction)
+        return
     end
 
-    local player = gData.GetPlayer();
-    local pet = gData.GetPet();
+    local player = gData.GetPlayer()
+    local pet = gData.GetPet()
 
     if (pet ~= nil) then
-        hadPet = true;
+        hadPet = true
     elseif (hadPet) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/macro set 1');
-        hadPet = false;
+        AshitaCore:GetChatManager():QueueCommand(1, '/macro set 1')
+        hadPet = false
     end
 
     if (player.Status == 'Engaged') then
-        gFunc.EquipSet(sets.TPGain);
+        gFunc.EquipSet(sets.TPGain)
         -- if all three weapon slots are empty during combat,
         -- equip the default weapon set (useful against merrows)
         utilities.ResetDefaultWeapons(sets.Weapons_Default)
@@ -374,7 +377,7 @@ profile.HandleDefault = function()
             gFunc.EquipSet(sets.Carb_Mitts)
         end
     else
-        gFunc.EquipSet(sets.Idle);
+        gFunc.EquipSet(sets.Idle)
         gFunc.EquipSet(sets.Weapons_Default)
     end
 
@@ -426,11 +429,11 @@ profile.HandleMidcast = function()
     elseif (spell.Skill == 'Enhancing Magic') then
         gFunc.EquipSet(sets.Enhancing)
         if (spell.Name == 'Stoneskin') then
-            gFunc.EquipSet(sets.Stoneskin);
+            gFunc.EquipSet(sets.Stoneskin)
         end
     elseif (spell.Skill == 'Healing Magic') then
         gFunc.EquipSet(sets.Heal)
-        local player = gData.GetPlayer();
+        local player = gData.GetPlayer()
         if (player.Status ~= 'Engaged') then
             gFunc.EquipSet(sets.Heal_Weapons)
         end

@@ -1,6 +1,5 @@
-utilities = gFunc.LoadFile('utilities.lua')
-naSpell = gFunc.LoadFile('naSpell.lua')
--- This file doesn't use brachyura.lua because it's handled in midcast.
+local utilities = gFunc.LoadFile('utilities.lua')
+local naSpell = gFunc.LoadFile('naSpell.lua')
 
 local profile = {}
 local melee = false
@@ -33,19 +32,19 @@ local sets = {
     },
     DW_Weapons = {
         Main = 'Yagrush',
-        Sub = 'Sindri',
+        Sub = 'Kraken Club',
     },
     Idle = {
         -- refresh, regen, -dt
         Head = 'Hlr. Cap +1',
         Neck = 'Fylgja Torque +1',
-        Ear1 = 'Light Earring',
+        Ear1 = 'Soil Earring',
         Ear2 = 'Soil Earring',
         Body = 'Clr. Bliaut +1',
         -- Body = 'Marduk\'s Jubbah',
         Hands = 'Marduk\'s Dastanas',
         Ring1 = 'Defending Ring',
-        Ring2 = 'Tamas Ring',
+        Ring2 = { Name = 'Dark Ring', Augment = { [1] = 'Magic dmg. taken -5%' } },
         Back = 'Umbra Cape',
         Waist = 'Cleric\'s Belt',
         Legs = 'Clr. Pantaln. +1',
@@ -58,9 +57,9 @@ local sets = {
         Ear1 = 'Brutal Earring',
         Ear2 = 'Hollow Earring',
         Body = 'Reverend Mail +1',
-        Hands = 'Blessed Mitts',
+        Hands = 'Blessed Mitts +1',
         Ring1 = 'Rajas Ring',
-        Ring2 = 'Mars\'s Ring',
+        Ring2 = 'Ares\'s Ring',
         Back = 'Aife\'s Mantle',
         Waist = 'Ninurta\'s Sash',
         Legs = 'Blessed Trousers', -- augmented
@@ -75,7 +74,7 @@ local sets = {
         Ear1 = 'Brutal Earring',
         Ear2 = 'Emberpearl Earring',
         Body = 'Blessed Bliaut', -- mnd+5 (augment for dex+ and atk+)
-        Body = 'Marduk\'s Jubbah',
+        -- Body = 'Marduk\'s Jubbah',
         Hands = 'Hlr. Mitts +1', --mnd+7, str+7
         Ring1 = 'Rajas Ring',
         Ring2 = 'Aqua Ring', -- replace with Strigoi? or Karka?
@@ -92,8 +91,9 @@ local sets = {
     },
     Haste = {
         Head = 'Windfall Hat',
+        Neck = 'Jeweled Collar',
         Ear2 = 'Loquac. Earring',
-        Hands = 'Blessed Mitts',
+        Hands = 'Blessed Mitts +1',
         Body = 'Marduk\'s Jubbah',
         Back = 'Swith Cape +1',
         Waist = 'Ninurta\'s Sash',
@@ -115,6 +115,7 @@ local sets = {
         Body = 'Nashira Manteel',
         Hands = 'Hlr. Mitts +1',
         Ring1 = { Name = 'Dark Ring', Augment = { [1] = '"Fast Cast"+1', [2] = '"Conserve MP"+3' } },
+        Ring2 = 'Tamas Ring',
         Back = 'Swith Cape +1',
         Waist = 'Ninurta\'s Sash',
         Legs = 'Clr. Pantaln. +1',
@@ -122,27 +123,31 @@ local sets = {
     },
     Precast = {
         Head = 'Windfall Hat',
+        Neck = 'Jeweled Collar',
         Ear2 = 'Loquac. Earring',
-        Hands = 'Blessed Mitts', -- fast cast aug
+        Hands = 'Blessed Mitts +1', -- fast cast aug
         Ring1 = { Name = 'Dark Ring', Augment = { [1] = '"Fast Cast"+1', [2] = '"Conserve MP"+3' } },
+        Ring2 = 'Tamas Ring',
         Body = 'Marduk\'s Jubbah',
         Back = 'Swith Cape +1',
         Waist = 'Ninurta\'s Sash',
         Feet = 'Rostrum Pumps',
     },
     PrecastHeal = {
-        Feet = 'Zenith Pumps +1', -- cure clogs?
+        Back = 'Hierarch\'s Mantle',
+        Feet = 'Cure Clogs',
     },
     PrecastHeal_Campaign = {
         Waist = 'Capricornian Rope',
     },
     Regen = {
-        Head = 'Goliard Chapeau',
+        Head = 'Cobra Cloche',
         Neck = 'Fylgja Torque +1',
+        Ear1 = 'Magnetic Earring',
         Ear2 = 'Loquac. Earring',
         Body = 'Clr. Bliaut +1',
-        Hands = 'Blessed Mitts',
-        Ring1 = 'Karka Ring',
+        Hands = 'Blessed Mitts +1',
+        Ring1 = { Name = 'Dark Ring', Augment = { [1] = '"Fast Cast"+1', [2] = '"Conserve MP"+3' } },
         Ring2 = 'Tamas Ring',
         Back = 'Grapevine Cape',
         Waist = 'Cleric\'s Belt',
@@ -157,19 +162,22 @@ local sets = {
         Head = 'Marduk\'s Tiara', -- divine 7
         Neck = 'Jokushu Chain', -- divine 10
         Ear1 = 'Knight\'s Earring', -- divine 5
-        Ear2 = 'Aqua Earring', -- magic acc and MND. eventually spire, divine earring is fine though
+        Ear2 = 'Spire Earring', -- divine 3
         Body = 'Marduk\'s Jubbah', -- MND 12
-        Hands = 'Blessed Mitts', -- MND 7
+        Hands = 'Blessed Mitts +1', -- MND 8
         Ring1 = 'Karka Ring', -- MND 6
-        Ring2 = 'Tamas Ring', -- MND 5; eventually hieratic ring
+        Ring2 = 'Hieratic Ring', -- MND 5, divine 7
         Back = 'Dew Silk Cape +1', -- MND 6
         Waist = 'Salire Belt', -- MND 5, m.acc 4, MAB 4
         Legs = 'Hlr. Pantaln. +1', -- divine 15
         Feet = 'Clr. Duckbills +1', -- MND 11
     },
     Divine_Weapons = {
-        Main = 'Chatoyant Staff',
+        Main = 'Chatoyant Staff', -- eventually divinity
         Sub = 'Light Grip',
+    },
+    Banish = {
+        Ear2 = 'Novio Earring',
     },
     Rest = {
         Main = 'Chatoyant Staff',
@@ -191,12 +199,12 @@ local sets = {
     Barspell = {
         -- also general enhancing
         -- Head = 'Hlr. Cap +1',
-        Head = 'Cobra Cloche', -- conserve MP +4
+        Head = 'Cobra Cloche',
         Neck = 'Fylgja Torque +1',
         Ear1 = 'Brachyura Earring',
-        Ear2 = 'Augment. Earring',
+        Ear2 = 'Spire Earring',
         Body = 'Blessed Bliaut',
-        Hands = 'Blessed Mitts',
+        Hands = 'Blessed Mitts +1',
         Ring1 = 'Karka Ring',
         Ring2 = 'Tamas Ring',
         Back = 'Grapevine Cape',
@@ -239,13 +247,13 @@ local sets = {
         Ear1 = 'Soil Earring',
         Ear2 = 'Soil Earring',
         Body = 'Clr. Bliaut +1',
-        -- Back = 'Umbra Cape',
         Back = 'Umbra Cape',
         Legs = 'Goliard Trews',
     },
     MDT = {
         -- TODO
         -- eventually Healer's Bliaut +1 (DT-5%)
+        Ring2 = { Name = 'Dark Ring', Augment = { [1] = 'Magic dmg. taken -5%' } },
     },
     BDT = {},
     Showoff = {},
@@ -255,13 +263,13 @@ profile.Sets = sets
 profile.Packer = {}
 
 profile.OnLoad = function()
-    gSettings.AllowAddSet = true;
-    utilities.Initialize();
+    gSettings.AllowAddSet = true
+    utilities.Initialize()
 
-    (function ()
-        AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 17');
-        -- gFunc.ForceEquipSet(sets.Weapons_Default);
-    end):once(3);
+    ;(function ()
+        AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 17')
+        -- gFunc.ForceEquipSet(sets.Weapons_Default)
+    end):once(3)
 end
 
 profile.OnUnload = function()
@@ -274,8 +282,8 @@ profile.HandleCommand = function(args)
         -- comma-delimited list of player names
         naSpell.SetPlayerPriority(args)
     elseif args[1] == 'melee' then
-        melee = not melee;
-        gFunc.Echo(255,  'Melee [' .. (melee and 'ON' or 'OFF') .. ']');
+        melee = not melee
+        gFunc.Echo(255,  'Melee [' .. (melee and 'ON' or 'OFF') .. ']')
     end
     utilities.HandleCommands(args)
 end
@@ -319,10 +327,10 @@ end
 profile.HandlePrecast = function()
     local spell = gData.GetAction()
     gFunc.EquipSet(sets.Precast)
-    if (spell.Skill == 'Healing Magic') then
+    if (spell.Name:match('^Cure')) or (spell.Name:match('^Cura')) then
         gFunc.EquipSet(sets.PrecastHeal)
         if gData.GetBuffCount('Allied Tags') > 0 then
-            gFunc.EquipSet(sets.PrecastHeal_Campaign);
+            gFunc.EquipSet(sets.PrecastHeal_Campaign)
         end
     end
     utilities.CheckCancels()
@@ -352,7 +360,13 @@ profile.HandleMidcast = function()
         if (spell.Name == 'Stoneskin') then
             gFunc.EquipSet(sets.Stoneskin)
         end
-        if (player.Status ~= 'Engaged') and not melee and not string.contains(spell.Name, 'Teleport') then
+        if 
+            (player.Status ~= 'Engaged') and not melee and
+            not string.contains(spell.Name, 'Teleport') and
+            not string.contains(spell.Name, 'Recall') and
+            not string.contains(spell.Name, 'Invisible') and
+            not string.contains(spell.Name, 'Sneak')
+        then
             gFunc.EquipSet(sets.Enh_Weapons)
         end
     elseif (spell.Skill == 'Healing Magic') then
@@ -379,6 +393,12 @@ profile.HandleMidcast = function()
         if (player.Status ~= 'Engaged' and not melee and spell.Name ~= 'Enlight') then
             gFunc.EquipSet(sets.Divine_Weapons)
         end
+        if
+            string.contains(spell.Name, 'Banish') or
+            spell.Name:match('^Holy')
+        then
+            gFunc.EquipSet(sets.Banish)
+        end
     end
 
 end
@@ -391,11 +411,11 @@ end
 
 profile.HandleWeaponskill = function()
     -- TODO
-    -- local target = gData.GetActionTarget();
+    -- local target = gData.GetActionTarget()
     -- if (tonumber(target.Distance) > 4.7) then
-    --     gFunc.Echo(255, "Get closer!");
-    --     gFunc.CancelAction();
-    --     return;
+    --     gFunc.Echo(255, "Get closer!")
+    --     gFunc.CancelAction()
+    --     return
     -- end
     --
     gFunc.EquipSet(sets.WS_Default)
